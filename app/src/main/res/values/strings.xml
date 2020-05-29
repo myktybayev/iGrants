@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">PrmanovApp</string>
+
+    <string name="menu_mamandyktar">Мамандықтар</string>
+    <string name="menu_granttar">Гранттар</string>
+    <string name="menu_univer_code">Универ кодтары</string>
+    <string name="menu_hostel">Хостелдер</string>
+    <string name="menu_dormitory">Жатақханалар</string>
+    <string name="menu_report">Кеңес жіберу</string>
+    <string name="menu_about">Жоба жайлы</string>
+
+</resources>

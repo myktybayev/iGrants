@@ -3,14 +3,20 @@
     package="kz.school.grants">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+
     <application
         android:allowBackup="true"
-        android:icon="@drawable/univer"
+        android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@drawable/univer"
+        android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+        android:windowSoftInputMode="adjustResize|stateAlwaysHidden"
         android:theme="@style/AppTheme.NoActionBar">
-        <activity android:name=".MenuActivity">
+
+        <activity android:name=".authentication.LoginByEmailPage">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -19,11 +25,67 @@
         </activity>
 
         <activity
-            android:name=".spec_menu.SpecialityActivity"
-            android:theme="@style/AppTheme.ActionBar" />
+            android:name=".MenuActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+
         <activity
-            android:name=".spec_menu.GrantInfo"
+            android:name=".spec_menu.activities.SpecialityActivity"
             android:theme="@style/AppTheme.ActionBar" />
+
+        <activity
+            android:name=".univer_menu.activities.ProfessionsActivity"
+            android:theme="@style/AppTheme.ActionBar" />
+
+        <activity
+            android:name=".spec_menu.activities.SpecBarUniverlerActivity"
+            android:parentActivityName=".spec_menu.activities.BallEsepteuActivity"
+            android:theme="@style/AppTheme.ActionBar" />
+
+        <activity
+            android:name=".granttar_menu.activities.SpecListActivity"
+            android:theme="@style/AppTheme.ActionBar" />
+
+        <activity
+            android:name=".spec_menu.activities.GrantInfo"
+            android:theme="@style/AppTheme.ActionBar" />
+
+        <activity
+            android:name=".news_menu.activities.AddNews"
+            android:launchMode="singleInstance"
+            android:parentActivityName=".MenuActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity
+            android:name=".univer_menu.activities.AddUniver"
+            android:launchMode="singleInstance"
+            android:parentActivityName=".MenuActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity
+            android:name=".spec_menu.activities.AddSubjects"
+            android:launchMode="singleInstance"
+            android:parentActivityName=".MenuActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity
+            android:name=".spec_menu.activities.AddBlock"
+            android:parentActivityName=".MenuActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity
+            android:name=".spec_menu.activities.BallEsepteuActivity"
+            android:parentActivityName=".MenuActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity
+            android:name=".advice_menu.activities.AddAdvice"
+            android:parentActivityName=".MenuActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity
+            android:name=".advice_menu.activities.AdviceReport"
+            android:parentActivityName=".advice_menu.activities.AddAdvice"
+            android:theme="@style/AppTheme.NoActionBar" />
 
     </application>
 

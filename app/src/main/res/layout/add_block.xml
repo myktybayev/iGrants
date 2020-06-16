@@ -1,0 +1,846 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            app:navigationIcon="@drawable/ic_close_white"
+            app:titleTextColor="@color/white">
+
+        </androidx.appcompat.widget.Toolbar>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/inputLayoutEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:theme="@style/InputLayout">
+
+                <EditText
+                    android:id="@+id/blockCodeEd"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Номер группы образов. программ"
+                    android:singleLine="true"
+                    android:textSize="15dp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/inputLayoutEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:theme="@style/InputLayout">
+
+                <EditText
+                    android:id="@+id/blockTitleEd"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Наименовние группы"
+                    android:singleLine="true"
+                    android:textSize="15dp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardElevation="5dp"
+                app:cardUseCompatPadding="true">
+
+                <LinearLayout
+                    android:id="@+id/specialityLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginTop="5dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="5dp"
+                        android:gravity="center"
+                        android:text="Мамандықтар енгізу"
+                        android:textColor="@color/black"
+                        android:textSize="14sp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/border"
+                        android:foreground="?android:selectableItemBackground"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="8"
+                            android:background="@drawable/border"
+                            android:gravity="center"
+                            android:text="1"
+                            android:textColor="@color/black"
+                            android:textSize="20dp" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <EditText
+                                android:id="@+id/specCode1"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:hint="мамандық кодын енгізу"
+                                android:textSize="14sp" />
+
+                            <EditText
+                                android:id="@+id/specName1"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:hint="мамандық атын енгізу"
+                                android:textSize="14sp" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/border"
+                        android:foreground="?android:selectableItemBackground"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="8"
+                            android:background="@drawable/border"
+                            android:gravity="center"
+                            android:text="2"
+                            android:textColor="@color/black"
+                            android:textSize="20dp" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <EditText
+                                android:id="@+id/specCode2"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:hint="мамандық кодын енгізу"
+                                android:textSize="14sp" />
+
+                            <EditText
+                                android:id="@+id/specName2"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:hint="мамандық атын енгізу"
+                                android:textSize="14sp" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/border"
+                        android:foreground="?android:selectableItemBackground"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="8"
+                            android:background="@drawable/border"
+                            android:gravity="center"
+                            android:text="3"
+                            android:textColor="@color/black"
+                            android:textSize="20dp" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <EditText
+                                android:id="@+id/specCode3"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:hint="мамандық кодын енгізу"
+                                android:textSize="14sp" />
+
+                            <EditText
+                                android:id="@+id/specName3"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:hint="мамандық атын енгізу"
+                                android:textSize="14sp" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/border"
+                        android:foreground="?android:selectableItemBackground"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="8"
+                            android:background="@drawable/border"
+                            android:gravity="center"
+                            android:text="4"
+                            android:textColor="@color/black"
+                            android:textSize="20dp" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <EditText
+                                android:id="@+id/specCode4"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:hint="мамандық кодын енгізу"
+                                android:textSize="14sp" />
+
+                            <EditText
+                                android:id="@+id/specName4"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:hint="мамандық атын енгізу"
+                                android:textSize="14sp" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/border"
+                        android:foreground="?android:selectableItemBackground"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/specNumber"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="8"
+                            android:background="@drawable/border"
+                            android:gravity="center"
+                            android:text="5"
+                            android:textColor="@color/black"
+                            android:textSize="20dp" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <EditText
+                                android:id="@+id/specCode5"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:hint="мамандық кодын енгізу"
+                                android:textSize="14sp" />
+
+                            <EditText
+                                android:id="@+id/specName5"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:hint="мамандық атын енгізу"
+                                android:textSize="14sp" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/border"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="Грант саны"
+                android:textColor="@android:color/black"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:background="@drawable/border"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/border"
+                        android:gravity="center"
+                        android:padding="5dp"
+                        android:text="2018 - 2019"
+                        android:textColor="@android:color/black"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+
+                    <LinearLayout
+                        style="@style/layout_style"
+                        android:layout_height="match_parent">
+
+                        <ImageView style="@style/start_style" />
+
+                        <TextView
+                            android:id="@+id/y18_19_total_tx"
+                            style="@style/edit_style"
+                            android:text="0" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        style="@style/layout_style"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            style="@style/group_style"
+                            android:text="KAZ" />
+
+                        <EditText
+                            android:id="@+id/y18_19_kaz_ed"
+                            style="@style/edit_style"
+                            android:inputType="number" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        style="@style/layout_style"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            style="@style/group_style"
+                            android:text="RUS" />
+
+                        <EditText
+                            android:id="@+id/y18_19_rus_ed"
+                            style="@style/edit_style"
+                            android:inputType="number" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:background="@drawable/border"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/border"
+                        android:gravity="center"
+                        android:padding="5dp"
+                        android:text="2019 - 2020"
+                        android:textColor="@android:color/black"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        style="@style/layout_style"
+                        android:layout_height="match_parent">
+
+                        <ImageView style="@style/start_style" />
+
+                        <TextView
+                            android:id="@+id/y19_20_total_tx"
+                            style="@style/number_style"
+                            android:text="0" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        style="@style/layout_style"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            style="@style/group_style"
+                            android:text="KAZ" />
+
+                        <EditText
+                            android:id="@+id/y19_20kaz_ed"
+                            style="@style/number_style"
+                            android:inputType="number" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        style="@style/layout_style"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            style="@style/group_style"
+                            android:text="RUS" />
+
+                        <EditText
+                            android:id="@+id/y19_20rus_ed"
+                            style="@style/number_style"
+                            android:inputType="number" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:background="@drawable/border"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/border"
+                        android:gravity="center"
+                        android:padding="5dp"
+                        android:text="АЙЫРМАСЫ"
+                        android:textColor="@android:color/black"
+                        android:textSize="13sp"
+                        android:singleLine="true"
+                        android:textStyle="bold" />
+
+
+                    <LinearLayout
+                        style="@style/layout_style"
+                        android:layout_height="match_parent">
+
+                        <ImageView style="@style/start_style" />
+
+                        <TextView
+                            android:id="@+id/yTotal_tx"
+                            style="@style/number_style"
+                            android:text="0"
+                            android:textColor="@color/green" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        style="@style/layout_style"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            style="@style/group_style"
+                            android:text="KAZ" />
+
+                        <TextView
+                            android:id="@+id/yKaz_tx"
+                            style="@style/number_style"
+                            android:text="0"
+                            android:textColor="@color/green" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        style="@style/layout_style"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            style="@style/group_style"
+                            android:text="RUS" />
+
+                        <TextView
+                            android:id="@+id/yRus_tx"
+                            style="@style/number_style"
+                            android:text="0"
+                            android:textColor="@color/green" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/border_green"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:text="Жалпы конкурс \n (ЕНТ балл)"
+                    android:textColor="@android:color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:background="@drawable/border_green"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        style="@style/layout_style"
+                        android:background="@drawable/border_green"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="@drawable/border_green"
+                            android:gravity="center"
+                            android:padding="10dp"
+                            android:text="Қазақ группа"
+                            android:textColor="@android:color/black"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+
+                        <LinearLayout style="@style/layout_style">
+
+                            <TextView
+                                style="@style/group_style"
+                                android:text="MAX" />
+
+                            <EditText
+                                android:id="@+id/kaz_max_ed"
+                                style="@style/number_style"
+                                android:layout_height="match_parent"
+                                android:inputType="number" />
+
+                        </LinearLayout>
+
+                        <LinearLayout style="@style/layout_style">
+
+                            <TextView
+                                style="@style/group_style"
+                                android:text="MIN" />
+
+                            <EditText
+                                android:id="@+id/kaz_min_ed"
+                                style="@style/number_style"
+                                android:inputType="number" />
+
+                        </LinearLayout>
+
+                        <LinearLayout style="@style/layout_style">
+
+                            <TextView
+                                style="@style/group_style"
+                                android:text="Орта" />
+
+                            <EditText
+                                android:id="@+id/kaz_ave_ed"
+                                style="@style/number_style"
+                                android:inputType="number" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        style="@style/layout_style"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="@drawable/border_green"
+                            android:gravity="center"
+                            android:padding="10dp"
+                            android:text="Орыс группа"
+                            android:textColor="@android:color/black"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+
+                        <LinearLayout style="@style/layout_style">
+
+                            <TextView
+                                style="@style/group_style"
+                                android:text="MAX" />
+
+                            <EditText
+                                android:id="@+id/rus_max_ed"
+                                style="@style/number_style"
+                                android:inputType="number" />
+
+                        </LinearLayout>
+
+                        <LinearLayout style="@style/layout_style">
+
+                            <TextView
+                                style="@style/group_style"
+                                android:text="MIN" />
+
+                            <EditText
+                                android:id="@+id/rus_min_ed"
+                                style="@style/number_style"
+                                android:inputType="number" />
+
+                        </LinearLayout>
+
+                        <LinearLayout style="@style/layout_style">
+
+                            <TextView
+                                style="@style/group_style"
+                                android:text="Орта" />
+
+                            <EditText
+                                android:id="@+id/rus_ave_ed"
+                                style="@style/number_style"
+                                android:inputType="number" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <CheckBox
+                android:id="@+id/auilKvotasi"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Ауыл квотасы"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:id="@+id/auilKvotasiLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:background="@drawable/border_orange"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:text="Ауыл квотасы \n (ЕНТ балл)"
+                    android:textColor="@android:color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:background="@drawable/border_orange"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        style="@style/layout_style"
+                        android:background="@drawable/border_orange"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="@drawable/border_orange"
+                            android:gravity="center"
+                            android:padding="10dp"
+                            android:text="Қазақ группа"
+                            android:textColor="@android:color/black"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+
+                        <LinearLayout style="@style/layout_style">
+
+                            <TextView
+                                style="@style/group_style"
+                                android:text="MAX" />
+
+                            <EditText
+                                android:id="@+id/auil_kaz_max_ed"
+                                style="@style/number_style"
+                                android:inputType="number" />
+
+                        </LinearLayout>
+
+                        <LinearLayout style="@style/layout_style">
+
+                            <TextView
+                                style="@style/group_style"
+                                android:text="MIN" />
+
+                            <EditText
+                                android:id="@+id/auil_kaz_min_ed"
+                                style="@style/number_style"
+                                android:inputType="number" />
+
+                        </LinearLayout>
+
+                        <LinearLayout style="@style/layout_style">
+
+                            <TextView
+                                style="@style/group_style"
+                                android:text="Орта" />
+
+                            <EditText
+                                android:id="@+id/auil_kaz_ave_ed"
+                                style="@style/number_style"
+                                android:inputType="number" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        style="@style/layout_style"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="@drawable/border_orange"
+                            android:gravity="center"
+                            android:padding="10dp"
+                            android:text="Орыс группа"
+                            android:textColor="@android:color/black"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+
+                        <LinearLayout style="@style/layout_style">
+
+                            <TextView
+                                style="@style/group_style"
+                                android:text="MAX" />
+
+                            <EditText
+                                android:id="@+id/auil_rus_max_ed"
+                                style="@style/number_style"
+                                android:inputType="number" />
+
+                        </LinearLayout>
+
+                        <LinearLayout style="@style/layout_style">
+
+                            <TextView
+                                style="@style/group_style"
+                                android:text="MIN" />
+
+                            <EditText
+                                android:id="@+id/auil_rus_min_ed"
+                                style="@style/number_style"
+                                android:inputType="number" />
+
+                        </LinearLayout>
+
+                        <LinearLayout style="@style/layout_style">
+
+                            <TextView
+                                style="@style/group_style"
+                                android:text="Орта" />
+
+                            <EditText
+                                android:id="@+id/auil_rus_ave_ed"
+                                style="@style/number_style"
+                                android:inputType="number" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp">
+
+                <ProgressBar
+                    android:id="@+id/progressBar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <Button
+                    android:id="@+id/submitBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/gradient3"
+                    android:text="@string/add"
+                    android:textColor="@color/white"
+                    android:textSize="20sp" />
+
+            </RelativeLayout>
+        </LinearLayout>
+    </ScrollView>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

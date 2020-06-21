@@ -42,7 +42,36 @@
             android:theme="@style/AppTheme.ActionBar" />
 
         <activity
-            android:name=".granttar_menu.activities.SpecListActivity"
+            android:name=".granttar_menu.activities.AtauliSpecListActivity"
+            android:parentActivityName=".MenuActivity"
+            android:theme="@style/AppTheme.ActionBar" />
+
+        <activity
+            android:name=".granttar_menu.activities.SerpinSpecListActivity"
+            android:parentActivityName=".MenuActivity"
+            android:theme="@style/AppTheme.ActionBar" />
+
+        <activity
+            android:name=".granttar_menu.activities.GrantsUniversActivity"
+            android:parentActivityName=".granttar_menu.activities.AtauliSpecListActivity"
+            android:theme="@style/AppTheme.ActionBar" />
+
+        <activity
+            android:name=".granttar_menu.activities.AtauliBallEsepteuActivity"
+            android:parentActivityName=".granttar_menu.activities.GrantsUniversActivity"
+            android:theme="@style/AppTheme.ActionBar" />
+
+        <activity
+            android:name=".granttar_menu.activities.SerpinBallEsepteuActivity"
+            android:parentActivityName=".granttar_menu.activities.GrantsUniversActivity"
+            android:theme="@style/AppTheme.ActionBar" />
+
+        <activity
+            android:name=".granttar_menu.activities.AtauliGrantInfo"
+            android:theme="@style/AppTheme.ActionBar" />
+
+        <activity
+            android:name=".granttar_menu.activities.SerpinGrantInfo"
             android:theme="@style/AppTheme.ActionBar" />
 
         <activity

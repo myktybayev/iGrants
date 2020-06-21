@@ -1,56 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:gravity="center"
-    android:orientation="vertical">
+    android:layout_height="wrap_content"
+    android:fillViewport="true"
+    android:gravity="center">
 
-    <include
-        android:id="@+id/llProgressBar"
-        layout="@layout/progress_loading"
-        android:visibility="gone" />
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardSearch"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_margin="10dp"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
-        <androidx.appcompat.widget.SearchView
-            android:id="@+id/searchView"
+        <include
+            android:id="@+id/llProgressBar"
+            layout="@layout/progress_loading"
+            android:visibility="gone" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardSearch"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingLeft="3dp"
-            android:paddingRight="3dp"
-            android:theme="@style/SearchViewTheme">
+            android:layout_margin="10dp">
 
-        </androidx.appcompat.widget.SearchView>
+            <androidx.appcompat.widget.SearchView
+                android:id="@+id/searchView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="3dp"
+                android:paddingRight="3dp"
+                android:theme="@style/SearchViewTheme">
 
-    </androidx.cardview.widget.CardView>
+            </androidx.appcompat.widget.SearchView>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:layout_below="@id/cardSearch"
-        android:id="@+id/home_recyclerview"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:listitem="@layout/item_grant_spec"
-        android:scrollbars="vertical" />
+        </androidx.cardview.widget.CardView>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fabBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:visibility="gone"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="20dp"
-        android:layout_marginRight="10dp"
-        android:clickable="true"
-        android:foreground="?android:selectableItemBackground"
-        android:src="@drawable/ic_add" />
+        <RelativeLayout
+            android:id="@+id/universRelative"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/cardSearch">
 
-</RelativeLayout>
+            <TextView
+                android:id="@+id/universNotFoundTxt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="Атаулы грант ұсынатын университеттер табылмады, алдымен Университеттер менюна өтуіңізді сұраймыз!" />
 
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/universRecyclerview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scrollbars="vertical" />
+
+        </RelativeLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/profRecyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/universRelative"
+            android:layout_marginTop="5dp"
+            android:scrollbars="vertical" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="20dp"
+            android:clickable="true"
+            android:foreground="?android:selectableItemBackground"
+            android:src="@drawable/ic_add"
+            android:visibility="gone" />
+
+    </RelativeLayout>
+
+</ScrollView>

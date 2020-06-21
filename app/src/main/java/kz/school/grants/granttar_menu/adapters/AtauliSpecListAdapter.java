@@ -13,12 +13,12 @@ import java.util.ArrayList;
 import kz.school.grants.R;
 import kz.school.grants.granttar_menu.models.SpecItem;
 
-public class SpecListAdapter extends RecyclerView.Adapter<SpecListAdapter.MyViewHolder> {
+public class AtauliSpecListAdapter extends RecyclerView.Adapter<AtauliSpecListAdapter.MyViewHolder> {
 
     Context mContext;
     ArrayList<SpecItem> mData;
 
-    public SpecListAdapter(Context mContext, ArrayList<SpecItem> mData) {
+    public AtauliSpecListAdapter(Context mContext, ArrayList<SpecItem> mData) {
         this.mContext = mContext;
         this.mData = mData;
     }
@@ -33,10 +33,8 @@ public class SpecListAdapter extends RecyclerView.Adapter<SpecListAdapter.MyView
     @Override
     public void onBindViewHolder(final MyViewHolder holder, int position) {
         SpecItem item = mData.get(position);
-
-        holder.specName.setText(item.getSpecCode()+" - "+item.getSpecName());
+        holder.specName.setText(item.getSpecCode() + " - " + item.getSpecName());
         holder.specSubjectPair.setText(item.getSpecSubjectPair());
-
     }
 
     @Override
@@ -44,7 +42,7 @@ public class SpecListAdapter extends RecyclerView.Adapter<SpecListAdapter.MyView
         return mData.size();
     }
 
-    public static class MyViewHolder extends RecyclerView.ViewHolder{
+    public static class MyViewHolder extends RecyclerView.ViewHolder {
 
         private TextView specName, specSubjectPair;
 

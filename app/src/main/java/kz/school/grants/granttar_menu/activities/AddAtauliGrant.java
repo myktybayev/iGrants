@@ -1,40 +1,22 @@
-package kz.school.grants.spec_menu.activities;
+package kz.school.grants.granttar_menu.activities;
 
-import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
-import android.content.res.TypedArray;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -42,28 +24,19 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.database.annotations.Nullable;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import kz.school.grants.R;
 import kz.school.grants.database.StoreDatabase;
-import kz.school.grants.spec_menu.adapters.ItemClickListener;
-import kz.school.grants.spec_menu.adapters.SubjectPairAdapter;
-import kz.school.grants.spec_menu.models.OneAddSpec;
-import kz.school.grants.spec_menu.models.SubjectPair;
 
-import static kz.school.grants.database.StoreDatabase.COLUMN_BLOCK_CODE;
 import static kz.school.grants.database.StoreDatabase.COLUMN_PROF_COUNT;
 import static kz.school.grants.database.StoreDatabase.COLUMN_SUBJECTS_ID;
-import static kz.school.grants.database.StoreDatabase.TABLE_GRANTS;
 import static kz.school.grants.database.StoreDatabase.TABLE_PROFILE_SUBJECTS;
 
-public class AddBlock extends AppCompatActivity implements View.OnClickListener {
+public class AddAtauliGrant extends AppCompatActivity implements View.OnClickListener {
     Toolbar toolbar;
     ProgressBar progressBar;
     Button submitBtn;
@@ -354,7 +327,7 @@ public class AddBlock extends AppCompatActivity implements View.OnClickListener 
 
                 mDatabaseBlockRef.child(toStr(blockCodeEd)).child("title").setValue(toStr(blockTitleEd));
                 mDatabaseBlockRef.child(toStr(blockCodeEd)).child("professions").setValue(professionHashMap).addOnCompleteListener(task -> {
-                    Toast.makeText(AddBlock.this, "Block added", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddAtauliGrant.this, "Block added", Toast.LENGTH_SHORT).show();
                     mDatabaseRef.child("subjects_ver").setValue(getIncreasedVersion());
                     finish();
                 });

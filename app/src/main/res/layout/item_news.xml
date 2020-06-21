@@ -18,29 +18,26 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:padding="5dp">
 
-            <LinearLayout
+            <TextView
+                android:id="@+id/news_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textColor="@color/black"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/news_date"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/news_title"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:text="News title"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/news_date"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:text="date" />
-            </LinearLayout>
+                android:layout_weight="1"
+                android:text="date"
+                android:textColor="@color/black_grey"
+                android:textSize="20sp" />
         </LinearLayout>
 
         <ImageView
@@ -57,7 +54,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:text="МИКРОПЛАСТИК - принято называть микропластиком."
-            android:textColor="@color/black" />
+            android:textColor="@color/black_grey"
+            android:textSize="16sp" />
 
         <LinearLayout
             android:layout_width="wrap_content"

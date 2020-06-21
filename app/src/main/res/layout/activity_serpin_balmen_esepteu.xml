@@ -55,39 +55,6 @@
 
         </LinearLayout>
 
-        <RadioGroup
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:orientation="horizontal">
-
-            <RadioButton
-                android:id="@+id/kazGroup"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_weight="1"
-                android:checked="true"
-                android:background="@drawable/border"
-                android:text="Қазақ группасы" />
-
-            <RadioButton
-                android:id="@+id/rusGroup"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_weight="1"
-                android:background="@drawable/border"
-                android:text="Орыс группасы" />
-        </RadioGroup>
-
-        <CheckBox
-            android:id="@+id/auilGroup"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:background="@drawable/border"
-            android:text="Ауыл квотасы" />
-
         <Button
             android:id="@+id/calcBtn"
             android:layout_width="match_parent"

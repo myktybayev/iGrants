@@ -29,6 +29,16 @@ public class Univer implements Serializable {
         this.professions = professions;
     }
 
+    public Univer(String univerId,      String univerImage,     String univerName,
+                  String univerPhone,   String univerLocation,  String univerCode) {
+        this.univerId = univerId;
+        this.univerImage = univerImage;
+        this.univerName = univerName;
+        this.univerPhone = univerPhone;
+        this.univerLocation = univerLocation;
+        this.univerCode = univerCode;
+    }
+
     public String getProfessions() {
         return professions;
     }

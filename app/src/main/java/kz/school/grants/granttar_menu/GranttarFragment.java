@@ -2,7 +2,6 @@ package kz.school.grants.granttar_menu;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,9 +19,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
 
 import kz.school.grants.R;
-import kz.school.grants.granttar_menu.activities.SpecListActivity;
+import kz.school.grants.granttar_menu.activities.AtauliSpecListActivity;
+import kz.school.grants.granttar_menu.activities.SerpinSpecListActivity;
 import kz.school.grants.granttar_menu.adapters.GrantAdapter;
-import kz.school.grants.spec_menu.activities.SpecialityActivity;
 import kz.school.grants.spec_menu.adapters.RecyclerItemClickListener;
 
 public class GranttarFragment extends Fragment implements View.OnClickListener {
@@ -77,14 +76,12 @@ public class GranttarFragment extends Fragment implements View.OnClickListener {
                     public void onItemClick(View view, final int pos) {
                         if(pos == 1){
 
-                            Intent intent = new Intent(getActivity(), SpecListActivity.class);
+                            Intent intent = new Intent(getActivity(), AtauliSpecListActivity.class);
+                            startActivity(intent);
 
-//                            Bundle bundle = new Bundle();
-//
-//                            Log.i("SpecFragment", "subjectId: "+subjectPairList.get(pos).getId());
-//                            bundle.putString("subjectId", subjectPairList.get(pos).getId());
-//                            intent.putExtras(bundle);
+                        }else if(pos == 3){
 
+                            Intent intent = new Intent(getActivity(), SerpinSpecListActivity.class);
                             startActivity(intent);
                         }
                     }

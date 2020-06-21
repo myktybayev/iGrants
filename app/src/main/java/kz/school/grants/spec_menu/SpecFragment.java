@@ -432,7 +432,6 @@ public class SpecFragment extends Fragment implements View.OnClickListener {
 
                                 }
 
-                                HashMap<String, GrantCounts> entBalldari = blocksHashMap.get(blockCode).getJalpiEnt();
 
                                 ContentValues grantsValues = new ContentValues();
                                 grantsValues.put(COLUMN_SUBJECTS_ID, subjectId);
@@ -443,6 +442,7 @@ public class SpecFragment extends Fragment implements View.OnClickListener {
                                 grantsValues.put(COLUMN_YEAR_19_20_KAZ_COUNT, Integer.parseInt("" + blocksHashMap.get(blockCode).getGrant19_20().get("kaz")));
                                 grantsValues.put(COLUMN_YEAR_19_20_RUS_COUNT, Integer.parseInt("" + blocksHashMap.get(blockCode).getGrant19_20().get("rus")));
 
+                                HashMap<String, GrantCounts> entBalldari = blocksHashMap.get(blockCode).getJalpiEnt();
                                 for (String entType : entBalldari.keySet()) {
                                     if (entType.equals("auilKaz")) {
                                         grantsValues.put(COLUMN_AUIL_KAZ_MAX_POINT, entBalldari.get(entType).getMax());

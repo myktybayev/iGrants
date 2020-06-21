@@ -115,21 +115,25 @@ public class SpecialityActivity extends AppCompatActivity implements View.OnClic
                     String blockTitle = storeDb.getStrFromColumn(cursor, COLUMN_BLOCK_TITLE);
                     String blockFull = blockCode + " - " + blockTitle;
 
-                    parent_title.add(blockFull);
+                    Log.i("SpecialityActivity", "blockCode: "+blockCode);
+
+                    if(blockCode.charAt(0) == 'B') {
+                        parent_title.add(blockFull);
 
 
-                    List<String> child = new ArrayList<>();
-                    Cursor childCursor = storeDb.getCursorWhereEqualTo(sqdb, TABLE_PROFESSIONS, COLUMN_BLOCK_CODE, blockCode, COLUMN_PROF_CODE);
-                    if (((childCursor != null) && (childCursor.getCount() > 0))) {
-                        while (childCursor.moveToNext()) {
+                        List<String> child = new ArrayList<>();
+                        Cursor childCursor = storeDb.getCursorWhereEqualTo(sqdb, TABLE_PROFESSIONS, COLUMN_BLOCK_CODE, blockCode, COLUMN_PROF_CODE);
+                        if (((childCursor != null) && (childCursor.getCount() > 0))) {
+                            while (childCursor.moveToNext()) {
 
-                            String profCode = storeDb.getStrFromColumn(childCursor, COLUMN_PROF_CODE);
-                            String profTitle = storeDb.getStrFromColumn(childCursor, COLUMN_PROF_TITLE);
-                            child.add(profCode+" - "+profTitle);
+                                String profCode = storeDb.getStrFromColumn(childCursor, COLUMN_PROF_CODE);
+                                String profTitle = storeDb.getStrFromColumn(childCursor, COLUMN_PROF_TITLE);
+                                child.add(profCode + " - " + profTitle);
+                            }
                         }
-                    }
 
-                    child_title.put(blockFull, child);
+                        child_title.put(blockFull, child);
+                    }
                 }
             }
         }

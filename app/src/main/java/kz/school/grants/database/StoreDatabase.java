@@ -14,7 +14,7 @@ import kz.school.grants.spec_menu.models.SubjectPair;
 public class StoreDatabase extends SQLiteOpenHelper {
 
     public static final String DATABASE_NAME = "igrants.db";
-    private static final int DATABASE_VERSION = 17;
+    private static final int DATABASE_VERSION = 20;
 
     public static final String TABLE_PROFILE_SUBJECTS = "profile_subjects";
     public static final String TABLE_BLOCKS = "blocks";
@@ -22,6 +22,11 @@ public class StoreDatabase extends SQLiteOpenHelper {
     public static final String TABLE_GRANTS = "grants";
     public static final String TABLE_ADVICE_HISTORY = "advice_history";
     public static final String TABLE_UNIVER_LIST = "univer_list";
+    public static final String TABLE_ATAULI_SPECS = "atauli_specs";
+    public static final String TABLE_ATAULI_GRANTS = "atauli_grants";
+
+    public static final String TABLE_SERPIN_SPECS = "serpin_specs";
+    public static final String TABLE_SERPIN_GRANTS = "serpin_grants";
     public static final String TABLE_VER = "versions";
 
     // TABLE_PROFILE_SUBJECTS columns
@@ -78,9 +83,17 @@ public class StoreDatabase extends SQLiteOpenHelper {
     public static final String COLUMN_UNIVER_CODE = "univer_code";
     public static final String COLUMN_PROFESSIONS_LIST = "professions_list";
 
+    //TABLE_ATAULI_GRANT_LIST columns
+    public static final String COLUMN_SPEC_CODE = "spec_code";
+    public static final String COLUMN_SPEC_NAME = "spec_name";
+    public static final String COLUMN_SPEC_SUBJECTS_PAIR = "spec_subjects_pair";
+    public static final String COLUMN_GRANT_CODE = "spec_grant_code";
+
     //TABLE_VER columns
     public static final String COLUMN_SUBJECT_VER = "subject_ver";
     public static final String COLUMN_UNIVER_LIST_VER = "univer_list_ver";
+    public static final String COLUMN_ATAULI_GRANTS_LIST_VER = "atauli_grant_list_ver";
+    public static final String COLUMN_SERPIN_VER = "serpin_ver";
     Context context;
 
     public StoreDatabase(Context context) {
@@ -106,6 +119,47 @@ public class StoreDatabase extends SQLiteOpenHelper {
                 COLUMN_SUBJECTS_PAIR + " TEXT , " +
                 COLUMN_PROF_CODE + " TEXT , " +
                 COLUMN_PROF_TITLE + " TEXT)");
+
+        db.execSQL("CREATE TABLE " + TABLE_ATAULI_SPECS + "(" +
+                COLUMN_SPEC_CODE + " TEXT , " +
+                COLUMN_SPEC_NAME + " TEXT , " +
+                COLUMN_SPEC_SUBJECTS_PAIR + " TEXT , " +
+                COLUMN_GRANT_CODE + " TEXT)");
+
+        db.execSQL("CREATE TABLE " + TABLE_ATAULI_GRANTS + "(" +
+                COLUMN_SPEC_CODE + " TEXT, " +
+                COLUMN_UNIVER_CODE + " TEXT , " +
+                COLUMN_YEAR_18_19_KAZ_COUNT + " INTEGER , " +
+                COLUMN_YEAR_18_19_RUS_COUNT + " INTEGER , " +
+                COLUMN_YEAR_19_20_KAZ_COUNT + " INTEGER , " +
+                COLUMN_YEAR_19_20_RUS_COUNT + " INTEGER , " +
+                COLUMN_AUIL_KAZ_MAX_POINT + " INTEGER , " +
+                COLUMN_AUIL_KAZ_MIN_POINT + " INTEGER , " +
+                COLUMN_AUIL_KAZ_AVE_POINT + " INTEGER , " +
+                COLUMN_AUIL_RUS_MAX_POINT + " INTEGER , " +
+                COLUMN_AUIL_RUS_MIN_POINT + " INTEGER , " +
+                COLUMN_AUIL_RUS_AVE_POINT + " INTEGER , " +
+                COLUMN_KAZ_MAX_POINT + " INTEGER , " +
+                COLUMN_KAZ_MIN_POINT + " INTEGER , " +
+                COLUMN_KAZ_AVE_POINT + " INTEGER , " +
+                COLUMN_RUS_MAX_POINT + " INTEGER , " +
+                COLUMN_RUS_MIN_POINT + " INTEGER , " +
+                COLUMN_RUS_AVE_POINT + " INTEGER)");
+
+        db.execSQL("CREATE TABLE " + TABLE_SERPIN_SPECS + "(" +
+                COLUMN_SPEC_CODE + " TEXT , " +
+                COLUMN_SPEC_NAME + " TEXT , " +
+                COLUMN_SPEC_SUBJECTS_PAIR + " TEXT , " +
+                COLUMN_GRANT_CODE + " TEXT)");
+
+        db.execSQL("CREATE TABLE " + TABLE_SERPIN_GRANTS + "(" +
+                COLUMN_SPEC_CODE + " TEXT, " +
+                COLUMN_UNIVER_CODE + " TEXT , " +
+                COLUMN_YEAR_18_19_KAZ_COUNT + " INTEGER , " +
+                COLUMN_YEAR_19_20_KAZ_COUNT + " INTEGER , " +
+                COLUMN_KAZ_MAX_POINT + " INTEGER , " +
+                COLUMN_KAZ_MIN_POINT + " INTEGER , " +
+                COLUMN_KAZ_AVE_POINT + " INTEGER)");
 
         db.execSQL("CREATE TABLE " + TABLE_GRANTS + "(" +
                 COLUMN_SUBJECTS_ID + " TEXT, " +
@@ -146,6 +200,8 @@ public class StoreDatabase extends SQLiteOpenHelper {
 
         db.execSQL("CREATE TABLE " + TABLE_VER + "(" +
                 COLUMN_UNIVER_LIST_VER + " TEXT , " +
+                COLUMN_ATAULI_GRANTS_LIST_VER + " TEXT , " +
+                COLUMN_SERPIN_VER + " TEXT , " +
                 COLUMN_SUBJECT_VER + " TEXT)");
 
         addVersions(db);
@@ -159,6 +215,10 @@ public class StoreDatabase extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_GRANTS);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_ADVICE_HISTORY);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_UNIVER_LIST);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_ATAULI_SPECS);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_ATAULI_GRANTS);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_SERPIN_SPECS);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_SERPIN_GRANTS);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_VER);
 
         onCreate(db);
@@ -181,7 +241,16 @@ public class StoreDatabase extends SQLiteOpenHelper {
 
     public void cleanUnivers(SQLiteDatabase db) {
         db.execSQL("delete from " + TABLE_UNIVER_LIST);
+    }
 
+    public void cleanGrants(SQLiteDatabase db) {
+        db.execSQL("delete from " + TABLE_ATAULI_SPECS);
+        db.execSQL("delete from " + TABLE_ATAULI_GRANTS);
+    }
+
+    public void cleanSerpin(SQLiteDatabase db) {
+        db.execSQL("delete from " + TABLE_SERPIN_SPECS);
+        db.execSQL("delete from " + TABLE_SERPIN_GRANTS);
     }
 
     public Cursor getCursorWhereGreaterThan(SQLiteDatabase db, String tableName, String columnName, String greaterValue, String orderColumn) {
@@ -224,6 +293,8 @@ public class StoreDatabase extends SQLiteOpenHelper {
         ContentValues versionValues = new ContentValues();
         versionValues.put(COLUMN_SUBJECT_VER, "0");
         versionValues.put(COLUMN_UNIVER_LIST_VER, "0");
+        versionValues.put(COLUMN_ATAULI_GRANTS_LIST_VER, "0");
+        versionValues.put(COLUMN_SERPIN_VER, "0");
 
         db.insert(TABLE_VER, null, versionValues);
     }

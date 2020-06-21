@@ -97,9 +97,6 @@ public class ProfessionsActivity extends AppCompatActivity implements View.OnCli
 
         addExpandableListeners();
         univerPhone.setOnClickListener(this);
-
-
-
     }
 
     public void initBundle(Bundle bundle) {
@@ -134,13 +131,20 @@ public class ProfessionsActivity extends AppCompatActivity implements View.OnCli
                         }
                     }
                     for (String subPair : profParents.keySet()) {
-                        Log.i("ProfessionActivity", "subPair: " + subPair);
                         parent_title.add(subPair);
 
                         List<String> child = new ArrayList<>();
                         for (Profession profession : profList) {
                             if (profession.getSubjectPair().equals(subPair)) {
-                                String pFull = profession.getProfCode() + " - " + profession.getProfTitle();
+                                String pFull;
+
+                                if(profession.getProfCode().charAt(0) != '5'){
+                                    String pCode = profession.getProfCode();
+                                    pFull = pCode.substring(1) + " - " + profession.getProfTitle();
+                                }else {
+                                    pFull = profession.getProfCode() + " - " + profession.getProfTitle();
+                                }
+
                                 child.add(pFull);
                                 profHashMap.put(pFull, profession);
                             }

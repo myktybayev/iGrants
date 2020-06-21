@@ -1,42 +1,35 @@
-package kz.school.grants.spec_menu.activities;
+package kz.school.grants.granttar_menu.activities;
 
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RadioButton;
-import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import android.widget.Toast;
-import android.widget.Toolbar;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityOptionsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
-import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import kz.school.grants.R;
 import kz.school.grants.database.StoreDatabase;
+import kz.school.grants.granttar_menu.adapters.AtauliBallEsepteuAdapter;
+import kz.school.grants.granttar_menu.models.OneBallEseptuUniver;
+import kz.school.grants.spec_menu.activities.SpecBarUniverlerActivity;
 import kz.school.grants.spec_menu.adapters.BallEsepteuAdapter;
 import kz.school.grants.spec_menu.adapters.RecyclerItemClickListener;
-import kz.school.grants.spec_menu.adapters.SubjectPairAdapter;
 import kz.school.grants.spec_menu.models.OneSpec;
-import kz.school.grants.univer_menu.activities.ProfessionsActivity;
+import kz.school.grants.univer_menu.models.Univer;
 
 import static kz.school.grants.database.StoreDatabase.COLUMN_AUIL_KAZ_MAX_POINT;
 import static kz.school.grants.database.StoreDatabase.COLUMN_AUIL_KAZ_MIN_POINT;
@@ -49,12 +42,20 @@ import static kz.school.grants.database.StoreDatabase.COLUMN_PROF_CODE;
 import static kz.school.grants.database.StoreDatabase.COLUMN_PROF_TITLE;
 import static kz.school.grants.database.StoreDatabase.COLUMN_RUS_MAX_POINT;
 import static kz.school.grants.database.StoreDatabase.COLUMN_RUS_MIN_POINT;
+import static kz.school.grants.database.StoreDatabase.COLUMN_SPEC_CODE;
 import static kz.school.grants.database.StoreDatabase.COLUMN_SUBJECTS_ID;
-import static kz.school.grants.database.StoreDatabase.TABLE_BLOCKS;
+import static kz.school.grants.database.StoreDatabase.COLUMN_UNIVER_CODE;
+import static kz.school.grants.database.StoreDatabase.COLUMN_UNIVER_ID;
+import static kz.school.grants.database.StoreDatabase.COLUMN_UNIVER_IMAGE;
+import static kz.school.grants.database.StoreDatabase.COLUMN_UNIVER_LOCATION;
+import static kz.school.grants.database.StoreDatabase.COLUMN_UNIVER_NAME;
+import static kz.school.grants.database.StoreDatabase.COLUMN_UNIVER_PHON;
+import static kz.school.grants.database.StoreDatabase.TABLE_ATAULI_GRANTS;
 import static kz.school.grants.database.StoreDatabase.TABLE_GRANTS;
 import static kz.school.grants.database.StoreDatabase.TABLE_PROFESSIONS;
+import static kz.school.grants.database.StoreDatabase.TABLE_UNIVER_LIST;
 
-public class BallEsepteuActivity extends AppCompatActivity implements View.OnClickListener {
+public class AtauliBallEsepteuActivity extends AppCompatActivity implements View.OnClickListener {
 
     private StoreDatabase storeDb;
     private SQLiteDatabase sqdb;
@@ -62,8 +63,8 @@ public class BallEsepteuActivity extends AppCompatActivity implements View.OnCli
     int max = 140;
     int min = 50;
     LinearLayoutManager linearLayoutManager;
-    BallEsepteuAdapter ballEsepteuAdapter;
-    ArrayList<OneSpec> specList;
+    AtauliBallEsepteuAdapter ballEsepteuAdapter;
+    ArrayList<OneBallEseptuUniver> specList;
 
     @BindView(R.id.resultRecyclerView)
     RecyclerView resultRecyclerView;
@@ -82,8 +83,11 @@ public class BallEsepteuActivity extends AppCompatActivity implements View.OnCli
     @BindView(R.id.rusGroup)
     RadioButton rusGroup;
 
+    @BindView(R.id.univerNotFound)
+    TextView univerNotFound;
+
     Bundle bundle;
-    String subjectId;
+    String specCode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,10 +110,10 @@ public class BallEsepteuActivity extends AppCompatActivity implements View.OnCli
 
         bundle = getIntent().getExtras();
         if (bundle != null) {
-            subjectId = bundle.getString("subjectId");
+            specCode = bundle.getString("specCode");
         }
 
-        ballEsepteuAdapter = new BallEsepteuAdapter(this, specList);
+        ballEsepteuAdapter = new AtauliBallEsepteuAdapter(this, specList);
         resultRecyclerView.setAdapter(ballEsepteuAdapter);
         calcBtn.setOnClickListener(this);
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -134,17 +138,14 @@ public class BallEsepteuActivity extends AppCompatActivity implements View.OnCli
                 new RecyclerItemClickListener(this, resultRecyclerView, new RecyclerItemClickListener.OnItemClickListener() {
                     @Override
                     public void onItemClick(View view, final int pos) {
-                        String[] profSlit = specList.get(pos).getTitle().split("-");
-                        String profCode = profSlit[0].trim();
 
-//                        Toast.makeText(BallEsepteuActivity.this, profCode[0].trim()+"!!!", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(AtauliBallEsepteuActivity.this, AtauliGrantInfo.class);
 
-                        Intent grantInfo = new Intent(BallEsepteuActivity.this, SpecBarUniverlerActivity.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putString("univerCode", specList.get(pos).getUniver().getUniverCode());
+                        intent.putExtras(bundle);
 
-                        Bundle grantBundle = new Bundle();
-                        grantBundle.putString("profCode", profCode);
-                        grantInfo.putExtras(grantBundle);
-                        startActivity(grantInfo);
+                        startActivity(intent);
 
                     }
 
@@ -155,8 +156,6 @@ public class BallEsepteuActivity extends AppCompatActivity implements View.OnCli
                 })
         );
     }
-
-    //        Cursor cursor = storeDb.getCursorWhereEqualTo(sqdb, TABLE_GRANTS, ""+COLUMN_SUBJECTS_ID, ""+subjectId, ""+COLUMN_KAZ_MIN_POINT);
 
     @Override
     public void onClick(View view) {
@@ -185,28 +184,37 @@ public class BallEsepteuActivity extends AppCompatActivity implements View.OnCli
         }
 
         Cursor cursor = sqdb.rawQuery(
-                "SELECT * FROM " + TABLE_GRANTS + " where " + COLUMN_SUBJECTS_ID + " = ? AND " + columnSearchMin + " <= ?" + " ORDER BY " + columnSearchMin + " DESC ",
-                new String[]{subjectId, userScore});
+                "SELECT * FROM " + TABLE_ATAULI_GRANTS + " where " + COLUMN_SPEC_CODE + " = ? AND " + columnSearchMin + " <= ?" + " ORDER BY " + columnSearchMin + " DESC ",
+                new String[]{specCode, userScore});
 
-        if (((cursor != null) && (cursor.getCount() > 0))) {
+        if (((cursor != null) && (cursor.getCount() > 0) )) {
             while (cursor.moveToNext()) {
-                String blockCode = storeDb.getStrFromColumn(cursor, COLUMN_BLOCK_CODE);
+                String univerCode = storeDb.getStrFromColumn(cursor, COLUMN_UNIVER_CODE);
                 String maxScore = storeDb.getStrFromColumn(cursor, columnSearchMax);
                 String minScore = storeDb.getStrFromColumn(cursor, columnSearchMin);
-                Log.i("BallEsepteu", "blockCode: " + blockCode);
 
-                if (blockCode.charAt(0) == 'B' && Integer.parseInt(minScore) > 0) {
-                    Cursor cursorProf = storeDb.getCursorWhereEqualTo(sqdb, TABLE_PROFESSIONS, "" + COLUMN_BLOCK_CODE, "" + blockCode, "" + COLUMN_BLOCK_CODE);
+                if(Integer.parseInt(minScore) > 0) {
+                    Cursor cursorProf = storeDb.getCursorWhereEqualTo(sqdb, TABLE_UNIVER_LIST, "" + COLUMN_UNIVER_CODE, "" + univerCode, "" + COLUMN_UNIVER_CODE);
                     if (((cursorProf != null) && (cursorProf.getCount() > 0))) {
                         while (cursorProf.moveToNext()) {
-                            String profCode = storeDb.getStrFromColumn(cursorProf, COLUMN_PROF_CODE);
-                            String profTitle = storeDb.getStrFromColumn(cursorProf, COLUMN_PROF_TITLE);
 
-                            specList.add(new OneSpec(profCode + " - " + profTitle, maxScore, minScore));
+                            Univer univer = new Univer(
+                                    storeDb.getStrFromColumn(cursorProf, COLUMN_UNIVER_ID),
+                                    storeDb.getStrFromColumn(cursorProf, COLUMN_UNIVER_IMAGE),
+                                    storeDb.getStrFromColumn(cursorProf, COLUMN_UNIVER_NAME),
+                                    storeDb.getStrFromColumn(cursorProf, COLUMN_UNIVER_PHON),
+                                    storeDb.getStrFromColumn(cursorProf, COLUMN_UNIVER_LOCATION),
+                                    storeDb.getStrFromColumn(cursorProf, COLUMN_UNIVER_CODE));
+
+                            specList.add(new OneBallEseptuUniver(univer, maxScore, minScore));
                         }
                     }
+                }else{
+                    univerNotFound.setVisibility(View.VISIBLE);
                 }
             }
+        }else{
+            univerNotFound.setVisibility(View.VISIBLE);
         }
 
         ballEsepteuAdapter.notifyDataSetChanged();

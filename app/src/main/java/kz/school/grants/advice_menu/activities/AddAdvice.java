@@ -6,6 +6,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.DragEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
@@ -130,25 +132,25 @@ public class AddAdvice extends AppCompatActivity implements View.OnClickListener
         groupList = new ArrayList<>();
         univerList = new ArrayList<>();
 
-        groupAutoComplete1.setThreshold(1);
+        groupAutoComplete1.setThreshold(2);
         groupAutoComplete1.setAdapter(adapterGroup);
 
-        groupAutoComplete2.setThreshold(1);
+        groupAutoComplete2.setThreshold(2);
         groupAutoComplete2.setAdapter(adapterGroup);
 
-        groupAutoComplete3.setThreshold(1);
+        groupAutoComplete3.setThreshold(2);
         groupAutoComplete3.setAdapter(adapterGroup);
 
-        groupAutoComplete4.setThreshold(1);
+        groupAutoComplete4.setThreshold(2);
         groupAutoComplete4.setAdapter(adapterGroup);
 
-        univerAutoComplete.setThreshold(1);
+        univerAutoComplete.setThreshold(2);
         univerAutoComplete.setAdapter(adapter);
-        univerAutoComplete2.setThreshold(1);
+        univerAutoComplete2.setThreshold(2);
         univerAutoComplete2.setAdapter(adapter);
-        univerAutoComplete3.setThreshold(1);
+        univerAutoComplete3.setThreshold(2);
         univerAutoComplete3.setAdapter(adapter);
-        univerAutoComplete4.setThreshold(1);
+        univerAutoComplete4.setThreshold(2);
         univerAutoComplete4.setAdapter(adapter);
 
         groupAutoComplete1.setDropDownHeight(LinearLayout.LayoutParams.MATCH_PARENT);
@@ -170,6 +172,7 @@ public class AddAdvice extends AppCompatActivity implements View.OnClickListener
         addItemClickToHideKeyboard(univerAutoComplete2);
         addItemClickToHideKeyboard(univerAutoComplete3);
         addItemClickToHideKeyboard(univerAutoComplete4);
+
 
         btnUniverClear1.setOnClickListener(this);
         btnUniverClear2.setOnClickListener(this);
@@ -211,7 +214,6 @@ public class AddAdvice extends AppCompatActivity implements View.OnClickListener
             InputMethodManager in = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             assert in != null;
             in.hideSoftInputFromWindow(arg1.getApplicationWindowToken(), 0);
-
         });
     }
 

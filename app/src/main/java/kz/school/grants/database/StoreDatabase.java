@@ -14,7 +14,7 @@ import kz.school.grants.spec_menu.models.SubjectPair;
 public class StoreDatabase extends SQLiteOpenHelper {
 
     public static final String DATABASE_NAME = "igrants.db";
-    private static final int DATABASE_VERSION = 20;
+    private static final int DATABASE_VERSION = 21;
 
     public static final String TABLE_PROFILE_SUBJECTS = "profile_subjects";
     public static final String TABLE_BLOCKS = "blocks";
@@ -259,6 +259,10 @@ public class StoreDatabase extends SQLiteOpenHelper {
 
     public Cursor getCursorWhereEqualTo(SQLiteDatabase db, String tableName, String columnName, String equalValue, String orderColumn) {
         return db.rawQuery("SELECT * FROM " + tableName + " WHERE " + columnName + "=?" + " ORDER BY " + orderColumn, new String[]{equalValue});
+    }
+
+    public Cursor getCursorWhereEqualAndTo(SQLiteDatabase db, String tableName, String columnName, String columnName2, String equalValue, String equalValue2, String orderColumn) {
+        return db.rawQuery("SELECT * FROM " + tableName + " WHERE " + columnName + "=? AND "+columnName2+ "=?"+ " ORDER BY " + orderColumn, new String[]{equalValue, equalValue2});
     }
 
     public Cursor getCursorWhereLikeTo(SQLiteDatabase db, String tableName, String columnName, String equalValue, String orderColumn) {

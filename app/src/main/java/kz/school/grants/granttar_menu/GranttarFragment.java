@@ -63,11 +63,11 @@ public class GranttarFragment extends Fragment implements View.OnClickListener {
         newsRef = FirebaseDatabase.getInstance().getReference();
 
         mAuth = FirebaseAuth.getInstance();
-        fabBtn.setOnClickListener(this);
 
-        if (mAuth.getCurrentUser() != null) {
+        if (isAdmin()) {
             adminSigned = true;
             fabBtn.setVisibility(View.VISIBLE);
+            fabBtn.setOnClickListener(this);
         }
 
         myrecyclerview.addOnItemTouchListener(
@@ -110,6 +110,13 @@ public class GranttarFragment extends Fragment implements View.OnClickListener {
 //            }
 //        });
 
+    }
+
+    public boolean isAdmin() {
+        if (mAuth.getCurrentUser() != null) {
+            return mAuth.getCurrentUser().getEmail().contains("admin");
+        }
+        return false;
     }
 
     @Override

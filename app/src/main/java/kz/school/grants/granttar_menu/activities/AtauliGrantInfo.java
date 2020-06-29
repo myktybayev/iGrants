@@ -32,6 +32,7 @@ import static kz.school.grants.database.StoreDatabase.COLUMN_KAZ_MIN_POINT;
 import static kz.school.grants.database.StoreDatabase.COLUMN_RUS_AVE_POINT;
 import static kz.school.grants.database.StoreDatabase.COLUMN_RUS_MAX_POINT;
 import static kz.school.grants.database.StoreDatabase.COLUMN_RUS_MIN_POINT;
+import static kz.school.grants.database.StoreDatabase.COLUMN_SPEC_CODE;
 import static kz.school.grants.database.StoreDatabase.COLUMN_UNIVER_CODE;
 import static kz.school.grants.database.StoreDatabase.COLUMN_YEAR_18_19_KAZ_COUNT;
 import static kz.school.grants.database.StoreDatabase.COLUMN_YEAR_18_19_RUS_COUNT;
@@ -94,7 +95,7 @@ public class AtauliGrantInfo extends AppCompatActivity {
     @BindView(R.id.auilLayout)
     LinearLayout auilLayout;
 
-    String univerCode;
+    String univerCode, specCode;
     private StoreDatabase storeDb;
     private SQLiteDatabase sqdb;
 
@@ -116,10 +117,11 @@ public class AtauliGrantInfo extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             univerCode = bundle.getString("univerCode");
+            specCode = bundle.getString("specCode");
 
             Log.i("AtauliGrantInfo", "univerCode: "+univerCode);
 
-            Cursor cursor = storeDb.getCursorWhereEqualTo(sqdb, TABLE_ATAULI_GRANTS, "" + COLUMN_UNIVER_CODE, ""+univerCode, "" + COLUMN_UNIVER_CODE);
+            Cursor cursor = storeDb.getCursorWhereEqualAndTo(sqdb, TABLE_ATAULI_GRANTS, "" + COLUMN_UNIVER_CODE, ""+ COLUMN_SPEC_CODE, ""+univerCode, ""+ specCode, "" + COLUMN_KAZ_MIN_POINT);
             Log.i("AtauliGrantInfo", "cursor: "+cursor.getCount());
 
             if (((cursor != null) && (cursor.getCount() > 0))) {

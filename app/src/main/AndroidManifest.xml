@@ -52,18 +52,32 @@
             android:theme="@style/AppTheme.ActionBar" />
 
         <activity
-            android:name=".granttar_menu.activities.GrantsUniversActivity"
+            android:name=".granttar_menu.activities.SerpinGrantsUniversActivity"
+            android:parentActivityName=".granttar_menu.activities.AtauliSpecListActivity"
+            android:theme="@style/AppTheme.ActionBar" />
+
+        <activity
+            android:name=".granttar_menu.activities.AtauliGrantsUniversActivity"
             android:parentActivityName=".granttar_menu.activities.AtauliSpecListActivity"
             android:theme="@style/AppTheme.ActionBar" />
 
         <activity
             android:name=".granttar_menu.activities.AtauliBallEsepteuActivity"
-            android:parentActivityName=".granttar_menu.activities.GrantsUniversActivity"
             android:theme="@style/AppTheme.ActionBar" />
 
         <activity
+            android:name=".granttar_menu.activities.add_grants.AddAtauliGrant"
+            android:parentActivityName=".granttar_menu.activities.SerpinGrantsUniversActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity
+            android:name=".granttar_menu.activities.add_grants.AddSerpinGrant"
+            android:parentActivityName=".granttar_menu.activities.SerpinGrantsUniversActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity
             android:name=".granttar_menu.activities.SerpinBallEsepteuActivity"
-            android:parentActivityName=".granttar_menu.activities.GrantsUniversActivity"
+            android:parentActivityName=".granttar_menu.activities.SerpinGrantsUniversActivity"
             android:theme="@style/AppTheme.ActionBar" />
 
         <activity

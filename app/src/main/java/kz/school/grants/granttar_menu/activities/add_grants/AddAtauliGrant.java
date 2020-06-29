@@ -1,6 +1,6 @@
-package kz.school.grants.granttar_menu.activities;
+package kz.school.grants.granttar_menu.activities.add_grants;
 
-import android.database.Cursor;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.text.Editable;
@@ -32,10 +32,6 @@ import butterknife.ButterKnife;
 import kz.school.grants.R;
 import kz.school.grants.database.StoreDatabase;
 
-import static kz.school.grants.database.StoreDatabase.COLUMN_PROF_COUNT;
-import static kz.school.grants.database.StoreDatabase.COLUMN_SUBJECTS_ID;
-import static kz.school.grants.database.StoreDatabase.TABLE_PROFILE_SUBJECTS;
-
 public class AddAtauliGrant extends AppCompatActivity implements View.OnClickListener {
     Toolbar toolbar;
     ProgressBar progressBar;
@@ -46,31 +42,8 @@ public class AddAtauliGrant extends AppCompatActivity implements View.OnClickLis
     LinearLayout auilKvotasiLayout;
     private DatabaseReference mDatabaseBlockRef, mDatabaseRef;
 
-    @BindView(R.id.blockCodeEd)
-    EditText blockCodeEd;
-    @BindView(R.id.blockTitleEd)
-    EditText blockTitleEd;
-
-    @BindView(R.id.specCode1)
-    EditText specCode1;
-    @BindView(R.id.specName1)
-    EditText specName1;
-    @BindView(R.id.specCode2)
-    EditText specCode2;
-    @BindView(R.id.specName2)
-    EditText specName2;
-    @BindView(R.id.specCode3)
-    EditText specCode3;
-    @BindView(R.id.specName3)
-    EditText specName3;
-    @BindView(R.id.specCode4)
-    EditText specCode4;
-    @BindView(R.id.specName4)
-    EditText specName4;
-    @BindView(R.id.specCode5)
-    EditText specCode5;
-    @BindView(R.id.specName5)
-    EditText specName5;
+    @BindView(R.id.univerCode)
+    EditText univerCode;
 
     @BindView(R.id.y18_19_total_tx)
     TextView y18_19_total_tx;
@@ -117,7 +90,7 @@ public class AddAtauliGrant extends AppCompatActivity implements View.OnClickLis
     String fillErrorStr;
     HashMap<String, String> professionHashMap;
     Bundle bundle;
-    String subjectId;
+    String specCode;
     int professionsCount = 0;
     private StoreDatabase storeDb;
     private SQLiteDatabase sqdb;
@@ -125,12 +98,11 @@ public class AddAtauliGrant extends AppCompatActivity implements View.OnClickLis
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.add_block);
+        setContentView(R.layout.add_atauli_grant);
         ButterKnife.bind(this);
 
         initViews();
         initIncreaseVersion();
-
     }
 
     public void initViews() {
@@ -138,7 +110,7 @@ public class AddAtauliGrant extends AppCompatActivity implements View.OnClickLis
         mDatabaseBlockRef = FirebaseDatabase.getInstance().getReference();
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle(getString(R.string.add_subjects));
+        getSupportActionBar().setTitle("Атаулы грант енгізу");
 
         submitBtn = findViewById(R.id.submitBtn);
         progressBar = findViewById(R.id.progressBar);
@@ -152,16 +124,10 @@ public class AddAtauliGrant extends AppCompatActivity implements View.OnClickLis
 
         bundle = getIntent().getExtras();
         if (bundle != null) {
-            subjectId = bundle.getString("subjectId");
-
-            Cursor cursor = storeDb.getCursorWhereEqualTo(sqdb, TABLE_PROFILE_SUBJECTS, "" + COLUMN_SUBJECTS_ID, "" + subjectId, "" + COLUMN_SUBJECTS_ID);
-            if (((cursor != null) && (cursor.getCount() > 0))) {
-                cursor.moveToFirst();
-                professionsCount = cursor.getInt(cursor.getColumnIndex(COLUMN_PROF_COUNT));
-            }
+            specCode = bundle.getString("specCode");
         }
 
-        mDatabaseBlockRef = mDatabaseBlockRef.child("profile_subjects").child(subjectId).child("blocks");
+        mDatabaseBlockRef = mDatabaseBlockRef.child("atauli_grant_list").child(specCode).child("univers");
         auilKvotasi.setOnCheckedChangeListener((compoundButton, b) -> {
             auilKvotasiChecked = b;
 
@@ -175,7 +141,6 @@ public class AddAtauliGrant extends AppCompatActivity implements View.OnClickLis
         addTotalCalc(y18_19_total_tx, y18_19_kaz_ed, y18_19_rus_ed);
         addTotalCalc(y19_20_total_tx, y19_20kaz_ed, y19_20rus_ed);
 
-//        addTotalCalc(yTotal_tx, y18_19_total_ed, y19_20_total_ed);
         addTotalDiff(yKaz_tx, y18_19_kaz_ed, y19_20kaz_ed);
         addTotalDiff(yRus_tx, y18_19_rus_ed, y19_20rus_ed);
 
@@ -242,8 +207,7 @@ public class AddAtauliGrant extends AppCompatActivity implements View.OnClickLis
                 progressBar.setVisibility(View.VISIBLE);
 
                 if (checkEmptyEditTexts(
-                        blockCodeEd, blockTitleEd,
-                        specCode1, specName1,
+                        univerCode,
                         y18_19_kaz_ed, y18_19_rus_ed, y19_20kaz_ed, y19_20rus_ed,
                         kaz_max_ed, kaz_min_ed, kaz_ave_ed, rus_max_ed, rus_min_ed, rus_ave_ed)) {
 
@@ -253,6 +217,7 @@ public class AddAtauliGrant extends AppCompatActivity implements View.OnClickLis
                     return;
                 }
 
+                String univerCodeStr = univerCode.getText().toString();
 
                 HashMap<String, Long> grant18_19 = new HashMap<>();
                 grant18_19.put("kaz", toLong(y18_19_kaz_ed));
@@ -295,40 +260,24 @@ public class AddAtauliGrant extends AppCompatActivity implements View.OnClickLis
                     auilRus.put("max", toLong(auil_rus_max_ed));
                     auilRus.put("min", toLong(auil_rus_min_ed));
 
-                    mDatabaseBlockRef.child(toStr(blockCodeEd)).child("jalpiEnt").child("auilKaz").setValue(auilKaz);
-                    mDatabaseBlockRef.child(toStr(blockCodeEd)).child("jalpiEnt").child("auilRus").setValue(auilRus);
+                    mDatabaseBlockRef.child(univerCodeStr).child("jalpiEnt").child("auilKaz").setValue(auilKaz);
+                    mDatabaseBlockRef.child(univerCodeStr).child("jalpiEnt").child("auilRus").setValue(auilRus);
 
                 }
 
-                professionHashMap.put(toStr(specCode1), toStr(specName1));
-
-                if (!checkEmpty(specCode2) && !checkEmpty(specName2))
-                    professionHashMap.put(toStr(specCode2), toStr(specName2));
-
-                if (!checkEmpty(specCode3) && !checkEmpty(specName3))
-                    professionHashMap.put(toStr(specCode3), toStr(specName3));
-
-                if (!checkEmpty(specCode4) && !checkEmpty(specName4))
-                    professionHashMap.put(toStr(specCode4), toStr(specName4));
-
-                if (!checkEmpty(specCode5) && !checkEmpty(specName5))
-                    professionHashMap.put(toStr(specCode5), toStr(specName5));
 
 
-                mDatabaseBlockRef.child(toStr(blockCodeEd)).child("grant18_19").setValue(grant18_19);
-                mDatabaseBlockRef.child(toStr(blockCodeEd)).child("grant19_20").setValue(grant19_20);
+                mDatabaseBlockRef.child(univerCodeStr).child("grant18_19").setValue(grant18_19);
+                mDatabaseBlockRef.child(univerCodeStr).child("grant19_20").setValue(grant19_20);
+                mDatabaseBlockRef.child(univerCodeStr).child("jalpiEnt").child("kaz").setValue(kazEnt);
+                mDatabaseBlockRef.child(univerCodeStr).child("jalpiEnt").child("rus").setValue(rusEnt);
 
-                mDatabaseBlockRef.child(toStr(blockCodeEd)).child("jalpiEnt").child("kaz").setValue(kazEnt);
-                mDatabaseBlockRef.child(toStr(blockCodeEd)).child("jalpiEnt").child("rus").setValue(rusEnt);
-
-                int profHashSize = professionHashMap.size();
-
-                mDatabaseRef.child("profile_subjects").child(subjectId).child("count").setValue((professionsCount+profHashSize));
-
-                mDatabaseBlockRef.child(toStr(blockCodeEd)).child("title").setValue(toStr(blockTitleEd));
-                mDatabaseBlockRef.child(toStr(blockCodeEd)).child("professions").setValue(professionHashMap).addOnCompleteListener(task -> {
-                    Toast.makeText(AddAtauliGrant.this, "Block added", Toast.LENGTH_SHORT).show();
-                    mDatabaseRef.child("subjects_ver").setValue(getIncreasedVersion());
+                mDatabaseBlockRef.child(univerCodeStr).child("univerCode").setValue(univerCodeStr).addOnCompleteListener(task -> {
+                    Toast.makeText(AddAtauliGrant.this, "Атаулы университет енгізілді", Toast.LENGTH_SHORT).show();
+                    mDatabaseRef.child("atauli_grant_list_ver").setValue(getIncreasedVersion());
+                    Intent intent = getIntent();
+                    intent.putExtra("univerCode", univerCodeStr);
+                    setResult(RESULT_OK, intent);
                     finish();
                 });
 
@@ -379,7 +328,7 @@ public class AddAtauliGrant extends AppCompatActivity implements View.OnClickLis
     }
 
     public void initIncreaseVersion() {
-        mDatabaseRef.child("subjects_ver").addValueEventListener(new ValueEventListener() {
+        mDatabaseRef.child("atauli_grant_list_ver").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {

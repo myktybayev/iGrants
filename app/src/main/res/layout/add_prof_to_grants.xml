@@ -55,23 +55,15 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
                 android:fontFamily="@font/quick"
-                android:text="@string/choose_profession" />
-
-            <Spinner
-                android:id="@+id/spinnerProfs"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:drawSelectorOnTop="true"
-                android:theme="@style/spinner_style"/>
+                android:text="@string/choose_bagdarlama" />
 
             <AutoCompleteTextView
-                android:id="@+id/groupProfs"
+                android:id="@+id/groupProfsAutoComplete"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:hint="Іздеу"
                 android:textSize="14sp" />
 
         </LinearLayout>

@@ -142,6 +142,8 @@ public class AtauliBallEsepteuActivity extends AppCompatActivity implements View
                         Intent intent = new Intent(AtauliBallEsepteuActivity.this, AtauliGrantInfo.class);
 
                         Bundle bundle = new Bundle();
+
+                        bundle.putString("specCode", specCode);
                         bundle.putString("univerCode", specList.get(pos).getUniver().getUniverCode());
                         intent.putExtras(bundle);
 

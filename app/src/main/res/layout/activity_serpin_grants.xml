@@ -46,6 +46,6 @@
         android:clickable="true"
         android:foreground="?android:selectableItemBackground"
         android:src="@drawable/ic_add"
-        android:visibility="visible" />
+        android:visibility="gone" />
 
 </RelativeLayout>

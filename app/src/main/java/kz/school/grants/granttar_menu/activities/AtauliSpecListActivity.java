@@ -11,8 +11,12 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -56,8 +60,6 @@ import static kz.school.grants.database.StoreDatabase.COLUMN_KAZ_AVE_POINT;
 import static kz.school.grants.database.StoreDatabase.COLUMN_KAZ_MAX_POINT;
 import static kz.school.grants.database.StoreDatabase.COLUMN_KAZ_MIN_POINT;
 import static kz.school.grants.database.StoreDatabase.COLUMN_PROFESSIONS_LIST;
-import static kz.school.grants.database.StoreDatabase.COLUMN_PROF_CODE;
-import static kz.school.grants.database.StoreDatabase.COLUMN_PROF_TITLE;
 import static kz.school.grants.database.StoreDatabase.COLUMN_RUS_AVE_POINT;
 import static kz.school.grants.database.StoreDatabase.COLUMN_RUS_MAX_POINT;
 import static kz.school.grants.database.StoreDatabase.COLUMN_RUS_MIN_POINT;
@@ -77,7 +79,6 @@ import static kz.school.grants.database.StoreDatabase.COLUMN_YEAR_19_20_KAZ_COUN
 import static kz.school.grants.database.StoreDatabase.COLUMN_YEAR_19_20_RUS_COUNT;
 import static kz.school.grants.database.StoreDatabase.TABLE_ATAULI_GRANTS;
 import static kz.school.grants.database.StoreDatabase.TABLE_ATAULI_SPECS;
-import static kz.school.grants.database.StoreDatabase.TABLE_PROFESSIONS;
 import static kz.school.grants.database.StoreDatabase.TABLE_PROFILE_SUBJECTS;
 import static kz.school.grants.database.StoreDatabase.TABLE_UNIVER_LIST;
 import static kz.school.grants.database.StoreDatabase.TABLE_VER;
@@ -98,16 +99,17 @@ public class AtauliSpecListActivity extends AppCompatActivity implements View.On
     private View progressLoading;
     private SearchView searchView;
     boolean univerList = false;
-    private ArrayList<String> lstProfs;
     private ArrayList<String> lstSubjectPair;
     Dialog addProfDialog;
-    Spinner spinnerProfs, spinnerSubjectPair;
+    Spinner spinnerSubjectPair;
     private StoreDatabase storeDb;
     private SQLiteDatabase sqdb;
     Button addProf;
     private DatabaseReference mDatabaseRef;
     String curVersion;
     TextView universNotFoundTxt;
+    AutoCompleteTextView groupProfsAutoComplete;
+    String subjectPair;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -149,6 +151,7 @@ public class AtauliSpecListActivity extends AppCompatActivity implements View.On
         if (isAdmin()) {
             adminSigned = true;
             fabBtn.setVisibility(View.VISIBLE);
+            fabBtn.setOnClickListener(this);
         }
 
         getGrantUniverList();
@@ -160,11 +163,11 @@ public class AtauliSpecListActivity extends AppCompatActivity implements View.On
                     @Override
                     public void onItemClick(View view, final int pos) {
 
-                        Intent intent = new Intent(AtauliSpecListActivity.this, GrantsUniversActivity.class);
+                        Intent intent = new Intent(AtauliSpecListActivity.this, AtauliGrantsUniversActivity.class);
 
                         Bundle bundle = new Bundle();
-                        bundle.putString("act", "atauli");
                         bundle.putString("specCode", lstSpecs.get(pos).getSpecCode());
+                        bundle.putString("specName", lstSpecs.get(pos).getSpecName());
                         intent.putExtras(bundle);
 
                         startActivity(intent);
@@ -191,10 +194,66 @@ public class AtauliSpecListActivity extends AppCompatActivity implements View.On
 
             case R.id.addProf:
 
+                String specCode = groupProfsAutoComplete.getText().toString().split("-")[0].trim();
+                String specName = groupProfsAutoComplete.getText().toString().split("-")[1].trim();
+                SpecItem specItem = new SpecItem(specCode, specName, subjectPair);
+                lstSpecs.add(specItem);
+                atauliSpecListAdapter.notifyDataSetChanged();
+
+                mDatabaseRef.child("atauli_grant_list").child(specCode).setValue(specItem).addOnCompleteListener(task -> {
+                    long inceradedVer = getIncreasedVersion();
+                    mDatabaseRef.child("atauli_grant_list_ver").setValue(inceradedVer);
+                    Toast.makeText(AtauliSpecListActivity.this, "Атаулы бағдарлама енгізілді"+inceradedVer, Toast.LENGTH_SHORT).show();
+
+                    groupProfsAutoComplete.setText("");
+                });
+
                 addProfDialog.dismiss();
                 break;
 
         }
+    }
+
+    public void loadProfessionToDialog() {
+        String[] groupsStore = getResources().getStringArray(R.array.blockList);
+        lstSubjectPair = new ArrayList<>();
+        addProfDialog = new Dialog(this);
+        addProfDialog.setContentView(R.layout.add_prof_to_grants);
+
+        groupProfsAutoComplete = addProfDialog.findViewById(R.id.groupProfsAutoComplete);
+        spinnerSubjectPair = addProfDialog.findViewById(R.id.spinnerSubjectPair);
+        addProf = addProfDialog.findViewById(R.id.addProf);
+
+        Cursor cursorSubjectPair = storeDb.getCursorAll(sqdb, TABLE_PROFILE_SUBJECTS);
+
+        if (((cursorSubjectPair != null) && (cursorSubjectPair.getCount() > 0))) {
+            while (cursorSubjectPair.moveToNext()) {
+                lstSubjectPair.add(storeDb.getStrFromColumn(cursorSubjectPair, COLUMN_SUBJECTS_PAIR));
+            }
+        }
+
+        groupProfsAutoComplete.setThreshold(2);
+        groupProfsAutoComplete.setDropDownHeight(LinearLayout.LayoutParams.MATCH_PARENT);
+
+        addItemClickToHideKeyboard(groupProfsAutoComplete);
+
+        groupProfsAutoComplete.setAdapter(new ArrayAdapter<>(this, R.layout.item_subject_pair, groupsStore));
+        spinnerSubjectPair.setAdapter(new ArrayAdapter<>(this, R.layout.item_subject_pair, lstSubjectPair));
+        subjectPair = lstSubjectPair.get(0);
+
+        spinnerSubjectPair.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int pos, long l) {
+                subjectPair = adapterView.getItemAtPosition(pos).toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        addProf.setOnClickListener(this);
     }
 
     private void getGrantUniverList() {
@@ -268,22 +327,21 @@ public class AtauliSpecListActivity extends AppCompatActivity implements View.On
                         lstSpecs.add(specItem);
                         String grant_code = feed.getKey();
 
-                        Log.i("SpecListActivity","grant code: "+grant_code);
-
                         ContentValues profValues = new ContentValues();
-                        assert specItem != null;
+
                         profValues.put(COLUMN_SPEC_CODE, specItem.getSpecCode());
                         profValues.put(COLUMN_SPEC_NAME, specItem.getSpecName());
                         profValues.put(COLUMN_SPEC_SUBJECTS_PAIR, specItem.getSpecSubjectPair());
                         profValues.put(COLUMN_GRANT_CODE, grant_code);
 
+                        Log.i("AtauliSpecListActivity","SPEC_CODE: "+specItem.getSpecCode());
                         sqdb.insert(TABLE_ATAULI_SPECS, null, profValues);
 
                         HashMap<String, OneUniver> universHashMap = specItem.getUnivers();
                         if (universHashMap != null) {
                             for (String univerCode : universHashMap.keySet()) {
 
-                                Log.i("SpecListActivity","univerCode: "+universHashMap.get(univerCode).getUniverCode());
+                                Log.i("AtauliSpecListActivity","univerCode: "+universHashMap.get(univerCode).getUniverCode());
 
                                 ContentValues grantsValues = new ContentValues();
                                 grantsValues.put(COLUMN_SPEC_CODE, specItem.getSpecCode());
@@ -310,6 +368,7 @@ public class AtauliSpecListActivity extends AppCompatActivity implements View.On
                                         grantsValues.put(COLUMN_KAZ_MAX_POINT, entBalldari.get(entType).getMax());
                                         grantsValues.put(COLUMN_KAZ_MIN_POINT, entBalldari.get(entType).getMin());
                                         grantsValues.put(COLUMN_KAZ_AVE_POINT, entBalldari.get(entType).getAve());
+                                        Log.d("AtauliSpecListActivity", "kaz: "+entBalldari.get(entType).getMax());
 
                                     } else if (entType.equals("rus")) {
                                         grantsValues.put(COLUMN_RUS_MAX_POINT, entBalldari.get(entType).getMax());
@@ -376,36 +435,10 @@ public class AtauliSpecListActivity extends AppCompatActivity implements View.On
         return res.getString(0);
     }
 
-    public void loadProfessionToDialog() {
-        lstProfs = new ArrayList<>();
-        lstSubjectPair = new ArrayList<>();
-        addProfDialog = new Dialog(this);
-        addProfDialog.setContentView(R.layout.add_prof_to_grants);
-
-        spinnerProfs = addProfDialog.findViewById(R.id.spinnerProfs);
-        spinnerSubjectPair = addProfDialog.findViewById(R.id.spinnerSubjectPair);
-
-        addProf = addProfDialog.findViewById(R.id.addProf);
-
-        Cursor cursor = storeDb.getCursorAll(sqdb, TABLE_PROFESSIONS);
-
-        if (((cursor != null) && (cursor.getCount() > 0))) {
-            while (cursor.moveToNext()) {
-                lstProfs.add(storeDb.getStrFromColumn(cursor, COLUMN_PROF_CODE) + " - " + storeDb.getStrFromColumn(cursor, COLUMN_PROF_TITLE));
-            }
-        }
-
-        Cursor cursorSubjectPair = storeDb.getCursorAll(sqdb, TABLE_PROFILE_SUBJECTS);
-
-        if (((cursorSubjectPair != null) && (cursorSubjectPair.getCount() > 0))) {
-            while (cursorSubjectPair.moveToNext()) {
-                lstSubjectPair.add(storeDb.getStrFromColumn(cursorSubjectPair, COLUMN_SUBJECTS_PAIR));
-            }
-        }
-
-        spinnerProfs.setAdapter(new ArrayAdapter<>(this, R.layout.item_subject_pair, lstProfs));
-        spinnerSubjectPair.setAdapter(new ArrayAdapter<>(this, R.layout.item_subject_pair, lstSubjectPair));
-        addProf.setOnClickListener(this);
+    public long getIncreasedVersion() {
+        long ver = Long.parseLong(curVersion);
+        ver += 1;
+        return ver;
     }
 
     @Override
@@ -461,6 +494,13 @@ public class AtauliSpecListActivity extends AppCompatActivity implements View.On
             return Objects.requireNonNull(mAuth.getCurrentUser().getEmail()).contains("admin");
         }
         return false;
+    }
+
+    public void addItemClickToHideKeyboard(AutoCompleteTextView autoCompleteTextView) {
+        autoCompleteTextView.setOnItemClickListener((arg0, arg1, arg2, arg3) -> {
+            InputMethodManager in = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            in.hideSoftInputFromWindow(arg1.getApplicationWindowToken(), 0);
+        });
     }
 
     private boolean checkInternetConnection() {

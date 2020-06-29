@@ -98,40 +98,12 @@
                         style="@style/layout_style"
                         android:layout_height="match_parent">
 
-                        <ImageView style="@style/start_style" />
-
-                        <TextView
-                            android:id="@+id/y18_19_total_tx"
-                            style="@style/edit_style"
-                            android:text="0" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        style="@style/layout_style"
-                        android:layout_height="match_parent">
-
                         <TextView
                             style="@style/group_style"
                             android:text="KAZ" />
 
                         <EditText
                             android:id="@+id/y18_19_kaz_ed"
-                            style="@style/edit_style"
-                            android:inputType="number" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        style="@style/layout_style"
-                        android:layout_height="match_parent">
-
-                        <TextView
-                            style="@style/group_style"
-                            android:text="RUS" />
-
-                        <EditText
-                            android:id="@+id/y18_19_rus_ed"
                             style="@style/edit_style"
                             android:inputType="number" />
 
@@ -163,40 +135,12 @@
                         style="@style/layout_style"
                         android:layout_height="match_parent">
 
-                        <ImageView style="@style/start_style" />
-
-                        <TextView
-                            android:id="@+id/y19_20_total_tx"
-                            style="@style/number_style"
-                            android:text="0" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        style="@style/layout_style"
-                        android:layout_height="match_parent">
-
                         <TextView
                             style="@style/group_style"
                             android:text="KAZ" />
 
                         <EditText
                             android:id="@+id/y19_20kaz_ed"
-                            style="@style/number_style"
-                            android:inputType="number" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        style="@style/layout_style"
-                        android:layout_height="match_parent">
-
-                        <TextView
-                            style="@style/group_style"
-                            android:text="RUS" />
-
-                        <EditText
-                            android:id="@+id/y19_20rus_ed"
                             style="@style/number_style"
                             android:inputType="number" />
 
@@ -230,42 +174,12 @@
                         style="@style/layout_style"
                         android:layout_height="match_parent">
 
-                        <ImageView style="@style/start_style" />
-
-                        <TextView
-                            android:id="@+id/yTotal_tx"
-                            style="@style/number_style"
-                            android:text="0"
-                            android:textColor="@color/green" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        style="@style/layout_style"
-                        android:layout_height="match_parent">
-
                         <TextView
                             style="@style/group_style"
                             android:text="KAZ" />
 
                         <TextView
                             android:id="@+id/yKaz_tx"
-                            style="@style/number_style"
-                            android:text="0"
-                            android:textColor="@color/green" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        style="@style/layout_style"
-                        android:layout_height="match_parent">
-
-                        <TextView
-                            style="@style/group_style"
-                            android:text="RUS" />
-
-                        <TextView
-                            android:id="@+id/yRus_tx"
                             style="@style/number_style"
                             android:text="0"
                             android:textColor="@color/green" />
@@ -288,7 +202,7 @@
                     android:background="@drawable/border_green"
                     android:gravity="center"
                     android:padding="10dp"
-                    android:text="Жалпы конкурс \n (ЕНТ балл)"
+                    android:text="Жалпы конкурс \n (ЕНТ балл, Қазақ группа)"
                     android:textColor="@android:color/black"
                     android:textSize="18sp"
                     android:textStyle="bold" />
@@ -360,217 +274,6 @@
 
                     </LinearLayout>
 
-                    <LinearLayout
-                        style="@style/layout_style"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:background="@drawable/border_green"
-                            android:gravity="center"
-                            android:padding="10dp"
-                            android:text="Орыс группа"
-                            android:textColor="@android:color/black"
-                            android:textSize="18sp"
-                            android:textStyle="bold" />
-
-                        <LinearLayout style="@style/layout_style">
-
-                            <TextView
-                                style="@style/group_style"
-                                android:text="MAX" />
-
-                            <EditText
-                                android:id="@+id/rus_max_ed"
-                                style="@style/number_style"
-                                android:inputType="number" />
-
-                        </LinearLayout>
-
-                        <LinearLayout style="@style/layout_style">
-
-                            <TextView
-                                style="@style/group_style"
-                                android:text="MIN" />
-
-                            <EditText
-                                android:id="@+id/rus_min_ed"
-                                style="@style/number_style"
-                                android:inputType="number" />
-
-                        </LinearLayout>
-
-                        <LinearLayout style="@style/layout_style">
-
-                            <TextView
-                                style="@style/group_style"
-                                android:text="Орта" />
-
-                            <EditText
-                                android:id="@+id/rus_ave_ed"
-                                style="@style/number_style"
-                                android:inputType="number" />
-
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-                </LinearLayout>
-            </LinearLayout>
-
-            <CheckBox
-                android:id="@+id/auilKvotasi"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="Ауыл квотасы"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-
-            <LinearLayout
-                android:id="@+id/auilKvotasiLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:orientation="vertical"
-                android:visibility="gone">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:background="@drawable/border_orange"
-                    android:gravity="center"
-                    android:padding="10dp"
-                    android:text="Ауыл квотасы \n (ЕНТ балл)"
-                    android:textColor="@android:color/black"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_weight="1"
-                    android:background="@drawable/border_orange"
-                    android:orientation="horizontal">
-
-                    <LinearLayout
-                        style="@style/layout_style"
-                        android:background="@drawable/border_orange"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:background="@drawable/border_orange"
-                            android:gravity="center"
-                            android:padding="10dp"
-                            android:text="Қазақ группа"
-                            android:textColor="@android:color/black"
-                            android:textSize="18sp"
-                            android:textStyle="bold" />
-
-                        <LinearLayout style="@style/layout_style">
-
-                            <TextView
-                                style="@style/group_style"
-                                android:text="MAX" />
-
-                            <EditText
-                                android:id="@+id/auil_kaz_max_ed"
-                                style="@style/number_style"
-                                android:inputType="number" />
-
-                        </LinearLayout>
-
-                        <LinearLayout style="@style/layout_style">
-
-                            <TextView
-                                style="@style/group_style"
-                                android:text="MIN" />
-
-                            <EditText
-                                android:id="@+id/auil_kaz_min_ed"
-                                style="@style/number_style"
-                                android:inputType="number" />
-
-                        </LinearLayout>
-
-                        <LinearLayout style="@style/layout_style">
-
-                            <TextView
-                                style="@style/group_style"
-                                android:text="Орта" />
-
-                            <EditText
-                                android:id="@+id/auil_kaz_ave_ed"
-                                style="@style/number_style"
-                                android:inputType="number" />
-
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        style="@style/layout_style"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:background="@drawable/border_orange"
-                            android:gravity="center"
-                            android:padding="10dp"
-                            android:text="Орыс группа"
-                            android:textColor="@android:color/black"
-                            android:textSize="18sp"
-                            android:textStyle="bold" />
-
-                        <LinearLayout style="@style/layout_style">
-
-                            <TextView
-                                style="@style/group_style"
-                                android:text="MAX" />
-
-                            <EditText
-                                android:id="@+id/auil_rus_max_ed"
-                                style="@style/number_style"
-                                android:inputType="number" />
-
-                        </LinearLayout>
-
-                        <LinearLayout style="@style/layout_style">
-
-                            <TextView
-                                style="@style/group_style"
-                                android:text="MIN" />
-
-                            <EditText
-                                android:id="@+id/auil_rus_min_ed"
-                                style="@style/number_style"
-                                android:inputType="number" />
-
-                        </LinearLayout>
-
-                        <LinearLayout style="@style/layout_style">
-
-                            <TextView
-                                style="@style/group_style"
-                                android:text="Орта" />
-
-                            <EditText
-                                android:id="@+id/auil_rus_ave_ed"
-                                style="@style/number_style"
-                                android:inputType="number" />
-
-                        </LinearLayout>
-
-                    </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
 

@@ -1,6 +1,5 @@
-package kz.school.grants.univer_menu;
+package kz.school.grants.granttar_menu.activities;
 
-import android.app.Dialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
@@ -8,22 +7,15 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
-import androidx.core.app.ActivityOptionsCompat;
-import androidx.core.util.Pair;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -37,75 +29,68 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Objects;
 
 import kz.school.grants.R;
-import kz.school.grants.advice_menu.AdviceFragment;
-import kz.school.grants.advice_menu.activities.AdviceReport;
 import kz.school.grants.database.StoreDatabase;
+import kz.school.grants.granttar_menu.activities.add_grants.AddAtauliGrant;
+import kz.school.grants.granttar_menu.activities.add_grants.AddSerpinGrant;
+import kz.school.grants.granttar_menu.adapters.AtauliUniversAdapter;
 import kz.school.grants.spec_menu.adapters.RecyclerItemClickListener;
-import kz.school.grants.univer_menu.activities.ProfessionsActivity;
 import kz.school.grants.univer_menu.models.Univer;
 
 import static kz.school.grants.database.StoreDatabase.COLUMN_PROFESSIONS_LIST;
+import static kz.school.grants.database.StoreDatabase.COLUMN_SPEC_CODE;
 import static kz.school.grants.database.StoreDatabase.COLUMN_UNIVER_CODE;
 import static kz.school.grants.database.StoreDatabase.COLUMN_UNIVER_ID;
 import static kz.school.grants.database.StoreDatabase.COLUMN_UNIVER_IMAGE;
 import static kz.school.grants.database.StoreDatabase.COLUMN_UNIVER_LOCATION;
 import static kz.school.grants.database.StoreDatabase.COLUMN_UNIVER_NAME;
 import static kz.school.grants.database.StoreDatabase.COLUMN_UNIVER_PHON;
+import static kz.school.grants.database.StoreDatabase.TABLE_ATAULI_GRANTS;
+import static kz.school.grants.database.StoreDatabase.TABLE_SERPIN_GRANTS;
 import static kz.school.grants.database.StoreDatabase.TABLE_UNIVER_LIST;
 import static kz.school.grants.database.StoreDatabase.TABLE_VER;
 
-public class UniversFragment extends Fragment implements View.OnClickListener {
+public class SerpinGrantsUniversActivity extends AppCompatActivity implements View.OnClickListener {
     View v;
     private RecyclerView myRecyclerView;
     private ArrayList<Univer> lstUnivers;
     private ArrayList<Univer> lstUniversCopy;
-    UniversAdapter universAdapter;
+    AtauliUniversAdapter universAdapter;
     private FirebaseAuth mAuth;
     private FloatingActionButton fabBtn;
     private View progressLoading;
     private SearchView searchView;
-    Button ratingBtn;
     private DatabaseReference mDatabaseRef;
     private StoreDatabase storeDb;
     private SQLiteDatabase sqdb;
     String curVersion;
     HashMap<String, String> tempHashMap;
+    Bundle bundle;
+    Button calcBtn;
 
-
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        v = inflater.inflate(R.layout.fragment_univers, container, false);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_atauli_univers);
+        setTitle("GrantsUniversActivity");
         initViews();
-        checkInternetConnection();
-        checkVersion("univer_list_ver");
-
-        return v;
     }
 
     public void initViews() {
 
         lstUnivers = new ArrayList<>();
         tempHashMap = new HashMap<>();
-        progressLoading = v.findViewById(R.id.llProgressBar);
-        myRecyclerView = v.findViewById(R.id.home_recyclerview);
-        ratingBtn = v.findViewById(R.id.ratingBtn);
-        fabBtn = v.findViewById(R.id.fabBtn);
-        searchView = v.findViewById(R.id.searchView);
-        storeDb = new StoreDatabase(getActivity());
+        progressLoading = findViewById(R.id.llProgressBar);
+        myRecyclerView = findViewById(R.id.home_recyclerview);
+        fabBtn = findViewById(R.id.fabBtn);
+        searchView = findViewById(R.id.searchView);
+        calcBtn = findViewById(R.id.calcBtn);
+        storeDb = new StoreDatabase(this);
         sqdb = storeDb.getWritableDatabase();
 
-
-//        lstUnivers.add(new Univer("123", "url", "Университет имени Сулеймана Демиреля (УСД (СДУ))", "87571122334", "Алматы", "302"));
-//        lstUnivers.add(new Univer("123", "url", "Кызылординский гуманитарный университет (КызГУ)","87571122334", "Кызылорда", "304"));
-//        lstUnivers.add(new Univer("123", "url", "Центрально-Азиатский университет (ЦАУ)", "87571122334","Алматы", "096"));
-
-
-        universAdapter = new UniversAdapter(getActivity(), getContext(), lstUnivers);
-        myRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        universAdapter = new AtauliUniversAdapter(this, this, lstUnivers);
+        myRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         myRecyclerView.setAdapter(universAdapter);
         myRecyclerViewAddListeners();
 
@@ -113,21 +98,137 @@ public class UniversFragment extends Fragment implements View.OnClickListener {
 
         mAuth = FirebaseAuth.getInstance();
         fabBtn.setOnClickListener(this);
-        ratingBtn.setOnClickListener(this);
+        calcBtn.setOnClickListener(this);
+
+
+        bundle = getIntent().getExtras();
+        initBundle(bundle);
 
         if (isAdmin()) {
             fabBtn.setVisibility(View.VISIBLE);
         }
+
+        myRecyclerView.addOnItemTouchListener(
+                new RecyclerItemClickListener(this, myRecyclerView, new RecyclerItemClickListener.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(View view, final int pos) {
+                        Intent intent = new Intent(SerpinGrantsUniversActivity.this, SerpinGrantInfo.class);
+                        Bundle bundle = new Bundle();
+
+                        bundle.putString("specCode", specCode);
+                        bundle.putString("univerCode", lstUnivers.get(pos).getUniverCode());
+                        intent.putExtras(bundle);
+                        startActivity(intent);
+                    }
+
+                    @Override
+                    public void onLongItemClick(View view, int pos) {
+
+                    }
+                })
+        );
     }
 
-    public boolean isAdmin(){
-        if(mAuth.getCurrentUser() != null){
+    String specCode, specName;
+
+    public void initBundle(Bundle bundle) {
+        if (bundle != null) {
+            specCode = bundle.getString("specCode");
+            specName = bundle.getString("specName");
+
+            Cursor cursor = storeDb.getCursorWhereEqualTo(sqdb, TABLE_SERPIN_GRANTS, COLUMN_SPEC_CODE, specCode, COLUMN_SPEC_CODE);
+
+            if (((cursor != null) && (cursor.getCount() > 0))) {
+                while (cursor.moveToNext()) {
+
+                    String univerCode = storeDb.getStrFromColumn(cursor, COLUMN_UNIVER_CODE);
+                    Cursor childCursor = storeDb.getCursorWhereEqualTo(sqdb, TABLE_UNIVER_LIST, COLUMN_UNIVER_CODE, univerCode, COLUMN_UNIVER_CODE);
+                    if (((childCursor != null) && (childCursor.getCount() > 0))) {
+                        childCursor.moveToFirst();
+
+                        lstUnivers.add(new Univer(
+                                storeDb.getStrFromColumn(childCursor, COLUMN_UNIVER_ID),
+                                storeDb.getStrFromColumn(childCursor, COLUMN_UNIVER_IMAGE),
+                                storeDb.getStrFromColumn(childCursor, COLUMN_UNIVER_NAME),
+                                storeDb.getStrFromColumn(childCursor, COLUMN_UNIVER_PHON),
+                                storeDb.getStrFromColumn(childCursor, COLUMN_UNIVER_LOCATION),
+                                storeDb.getStrFromColumn(childCursor, COLUMN_UNIVER_CODE),
+                                storeDb.getStrFromColumn(childCursor, COLUMN_PROFESSIONS_LIST)
+                        ));
+                    }
+
+                    universAdapter.notifyDataSetChanged();
+                }
+
+            }
+        }
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.calcBtn:
+
+                Intent ballIntent = new Intent(SerpinGrantsUniversActivity.this, SerpinBallEsepteuActivity.class);
+
+                Bundle grantBundle = new Bundle();
+                grantBundle.putString("specCode", specCode);
+
+                ballIntent.putExtras(grantBundle);
+                startActivity(ballIntent);
+
+                break;
+
+            case R.id.fabBtn:
+                Intent addAtauliBlock = new Intent(SerpinGrantsUniversActivity.this, AddSerpinGrant.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("specCode", specCode);
+                addAtauliBlock.putExtras(bundle);
+
+                startActivityForResult(addAtauliBlock, 12);
+
+                break;
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        try {
+            super.onActivityResult(requestCode, resultCode, data);
+
+            if (requestCode == 12  && resultCode  == RESULT_OK) {
+                String univerCode = data.getStringExtra("univerCode");
+                Cursor childCursor = storeDb.getCursorWhereEqualTo(sqdb, TABLE_UNIVER_LIST, COLUMN_UNIVER_CODE, univerCode, COLUMN_UNIVER_CODE);
+                if (((childCursor != null) && (childCursor.getCount() > 0))) {
+                    childCursor.moveToFirst();
+
+                    lstUnivers.add(new Univer(
+                            storeDb.getStrFromColumn(childCursor, COLUMN_UNIVER_ID),
+                            storeDb.getStrFromColumn(childCursor, COLUMN_UNIVER_IMAGE),
+                            storeDb.getStrFromColumn(childCursor, COLUMN_UNIVER_NAME),
+                            storeDb.getStrFromColumn(childCursor, COLUMN_UNIVER_PHON),
+                            storeDb.getStrFromColumn(childCursor, COLUMN_UNIVER_LOCATION),
+                            storeDb.getStrFromColumn(childCursor, COLUMN_UNIVER_CODE),
+                            storeDb.getStrFromColumn(childCursor, COLUMN_PROFESSIONS_LIST)
+                    ));
+                }
+
+                universAdapter.notifyDataSetChanged();
+            }
+        } catch (Exception ex) {
+            Toast.makeText(SerpinGrantsUniversActivity.this, ex.toString(), Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
+    public boolean isAdmin() {
+        if (mAuth.getCurrentUser() != null) {
             return mAuth.getCurrentUser().getEmail().contains("admin");
         }
         return false;
     }
 
-    private void searchAddListener(){
+    private void searchAddListener() {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
@@ -142,66 +243,26 @@ public class UniversFragment extends Fragment implements View.OnClickListener {
         });
     }
 
-    private void myRecyclerViewAddListeners(){
+    private void myRecyclerViewAddListeners() {
 
         myRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
 
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                if (dy > 0 || dy < 0 && fabBtn.isShown())
-                    fabBtn.hide();
+                if (dy > 0 || dy < 0 && fabBtn.isShown()) fabBtn.hide();
+
+                if (dy > 0 || dy < 0 && calcBtn.isShown()) calcBtn.setVisibility(View.INVISIBLE);
             }
 
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                if (newState == RecyclerView.SCROLL_STATE_IDLE)
+                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
                     if(isAdmin()) fabBtn.show();
+                    calcBtn.setVisibility(View.VISIBLE);
+                }
                 super.onScrollStateChanged(recyclerView, newState);
             }
         });
-
-        /*
-        myRecyclerView.addOnItemTouchListener(
-                new RecyclerItemClickListener(getActivity(), myRecyclerView, new RecyclerItemClickListener.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(View view, final int pos) {
-
-//                        Intent univerCabinet = new Intent(getActivity(), ProfessionsActivity.class);
-//                        Bundle bundle = new Bundle();
-//                        bundle.putSerializable("univer", lstUnivers.get(pos));
-//                        univerCabinet.putExtras(bundle);
-//                        startActivity(univerCabinet);
-//
-//                        Intent intent = new Intent(getActivity(), ProfessionsActivity.class);
-//                        Pair<View, String> p1 = Pair.create((View)mObjectIV, "univerName");
-//                        Pair<View, String> p2 = Pair.create((View)mObjectNameTV, "univerLocation");
-//                        Pair<View, String> p2 = Pair.create((View)mObjectNameTV, "univerPhone");
-//                        ActivityOptionsCompat options = ActivityOptionsCompat.
-//                                makeSceneTransitionAnimation(getActivity(), p1, p2);
-//
-//                        startActivity(intent, options.toBundle());
-
-
-                    }
-
-                    @Override
-                    public void onLongItemClick(View view, int pos) {
-
-                    }
-                })
-        );
-        */
-    }
-
-    @Override
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.ratingBtn:
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://atameken.kz/kk/university_ratings?page=2"));
-                startActivity(browserIntent);
-                break;
-        }
-//        startActivity(new Intent(getActivity(), AddNews.class));
     }
 
     private void checkVersion(String versionName) {
@@ -218,7 +279,7 @@ public class UniversFragment extends Fragment implements View.OnClickListener {
                         fillUniversFromDB();
                     }
                 } else {
-                    Toast.makeText(getActivity(), "Can not find " + versionName, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SerpinGrantsUniversActivity.this, "Can not find " + versionName, Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -271,8 +332,6 @@ public class UniversFragment extends Fragment implements View.OnClickListener {
                         lstUnivers.add(univer);
 
                         ContentValues uniValues = new ContentValues();
-                        assert univer != null;
-
                         uniValues.put(COLUMN_UNIVER_ID, univer.getUniverId());
                         uniValues.put(COLUMN_UNIVER_IMAGE, univer.getUniverImage());
                         uniValues.put(COLUMN_UNIVER_NAME, univer.getUniverName());
@@ -286,7 +345,6 @@ public class UniversFragment extends Fragment implements View.OnClickListener {
                     }
 
                     lstUniversCopy = (ArrayList<Univer>) lstUnivers.clone();
-                    searchAddListener();
                     progressLoading.setVisibility(View.GONE);
                     universAdapter.notifyDataSetChanged();
                 }
@@ -315,7 +373,7 @@ public class UniversFragment extends Fragment implements View.OnClickListener {
 
     private boolean checkInternetConnection() {
         if (!isNetworkAvailable()) {
-            Toast.makeText(getActivity(), getString(R.string.check_inet), Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.check_inet), Toast.LENGTH_SHORT).show();
             return false;
         }
 
@@ -324,7 +382,7 @@ public class UniversFragment extends Fragment implements View.OnClickListener {
 
     private boolean isNetworkAvailable() {
         ConnectivityManager connectivityManager
-                = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }

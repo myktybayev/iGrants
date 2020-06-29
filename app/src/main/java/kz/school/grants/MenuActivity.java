@@ -110,13 +110,13 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
     public void onBackPressed() {
 
     }
-
-    public void addListenerToLogOut(){
+    
+    public void addListenerToLogOut() {
         mDatabaseRef.child("logOutAll").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                Log.i("MenuActivity", "addListenerToLogOut");
-                if (!isAdmin()) {
+                if (dataSnapshot.exists() && !isAdmin()) {
+                    Toast.makeText(MenuActivity.this, "Мұғалімдердің пароль өзгерді, жасаушыларға хабарласуыңызды сұраймыз!", Toast.LENGTH_LONG).show();
                     FirebaseAuth.getInstance().signOut();
                     startActivity(new Intent(MenuActivity.this, LoginByEmailPage.class));
                 }
@@ -129,8 +129,8 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
         });
     }
 
-    public boolean isAdmin(){
-        if(mAuth.getCurrentUser() != null){
+    public boolean isAdmin() {
+        if (mAuth.getCurrentUser() != null) {
             return mAuth.getCurrentUser().getEmail().contains("admin");
         }
         return false;

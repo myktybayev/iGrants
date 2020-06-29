@@ -32,6 +32,8 @@ import java.util.HashMap;
 
 import kz.school.grants.R;
 import kz.school.grants.database.StoreDatabase;
+import kz.school.grants.granttar_menu.activities.add_grants.AddAtauliGrant;
+import kz.school.grants.granttar_menu.activities.add_grants.AddSerpinGrant;
 import kz.school.grants.granttar_menu.adapters.AtauliUniversAdapter;
 import kz.school.grants.spec_menu.adapters.RecyclerItemClickListener;
 import kz.school.grants.univer_menu.models.Univer;
@@ -49,7 +51,7 @@ import static kz.school.grants.database.StoreDatabase.TABLE_SERPIN_GRANTS;
 import static kz.school.grants.database.StoreDatabase.TABLE_UNIVER_LIST;
 import static kz.school.grants.database.StoreDatabase.TABLE_VER;
 
-public class GrantsUniversActivity extends AppCompatActivity implements View.OnClickListener {
+public class AtauliGrantsUniversActivity extends AppCompatActivity implements View.OnClickListener {
     View v;
     private RecyclerView myRecyclerView;
     private ArrayList<Univer> lstUnivers;
@@ -71,7 +73,7 @@ public class GrantsUniversActivity extends AppCompatActivity implements View.OnC
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_atauli_univers);
-        setTitle("GrantsUniversActivity");
+        setTitle("AtauliGrantsUniversActivity");
         initViews();
     }
 
@@ -110,18 +112,10 @@ public class GrantsUniversActivity extends AppCompatActivity implements View.OnC
                 new RecyclerItemClickListener(this, myRecyclerView, new RecyclerItemClickListener.OnItemClickListener() {
                     @Override
                     public void onItemClick(View view, final int pos) {
-                        Class grantClass = AtauliGrantInfo.class;
 
-                        if(act.equals("atauli")) {
-                            grantClass = AtauliGrantInfo.class;
-
-                        }else if(act.equals("serpin")) {
-
-                            grantClass = SerpinGrantInfo.class;
-                        }
-
-                        Intent intent = new Intent(GrantsUniversActivity.this, grantClass);
+                        Intent intent = new Intent(AtauliGrantsUniversActivity.this, AtauliGrantInfo.class);
                         Bundle bundle = new Bundle();
+                        bundle.putString("specCode", specCode);
                         bundle.putString("univerCode", lstUnivers.get(pos).getUniverCode());
                         intent.putExtras(bundle);
                         startActivity(intent);
@@ -135,23 +129,14 @@ public class GrantsUniversActivity extends AppCompatActivity implements View.OnC
         );
     }
 
-    String specCode, act;
-    String tableName;
+    String specCode, specName;
 
     public void initBundle(Bundle bundle) {
         if (bundle != null) {
             specCode = bundle.getString("specCode");
-            act = bundle.getString("act");
-            assert act != null;
+            specName = bundle.getString("specName");
 
-            if(act.equals("atauli")) {
-                tableName = TABLE_ATAULI_GRANTS;
-
-            }else if(act.equals("serpin")) {
-                tableName = TABLE_SERPIN_GRANTS;
-            }
-
-            Cursor cursor = storeDb.getCursorWhereEqualTo(sqdb, tableName, COLUMN_SPEC_CODE, specCode, COLUMN_SPEC_CODE);
+            Cursor cursor = storeDb.getCursorWhereEqualTo(sqdb, TABLE_ATAULI_GRANTS, COLUMN_SPEC_CODE, specCode, COLUMN_SPEC_CODE);
 
             if (((cursor != null) && (cursor.getCount() > 0))) {
                 while (cursor.moveToNext()) {
@@ -183,16 +168,7 @@ public class GrantsUniversActivity extends AppCompatActivity implements View.OnC
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.calcBtn:
-                Class ballEsepteuClass = AtauliBallEsepteuActivity.class;
-
-                if(act.equals("atauli")) {
-                    ballEsepteuClass = AtauliBallEsepteuActivity.class;
-
-                }else if(act.equals("serpin")) {
-                    ballEsepteuClass = SerpinBallEsepteuActivity.class;
-                }
-
-                Intent ballIntent = new Intent(GrantsUniversActivity.this, ballEsepteuClass);
+                Intent ballIntent = new Intent(AtauliGrantsUniversActivity.this, AtauliBallEsepteuActivity.class);
 
                 Bundle grantBundle = new Bundle();
                 grantBundle.putString("specCode", specCode);
@@ -203,9 +179,45 @@ public class GrantsUniversActivity extends AppCompatActivity implements View.OnC
                 break;
 
             case R.id.fabBtn:
+                Intent addAtauliBlock = new Intent(AtauliGrantsUniversActivity.this, AddAtauliGrant.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("specCode", specCode);
+                addAtauliBlock.putExtras(bundle);
+
+                startActivityForResult(addAtauliBlock, 12);
 
                 break;
         }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        try {
+            super.onActivityResult(requestCode, resultCode, data);
+
+            if (requestCode == 12  && resultCode  == RESULT_OK) {
+                String univerCode = data.getStringExtra("univerCode");
+                Cursor childCursor = storeDb.getCursorWhereEqualTo(sqdb, TABLE_UNIVER_LIST, COLUMN_UNIVER_CODE, univerCode, COLUMN_UNIVER_CODE);
+                if (((childCursor != null) && (childCursor.getCount() > 0))) {
+                    childCursor.moveToFirst();
+
+                    lstUnivers.add(new Univer(
+                            storeDb.getStrFromColumn(childCursor, COLUMN_UNIVER_ID),
+                            storeDb.getStrFromColumn(childCursor, COLUMN_UNIVER_IMAGE),
+                            storeDb.getStrFromColumn(childCursor, COLUMN_UNIVER_NAME),
+                            storeDb.getStrFromColumn(childCursor, COLUMN_UNIVER_PHON),
+                            storeDb.getStrFromColumn(childCursor, COLUMN_UNIVER_LOCATION),
+                            storeDb.getStrFromColumn(childCursor, COLUMN_UNIVER_CODE),
+                            storeDb.getStrFromColumn(childCursor, COLUMN_PROFESSIONS_LIST)
+                    ));
+                }
+
+                universAdapter.notifyDataSetChanged();
+            }
+        } catch (Exception ex) {
+            Toast.makeText(AtauliGrantsUniversActivity.this, ex.toString(), Toast.LENGTH_SHORT).show();
+        }
+
     }
 
     public boolean isAdmin() {
@@ -244,14 +256,13 @@ public class GrantsUniversActivity extends AppCompatActivity implements View.OnC
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-                    fabBtn.show();
+                    if(isAdmin()) fabBtn.show();
                     calcBtn.setVisibility(View.VISIBLE);
                 }
                 super.onScrollStateChanged(recyclerView, newState);
             }
         });
     }
-
 
     private void checkVersion(String versionName) {
         mDatabaseRef.child(versionName).addValueEventListener(new ValueEventListener() {
@@ -267,7 +278,7 @@ public class GrantsUniversActivity extends AppCompatActivity implements View.OnC
                         fillUniversFromDB();
                     }
                 } else {
-                    Toast.makeText(GrantsUniversActivity.this, "Can not find " + versionName, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AtauliGrantsUniversActivity.this, "Can not find " + versionName, Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -320,7 +331,6 @@ public class GrantsUniversActivity extends AppCompatActivity implements View.OnC
                         lstUnivers.add(univer);
 
                         ContentValues uniValues = new ContentValues();
-                        assert univer != null;
 
                         uniValues.put(COLUMN_UNIVER_ID, univer.getUniverId());
                         uniValues.put(COLUMN_UNIVER_IMAGE, univer.getUniverImage());

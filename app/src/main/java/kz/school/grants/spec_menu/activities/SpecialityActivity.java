@@ -7,10 +7,13 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ExpandableListView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
@@ -99,6 +102,14 @@ public class SpecialityActivity extends AppCompatActivity implements View.OnClic
             grantInfo.putExtras(grantBundle);
             startActivity(grantInfo);
             return true;
+        });
+
+        expandableListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Toast.makeText(SpecialityActivity.this, "Мамандық жайлы инфо шығады, жақында!", Toast.LENGTH_SHORT).show();
+                return false;
+            }
         });
     }
 

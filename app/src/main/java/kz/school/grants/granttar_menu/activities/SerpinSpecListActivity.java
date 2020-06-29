@@ -10,8 +10,12 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -45,8 +49,6 @@ import static kz.school.grants.database.StoreDatabase.COLUMN_GRANT_CODE;
 import static kz.school.grants.database.StoreDatabase.COLUMN_KAZ_AVE_POINT;
 import static kz.school.grants.database.StoreDatabase.COLUMN_KAZ_MAX_POINT;
 import static kz.school.grants.database.StoreDatabase.COLUMN_KAZ_MIN_POINT;
-import static kz.school.grants.database.StoreDatabase.COLUMN_PROF_CODE;
-import static kz.school.grants.database.StoreDatabase.COLUMN_PROF_TITLE;
 import static kz.school.grants.database.StoreDatabase.COLUMN_SPEC_CODE;
 import static kz.school.grants.database.StoreDatabase.COLUMN_SPEC_NAME;
 import static kz.school.grants.database.StoreDatabase.COLUMN_SPEC_SUBJECTS_PAIR;
@@ -54,7 +56,6 @@ import static kz.school.grants.database.StoreDatabase.COLUMN_SUBJECTS_PAIR;
 import static kz.school.grants.database.StoreDatabase.COLUMN_UNIVER_CODE;
 import static kz.school.grants.database.StoreDatabase.COLUMN_YEAR_18_19_KAZ_COUNT;
 import static kz.school.grants.database.StoreDatabase.COLUMN_YEAR_19_20_KAZ_COUNT;
-import static kz.school.grants.database.StoreDatabase.TABLE_PROFESSIONS;
 import static kz.school.grants.database.StoreDatabase.TABLE_PROFILE_SUBJECTS;
 import static kz.school.grants.database.StoreDatabase.TABLE_SERPIN_GRANTS;
 import static kz.school.grants.database.StoreDatabase.TABLE_SERPIN_SPECS;
@@ -75,12 +76,14 @@ public class SerpinSpecListActivity extends AppCompatActivity implements View.On
     private ArrayList<String> lstProfs;
     private ArrayList<String> lstSubjectPair;
     Dialog addProfDialog;
-    Spinner spinnerProfs, spinnerSubjectPair;
+    Spinner spinnerSubjectPair;
     private StoreDatabase storeDb;
     private SQLiteDatabase sqdb;
     Button addProf;
     private DatabaseReference mDatabaseRef;
     String curVersion;
+    AutoCompleteTextView groupProfsAutoComplete;
+    String subjectPair;
 
 
     @Override
@@ -112,6 +115,7 @@ public class SerpinSpecListActivity extends AppCompatActivity implements View.On
         if (isAdmin()) {
             adminSigned = true;
             fabBtn.setVisibility(View.VISIBLE);
+            fabBtn.setOnClickListener(this);
         }
 
         addSearchListener();
@@ -122,11 +126,11 @@ public class SerpinSpecListActivity extends AppCompatActivity implements View.On
                     @Override
                     public void onItemClick(View view, final int pos) {
 
-                        Intent intent = new Intent(SerpinSpecListActivity.this, GrantsUniversActivity.class);
+                        Intent intent = new Intent(SerpinSpecListActivity.this, SerpinGrantsUniversActivity.class);
 
                         Bundle bundle = new Bundle();
-                        bundle.putString("act", "serpin");
                         bundle.putString("specCode", lstSpecs.get(pos).getSpecCode());
+                        bundle.putString("specName", lstSpecs.get(pos).getSpecName());
                         intent.putExtras(bundle);
 
                         startActivity(intent);
@@ -152,6 +156,20 @@ public class SerpinSpecListActivity extends AppCompatActivity implements View.On
                 break;
 
             case R.id.addProf:
+
+                String specCode = groupProfsAutoComplete.getText().toString().split("-")[0].trim();
+                String specName = groupProfsAutoComplete.getText().toString().split("-")[1].trim();
+                SpecItem specItem = new SpecItem(specCode, specName, subjectPair);
+                lstSpecs.add(specItem);
+                specListAdapter.notifyDataSetChanged();
+
+                mDatabaseRef.child("serpin_grant_list").child(specCode).setValue(specItem).addOnCompleteListener(task -> {
+                    long inceradedVer = getIncreasedVersion();
+                    mDatabaseRef.child("serpin_ver").setValue(inceradedVer);
+                    Toast.makeText(SerpinSpecListActivity.this, "Серпін бағдарлама енгізілді"+inceradedVer, Toast.LENGTH_SHORT).show();
+
+                    groupProfsAutoComplete.setText("");
+                });
 
                 addProfDialog.dismiss();
                 break;
@@ -193,7 +211,6 @@ public class SerpinSpecListActivity extends AppCompatActivity implements View.On
                         String grant_code = feed.getKey();
 
                         ContentValues profValues = new ContentValues();
-                        assert specItem != null;
                         profValues.put(COLUMN_SPEC_CODE, specItem.getSpecCode());
                         profValues.put(COLUMN_SPEC_NAME, specItem.getSpecName());
                         profValues.put(COLUMN_SPEC_SUBJECTS_PAIR, specItem.getSpecSubjectPair());
@@ -226,6 +243,9 @@ public class SerpinSpecListActivity extends AppCompatActivity implements View.On
                     lstSpecsCopy = (ArrayList<SpecItem>) lstSpecs.clone();
                     progressLoading.setVisibility(View.GONE);
                     specListAdapter.notifyDataSetChanged();
+                }else{
+                    lstSpecs.clear();
+                    storeDb.cleanSerpin(sqdb);
                 }
             }
 
@@ -274,24 +294,21 @@ public class SerpinSpecListActivity extends AppCompatActivity implements View.On
         return res.getString(0);
     }
 
+    public long getIncreasedVersion() {
+        long ver = Long.parseLong(curVersion);
+        ver += 1;
+        return ver;
+    }
+
     public void loadProfessionToDialog() {
-        lstProfs = new ArrayList<>();
+        String[] groupsStore = getResources().getStringArray(R.array.blockList);
         lstSubjectPair = new ArrayList<>();
         addProfDialog = new Dialog(this);
         addProfDialog.setContentView(R.layout.add_prof_to_grants);
 
-        spinnerProfs = addProfDialog.findViewById(R.id.spinnerProfs);
+        groupProfsAutoComplete = addProfDialog.findViewById(R.id.groupProfsAutoComplete);
         spinnerSubjectPair = addProfDialog.findViewById(R.id.spinnerSubjectPair);
-
         addProf = addProfDialog.findViewById(R.id.addProf);
-
-        Cursor cursor = storeDb.getCursorAll(sqdb, TABLE_PROFESSIONS);
-
-        if (((cursor != null) && (cursor.getCount() > 0))) {
-            while (cursor.moveToNext()) {
-                lstProfs.add(storeDb.getStrFromColumn(cursor, COLUMN_PROF_CODE) + " - " + storeDb.getStrFromColumn(cursor, COLUMN_PROF_TITLE));
-            }
-        }
 
         Cursor cursorSubjectPair = storeDb.getCursorAll(sqdb, TABLE_PROFILE_SUBJECTS);
 
@@ -301,8 +318,27 @@ public class SerpinSpecListActivity extends AppCompatActivity implements View.On
             }
         }
 
-        spinnerProfs.setAdapter(new ArrayAdapter<>(this, R.layout.item_subject_pair, lstProfs));
+        groupProfsAutoComplete.setThreshold(2);
+        groupProfsAutoComplete.setDropDownHeight(LinearLayout.LayoutParams.MATCH_PARENT);
+
+        addItemClickToHideKeyboard(groupProfsAutoComplete);
+
+        groupProfsAutoComplete.setAdapter(new ArrayAdapter<>(this, R.layout.item_subject_pair, groupsStore));
         spinnerSubjectPair.setAdapter(new ArrayAdapter<>(this, R.layout.item_subject_pair, lstSubjectPair));
+        subjectPair = lstSubjectPair.get(0);
+
+        spinnerSubjectPair.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int pos, long l) {
+                subjectPair = adapterView.getItemAtPosition(pos).toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
         addProf.setOnClickListener(this);
     }
 
@@ -368,6 +404,13 @@ public class SerpinSpecListActivity extends AppCompatActivity implements View.On
         }
 
         return true;
+    }
+
+    public void addItemClickToHideKeyboard(AutoCompleteTextView autoCompleteTextView) {
+        autoCompleteTextView.setOnItemClickListener((arg0, arg1, arg2, arg3) -> {
+            InputMethodManager in = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            in.hideSoftInputFromWindow(arg1.getApplicationWindowToken(), 0);
+        });
     }
 
     private boolean isNetworkAvailable() {

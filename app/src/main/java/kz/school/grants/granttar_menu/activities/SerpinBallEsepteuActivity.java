@@ -127,6 +127,7 @@ public class SerpinBallEsepteuActivity extends AppCompatActivity implements View
                         Intent intent = new Intent(SerpinBallEsepteuActivity.this, SerpinGrantInfo.class);
 
                         Bundle bundle = new Bundle();
+                        bundle.putString("specCode", specCode);
                         bundle.putString("univerCode", specList.get(pos).getUniver().getUniverCode());
                         intent.putExtras(bundle);
 

@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -69,15 +70,15 @@ public class SpecBarUniverlerActivity extends AppCompatActivity implements View.
     HashMap<String, String> tempHashMap;
     Bundle bundle;
     String profCode;
+    TextView univerNotFound;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_univers);
+        setContentView(R.layout.activity_univerler);
         initViews();
         checkInternetConnection();
-        checkVersion("univer_list_ver");
-
+        fillUniversFromDB();
     }
 
     public void initViews() {
@@ -88,6 +89,7 @@ public class SpecBarUniverlerActivity extends AppCompatActivity implements View.
         ratingBtn = findViewById(R.id.ratingBtn);
         fabBtn = findViewById(R.id.fabBtn);
         searchView = findViewById(R.id.searchView);
+        univerNotFound = findViewById(R.id.univerNotFound);
         storeDb = new StoreDatabase(this);
         sqdb = storeDb.getWritableDatabase();
 
@@ -96,7 +98,6 @@ public class SpecBarUniverlerActivity extends AppCompatActivity implements View.
         if (bundle != null) {
             profCode = bundle.getString("profCode");
         }
-
 
         universAdapter = new UniversAdapter(this, this, lstUnivers);
         myRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -144,38 +145,6 @@ public class SpecBarUniverlerActivity extends AppCompatActivity implements View.
                 super.onScrollStateChanged(recyclerView, newState);
             }
         });
-
-        /*
-        myRecyclerView.addOnItemTouchListener(
-                new RecyclerItemClickListener(this, myRecyclerView, new RecyclerItemClickListener.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(View view, final int pos) {
-
-//                        Intent univerCabinet = new Intent(this, ProfessionsActivity.class);
-//                        Bundle bundle = new Bundle();
-//                        bundle.putSerializable("univer", lstUnivers.get(pos));
-//                        univerCabinet.putExtras(bundle);
-//                        startActivity(univerCabinet);
-//
-//                        Intent intent = new Intent(this, ProfessionsActivity.class);
-//                        Pair<View, String> p1 = Pair.create((View)mObjectIV, "univerName");
-//                        Pair<View, String> p2 = Pair.create((View)mObjectNameTV, "univerLocation");
-//                        Pair<View, String> p2 = Pair.create((View)mObjectNameTV, "univerPhone");
-//                        ActivityOptionsCompat options = ActivityOptionsCompat.
-//                                makeSceneTransitionAnimation(this, p1, p2);
-//
-//                        startActivity(intent, options.toBundle());
-
-
-                    }
-
-                    @Override
-                    public void onLongItemClick(View view, int pos) {
-
-                    }
-                })
-        );
-        */
     }
 
     @Override
@@ -186,113 +155,46 @@ public class SpecBarUniverlerActivity extends AppCompatActivity implements View.
                 startActivity(browserIntent);
                 break;
         }
-//        startActivity(new Intent(this, AddNews.class));
-    }
-
-    private void checkVersion(String versionName) {
-        mDatabaseRef.child(versionName).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    String newVersion = dataSnapshot.getValue().toString();
-                    if (!getCurrentVersion(versionName).equals(newVersion)) {
-                        progressLoading.setVisibility(View.VISIBLE);
-                        updateVersion(versionName, newVersion);
-                        refreshUniverList();
-                    } else {
-                        fillUniversFromDB();
-                    }
-                } else {
-                    Toast.makeText(SpecBarUniverlerActivity.this, "Can not find " + versionName, Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
     }
 
     private void fillUniversFromDB() {
-        Cursor userCursor = storeDb.getCursorWhereLikeTo(sqdb, TABLE_UNIVER_LIST, COLUMN_PROFESSIONS_LIST, profCode, COLUMN_UNIVER_ID);
-        lstUnivers.clear();
+        Cursor uCursor = storeDb.getCursorAll(sqdb, TABLE_UNIVER_LIST);
+        if (((uCursor != null) && (uCursor.getCount() > 0))) {
 
-        Log.i("Univers", "fillUniversFromDB");
+            Cursor userCursor = storeDb.getCursorWhereLikeTo(sqdb, TABLE_UNIVER_LIST, COLUMN_PROFESSIONS_LIST, profCode, COLUMN_UNIVER_ID);
+            lstUnivers.clear();
 
-        if (((userCursor != null) && (userCursor.getCount() > 0))) {
-            while (userCursor.moveToNext()) {
+            if (((userCursor != null) && (userCursor.getCount() > 0))) {
+                while (userCursor.moveToNext()) {
+                    String univerCode =  storeDb.getStrFromColumn(userCursor, COLUMN_UNIVER_CODE);
 
-                lstUnivers.add(new Univer(
-                        storeDb.getStrFromColumn(userCursor, COLUMN_UNIVER_ID),
-                        storeDb.getStrFromColumn(userCursor, COLUMN_UNIVER_IMAGE),
-                        storeDb.getStrFromColumn(userCursor, COLUMN_UNIVER_NAME),
-                        storeDb.getStrFromColumn(userCursor, COLUMN_UNIVER_PHON),
-                        storeDb.getStrFromColumn(userCursor, COLUMN_UNIVER_LOCATION),
-                        storeDb.getStrFromColumn(userCursor, COLUMN_UNIVER_CODE),
-                        storeDb.getStrFromColumn(userCursor, COLUMN_PROFESSIONS_LIST)
-                ));
+                    if(!univerCode.equals("190") && !univerCode.equals("421") && !univerCode.equals("522") && (!univerCode.equals("026") || profCode.equals("5B074800"))){
+                        lstUnivers.add(new Univer(
+                                storeDb.getStrFromColumn(userCursor, COLUMN_UNIVER_ID),
+                                storeDb.getStrFromColumn(userCursor, COLUMN_UNIVER_IMAGE),
+                                storeDb.getStrFromColumn(userCursor, COLUMN_UNIVER_NAME),
+                                storeDb.getStrFromColumn(userCursor, COLUMN_UNIVER_PHON),
+                                storeDb.getStrFromColumn(userCursor, COLUMN_UNIVER_LOCATION),
+                                storeDb.getStrFromColumn(userCursor, COLUMN_UNIVER_CODE),
+                                storeDb.getStrFromColumn(userCursor, COLUMN_PROFESSIONS_LIST)
+                        ));
+                    }else{
+                        univerNotFound.setVisibility(View.VISIBLE);
+                    }
+                }
+                lstUniversCopy = (ArrayList<Univer>) lstUnivers.clone();
+                searchAddListener();
+
+                progressLoading.setVisibility(View.GONE);
+                universAdapter.notifyDataSetChanged();
+            }else{
+                progressLoading.setVisibility(View.GONE);
+                univerNotFound.setVisibility(View.VISIBLE);
             }
-            lstUniversCopy = (ArrayList<Univer>) lstUnivers.clone();
-            searchAddListener();
-
-            progressLoading.setVisibility(View.GONE);
-            universAdapter.notifyDataSetChanged();
+        }else{
+            Toast.makeText(this, "Университеттер тізімі табылмады, бірінші Университет менюға кіріп шықсаңыз", Toast.LENGTH_LONG).show();
         }
 
-    }
-
-    private void refreshUniverList() {
-        mDatabaseRef.child("univer_list").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    lstUnivers.clear();
-                    storeDb.cleanUnivers(sqdb);
-                    for (DataSnapshot feed : dataSnapshot.getChildren()) {
-                        Univer univer = feed.getValue(Univer.class);
-                        lstUnivers.add(univer);
-
-                        ContentValues uniValues = new ContentValues();
-                        assert univer != null;
-
-                        uniValues.put(COLUMN_UNIVER_ID, univer.getUniverId());
-                        uniValues.put(COLUMN_UNIVER_IMAGE, univer.getUniverImage());
-                        uniValues.put(COLUMN_UNIVER_NAME, univer.getUniverName());
-                        uniValues.put(COLUMN_UNIVER_PHON, univer.getUniverPhone());
-                        uniValues.put(COLUMN_UNIVER_LOCATION, univer.getUniverLocation());
-                        uniValues.put(COLUMN_UNIVER_CODE, univer.getUniverCode());
-                        uniValues.put(COLUMN_PROFESSIONS_LIST, univer.getProfessions());
-
-                        sqdb.insert(TABLE_UNIVER_LIST, null, uniValues);
-
-                    }
-
-                    lstUniversCopy = (ArrayList<Univer>) lstUnivers.clone();
-                    progressLoading.setVisibility(View.GONE);
-                    universAdapter.notifyDataSetChanged();
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-    }
-
-    private void updateVersion(String versionName, String version) {
-        ContentValues versionValues = new ContentValues();
-        versionValues.put(versionName, version);
-        sqdb.update(TABLE_VER, versionValues, versionName + "=" + curVersion, null);
-
-    }
-
-    private String getCurrentVersion(String versionName) {
-        Cursor res = sqdb.rawQuery("SELECT " + versionName + " FROM " + TABLE_VER, null);
-        res.moveToNext();
-        curVersion = res.getString(0);
-        return res.getString(0);
     }
 
     private boolean checkInternetConnection() {

@@ -69,7 +69,7 @@ public class SpecBarUniverlerActivity extends AppCompatActivity implements View.
     String curVersion;
     HashMap<String, String> tempHashMap;
     Bundle bundle;
-    String profCode;
+    String profFull, profCode;
     TextView univerNotFound;
 
     @Override
@@ -96,7 +96,9 @@ public class SpecBarUniverlerActivity extends AppCompatActivity implements View.
 
         bundle = getIntent().getExtras();
         if (bundle != null) {
+            profFull = bundle.getString("profFull");
             profCode = bundle.getString("profCode");
+            setTitle(profFull);
         }
 
         universAdapter = new UniversAdapter(this, this, lstUnivers);

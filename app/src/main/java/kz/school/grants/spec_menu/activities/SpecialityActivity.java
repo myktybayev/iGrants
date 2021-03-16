@@ -43,18 +43,16 @@ public class SpecialityActivity extends AppCompatActivity implements View.OnClic
     private ExpandableListAdapter expandableListAdapter;
     private StoreDatabase storeDb;
     private SQLiteDatabase sqdb;
-    String subjectId;
+    String subjectPair, subjectId;
     FloatingActionButton fabBtn;
     Button calcBtn;
     private FirebaseAuth mAuth;
     boolean adminSigned = false;
-    int LAUNCH_ADD_BLOCK_ACTIVITY = 101;
     Bundle bundle;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_speciality);
-        setTitle("SpecialityActivity");
         initViews();
     }
 
@@ -90,14 +88,14 @@ public class SpecialityActivity extends AppCompatActivity implements View.OnClic
         expandableListView.setOnChildClickListener((expandableListView, view, i, i1, l) -> {
 
             String blockTitle = parent_title.get(i);
+            String profName = child_title.get(parent_title.get(i)).get(i1);
 
             final String bCode = blockTitle.substring(0, blockTitle.indexOf("-")).trim();
-
-            Log.i("SpecialityActivity", "bCode: "+bCode);
 
             Intent grantInfo = new Intent(SpecialityActivity.this, GrantInfo.class);
 
             Bundle grantBundle = new Bundle();
+            grantBundle.putString("profName", profName);
             grantBundle.putString("blockCode", bCode);
             grantInfo.putExtras(grantBundle);
             startActivity(grantInfo);
@@ -115,9 +113,12 @@ public class SpecialityActivity extends AppCompatActivity implements View.OnClic
 
     public void initBundle(Bundle bundle){
         if (bundle != null) {
+            subjectPair = bundle.getString("subjectPair");
             subjectId = bundle.getString("subjectId");
+            setTitle(subjectPair);
 
             Cursor cursor = storeDb.getCursorWhereEqualTo(sqdb, TABLE_BLOCKS, COLUMN_SUBJECTS_ID, subjectId, COLUMN_BLOCK_CODE);
+
 
             if (((cursor != null) && (cursor.getCount() > 0))) {
                 while (cursor.moveToNext()) {

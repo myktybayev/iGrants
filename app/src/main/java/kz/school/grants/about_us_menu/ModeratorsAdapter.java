@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -43,15 +44,14 @@ public class ModeratorsAdapter extends BaseAdapter {
             convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.moderator_desing,null);
             TextView name = convertView.findViewById(R.id.name);
             TextView desc = convertView.findViewById(R.id.desc);
-            CircleImageView imageView = convertView.findViewById(R.id.imageView);
-            RelativeLayout relativeLayout = convertView.findViewById(R.id.backgroundColor);
+            ImageView imageView = convertView.findViewById(R.id.imageView);
 
             desc.setText(Moderators.get(position).getName());
             name.setText(Moderators.get(position).getDesc());
             imageView.setImageResource(Moderators.get(position).getImage());
 
 //            Glide.with(context).load(Moderators.get(position).getImage()).into(imageView);
-            relativeLayout.setBackgroundColor(context.getResources().getColor(Moderators.get(position).getColor()));
+//            relativeLayout.setBackgroundColor(context.getResources().getColor(Moderators.get(position).getColor()));
 
         }
         return convertView;

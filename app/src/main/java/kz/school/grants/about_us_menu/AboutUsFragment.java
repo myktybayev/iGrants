@@ -22,7 +22,7 @@ public class AboutUsFragment extends Fragment {
     GridView gridView;
     ArrayList<Moderator> moderators;
     ModeratorsAdapter adapter;
-    LinearLayout askQuestion;
+//    LinearLayout askQuestion;
 
     public AboutUsFragment() {
 
@@ -32,6 +32,8 @@ public class AboutUsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_moderator, container, false);
         gridView = view.findViewById(R.id.gridView);
+
+        /*
         askQuestion = view.findViewById(R.id.askQuestion);
         askQuestion.setOnClickListener(view -> {
             try {
@@ -48,6 +50,7 @@ public class AboutUsFragment extends Fragment {
                 e.printStackTrace();
             }
         });
+        */
 
         initGrid();
         return view;
@@ -56,8 +59,8 @@ public class AboutUsFragment extends Fragment {
     public void initGrid() {
         moderators = new ArrayList<>();
 
-        moderators.add(new Moderator(R.drawable.riki, "Прманов Рысбек",getString(R.string.ceo), R.color.second));
-        moderators.add(new Moderator(R.drawable.me3, "Мықтыбаев Бахытжан",getString(R.string.project_developer), R.color.first));
+        moderators.add(new Moderator(R.drawable.edu_olgo, "Educon"," ", R.color.second));
+        moderators.add(new Moderator(R.drawable.d_logo, "Достық"," ", R.color.first));
 
         adapter = new ModeratorsAdapter(getActivity(), moderators);
         gridView.setAdapter(adapter);

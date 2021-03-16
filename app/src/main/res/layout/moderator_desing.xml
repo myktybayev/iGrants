@@ -6,25 +6,19 @@
     app:cardElevation="5dp"
     app:cardUseCompatPadding="true">
 
-    <RelativeLayout
-        android:id="@+id/backgroundColor"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/light_grey"
-        android:padding="60dp" />
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="20dp"
+        android:layout_margin="10dp"
         android:gravity="center_horizontal|center_vertical"
         android:orientation="vertical">
 
-        <de.hdodenhof.circleimageview.CircleImageView
+        <ImageView
             android:id="@+id/imageView"
-            android:layout_width="120dp"
+            android:layout_width="match_parent"
             android:layout_height="120dp"
-            android:src="@drawable/me4"
+            android:src="@drawable/edu_olgo"
+            android:scaleType="centerInside"
             app:civ_border_color="@color/light_grey"
             app:civ_border_width="5dp" />
 

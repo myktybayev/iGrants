@@ -1,6 +1,8 @@
 package kz.school.grants.news_menu;
 
-public class NewsFeed {
+import java.io.Serializable;
+
+public class NewsFeed implements Serializable {
 
     private String fKey;
     private String news_title;

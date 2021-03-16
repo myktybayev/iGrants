@@ -92,17 +92,16 @@ public class GrantInfo extends AppCompatActivity {
     @BindView(R.id.auilLayout)
     LinearLayout auilLayout;
 
-    String blockCode;
+    String profName, blockCode;
     private StoreDatabase storeDb;
     private SQLiteDatabase sqdb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_spec_info);
+        setContentView(R.layout.activity_spec_info_old);
         ButterKnife.bind(this);
 
-        setTitle("GrantInfo");
         initViews();
 
     }
@@ -113,8 +112,10 @@ public class GrantInfo extends AppCompatActivity {
 
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
+            profName = bundle.getString("profName");
             blockCode = bundle.getString("blockCode");
 
+            setTitle(profName);
             Log.i("GrantInfo", "bCode: "+blockCode);
 
             Cursor cursor = storeDb.getCursorWhereEqualTo(sqdb, TABLE_GRANTS, "" + COLUMN_BLOCK_CODE, ""+blockCode, "" + COLUMN_BLOCK_CODE);

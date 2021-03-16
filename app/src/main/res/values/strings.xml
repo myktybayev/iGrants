@@ -25,6 +25,9 @@
     <string name="add_advice">Кеңес енгізу</string>
     <string name="advice_report">Кеңес Репорт</string>
 
+    <string name="previousYear">2019 - 2020</string>
+    <string name="currentYear">2020 - 2021</string>
+
     <string name="uploadNewsImage">Жаңалық суретін енгізіңіз</string>
     <string name="news_title">Тақырыбы</string>
     <string name="news_desc">Мәтіні</string>
@@ -387,7 +390,6 @@
         <item>520 - Казахстанский многопрофильный институт «Парасат» (КМИ «Парасат»)</item>
         <item>521 - Национальный университет обороны Министерства обороны РК (НУО МО РК)</item>
     </string-array>
-
 
 
 </resources>

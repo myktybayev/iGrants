@@ -1,0 +1,566 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:cardElevation="5dp"
+        app:cardUseCompatPadding="true">
+
+        <LinearLayout
+            android:id="@+id/childLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:paddingLeft="10dp"
+            android:paddingBottom="10dp"
+            android:paddingRight="10dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Бағдарлама"
+                android:textColor="@color/black_grey"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/specFull"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="block name"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="Университет"
+                android:textColor="@color/black_grey"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/univerName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="univer name"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/border"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="Грант саны"
+                android:textColor="@android:color/black"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:background="@drawable/border"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/border"
+                        android:gravity="center"
+                        android:padding="5dp"
+                        android:text="@string/previousYear"
+                        android:textColor="@android:color/black"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+
+                    <LinearLayout
+                        android:layout_height="match_parent"
+                        style="@style/layout_style">
+
+                        <ImageView style="@style/start_style" />
+
+                        <TextView
+                            android:id="@+id/y18_19_total"
+                            style="@style/number_style"
+                            android:text="0" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_height="match_parent"
+                        style="@style/layout_style">
+
+                        <TextView
+                            style="@style/group_style"
+                            android:text="KAZ" />
+
+                        <TextView
+                            android:id="@+id/y18_19_kaz"
+                            style="@style/number_style"
+                            android:text="0" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_height="match_parent"
+                        style="@style/layout_style">
+
+                        <TextView
+                            style="@style/group_style"
+                            android:text="RUS" />
+
+                        <TextView
+                            android:id="@+id/y18_19_rus"
+                            style="@style/number_style"
+                            android:text="0" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:background="@drawable/border"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/border"
+                        android:gravity="center"
+                        android:text="@string/currentYear"
+                        android:padding="5dp"
+                        android:textColor="@android:color/black"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:layout_height="match_parent"
+                        style="@style/layout_style">
+
+                        <ImageView style="@style/start_style" />
+
+                        <TextView
+                            android:id="@+id/y19_20_total"
+                            style="@style/number_style"
+                            android:text="0" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_height="match_parent"
+                        style="@style/layout_style">
+
+                        <TextView
+                            style="@style/group_style"
+                            android:text="KAZ" />
+
+                        <TextView
+                            android:id="@+id/y19_20kaz"
+                            style="@style/number_style"
+                            android:text="0" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_height="match_parent"
+                        style="@style/layout_style">
+
+                        <TextView
+                            style="@style/group_style"
+                            android:text="RUS" />
+
+                        <TextView
+                            android:id="@+id/y19_20rus"
+                            style="@style/number_style"
+                            android:text="0" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:background="@drawable/border"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:padding="5dp"
+                        android:text="АЙЫРМАСЫ"
+                        android:background="@drawable/border"
+                        android:textColor="@android:color/black"
+                        android:textSize="13sp"
+                        android:singleLine="true"
+                        android:layout_weight="1"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:layout_height="match_parent"
+                        style="@style/layout_style">
+
+                        <ImageView style="@style/start_style" />
+
+                        <TextView
+                            android:id="@+id/yTotal"
+                            style="@style/number_style"
+                            android:text="0"
+                            android:textColor="@color/green" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_height="match_parent"
+                        style="@style/layout_style">
+
+                        <TextView
+                            style="@style/group_style"
+                            android:text="KAZ" />
+
+                        <TextView
+                            android:id="@+id/yKaz"
+                            style="@style/number_style"
+                            android:text="0"
+                            android:textColor="@color/green" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_height="match_parent"
+                        style="@style/layout_style">
+
+                        <TextView
+                            style="@style/group_style"
+                            android:text="RUS" />
+
+                        <TextView
+                            android:id="@+id/yRus"
+                            style="@style/number_style"
+                            android:text="0"
+                            android:textColor="@color/green" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/border_green"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="Жалпы конкурс \n (ЕНТ балл)"
+                android:textColor="@android:color/black"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:background="@drawable/border_green"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    style="@style/layout_style"
+                    android:background="@drawable/border_green"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@drawable/border_green"
+                        android:gravity="center"
+                        android:padding="10dp"
+                        android:text="Қазақ группа"
+                        android:textColor="@android:color/black"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <LinearLayout style="@style/layout_style">
+
+                        <TextView
+                            style="@style/group_style"
+                            android:text="MAX" />
+
+                        <TextView
+                            android:id="@+id/kaz_max"
+                            style="@style/number_style"
+                            android:text="0" />
+
+                    </LinearLayout>
+
+                    <LinearLayout style="@style/layout_style">
+
+                        <TextView
+                            style="@style/group_style"
+                            android:text="MIN" />
+
+                        <TextView
+                            android:id="@+id/kaz_min"
+                            style="@style/number_style"
+                            android:text="0" />
+
+                    </LinearLayout>
+
+                    <LinearLayout style="@style/layout_style">
+
+                        <TextView
+                            style="@style/group_style"
+                            android:text="Орта" />
+
+                        <TextView
+                            android:id="@+id/kaz_ave"
+                            style="@style/number_style"
+                            android:text="0" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    style="@style/layout_style"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@drawable/border_green"
+                        android:gravity="center"
+                        android:padding="10dp"
+                        android:text="Орыс группа"
+                        android:textColor="@android:color/black"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <LinearLayout style="@style/layout_style">
+
+                        <TextView
+                            style="@style/group_style"
+                            android:text="MAX" />
+
+                        <TextView
+                            android:id="@+id/rus_max"
+                            style="@style/number_style"
+                            android:text="0" />
+
+                    </LinearLayout>
+
+                    <LinearLayout style="@style/layout_style">
+
+                        <TextView
+                            style="@style/group_style"
+                            android:text="MIN" />
+
+                        <TextView
+                            android:id="@+id/rus_min"
+                            style="@style/number_style"
+                            android:text="0" />
+
+                    </LinearLayout>
+
+                    <LinearLayout style="@style/layout_style">
+
+                        <TextView
+                            style="@style/group_style"
+                            android:text="Орта" />
+
+                        <TextView
+                            android:id="@+id/rus_ave"
+                            style="@style/number_style"
+                            android:text="0" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/auilLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:background="@drawable/border_orange"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:text="Ауыл квотасы \n (ЕНТ балл)"
+                    android:textColor="@android:color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:background="@drawable/border_orange"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        style="@style/layout_style"
+                        android:background="@drawable/border_orange"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="@drawable/border_orange"
+                            android:gravity="center"
+                            android:padding="10dp"
+                            android:text="Қазақ группа"
+                            android:textColor="@android:color/black"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+
+                        <LinearLayout style="@style/layout_style">
+
+                            <TextView
+                                style="@style/group_style"
+                                android:text="MAX" />
+
+                            <TextView
+                                android:id="@+id/auil_kaz_max"
+                                style="@style/number_style"
+                                android:text="135" />
+
+                        </LinearLayout>
+
+                        <LinearLayout style="@style/layout_style">
+
+                            <TextView
+                                style="@style/group_style"
+                                android:text="MIN" />
+
+                            <TextView
+                                android:id="@+id/auil_kaz_min"
+                                style="@style/number_style"
+                                android:text="0" />
+
+                        </LinearLayout>
+
+                        <LinearLayout style="@style/layout_style">
+
+                            <TextView
+                                style="@style/group_style"
+                                android:text="Орта" />
+
+                            <TextView
+                                android:id="@+id/auil_kaz_ave"
+                                style="@style/number_style"
+                                android:text="0" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        style="@style/layout_style"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="@drawable/border_orange"
+                            android:gravity="center"
+                            android:padding="10dp"
+                            android:text="Орыс группа"
+                            android:textColor="@android:color/black"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+
+                        <LinearLayout style="@style/layout_style">
+
+                            <TextView
+                                style="@style/group_style"
+                                android:text="MAX" />
+
+                            <TextView
+                                android:id="@+id/auil_rus_max"
+                                style="@style/number_style"
+                                android:text="0" />
+
+                        </LinearLayout>
+
+                        <LinearLayout style="@style/layout_style">
+
+                            <TextView
+                                style="@style/group_style"
+                                android:text="MIN" />
+
+                            <TextView
+                                android:id="@+id/auil_rus_min"
+                                style="@style/number_style"
+                                android:text="0" />
+
+                        </LinearLayout>
+
+                        <LinearLayout style="@style/layout_style">
+
+                            <TextView
+                                style="@style/group_style"
+                                android:text="Орта" />
+
+                            <TextView
+                                android:id="@+id/auil_rus_ave"
+                                style="@style/number_style"
+                                android:text="0" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+</ScrollView>

@@ -26,7 +26,11 @@ import java.util.Objects;
 
 import butterknife.BindView;
 import kz.school.grants.R;
+import kz.school.grants.granttar_menu.activities.AtauliSpecListActivity;
+import kz.school.grants.granttar_menu.activities.SerpinSpecListActivity;
 import kz.school.grants.news_menu.activities.AddNews;
+import kz.school.grants.news_menu.activities.NewsActivity;
+import kz.school.grants.spec_menu.adapters.RecyclerItemClickListener;
 
 public class NewsFragment extends Fragment implements View.OnClickListener {
     View v;
@@ -85,6 +89,22 @@ public class NewsFragment extends Fragment implements View.OnClickListener {
 
             }
         });
+
+        myrecyclerview.addOnItemTouchListener(
+                new RecyclerItemClickListener(getActivity(), myrecyclerview, new RecyclerItemClickListener.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(View view, final int pos) {
+                        Intent intent = new Intent(getActivity(), NewsActivity.class);
+                        intent.putExtra("news", lstContact.get(pos));
+                        startActivity(intent);
+                    }
+
+                    @Override
+                    public void onLongItemClick(View view, int pos) {
+
+                    }
+                })
+        );
 
     }
 

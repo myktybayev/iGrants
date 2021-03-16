@@ -165,6 +165,7 @@ public class SpecFragment extends Fragment implements View.OnClickListener {
 
                         Bundle bundle = new Bundle();
 
+                        bundle.putString("subjectPair", subjectPairList.get(pos).getPair());
                         bundle.putString("subjectId", subjectPairList.get(pos).getId());
                         intent.putExtras(bundle);
 

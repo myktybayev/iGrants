@@ -10,6 +10,7 @@
         app:cardElevation="5dp"
         app:cardUseCompatPadding="true">
 
+
         <LinearLayout
             android:id="@+id/childLayout"
             android:layout_width="match_parent"
@@ -18,8 +19,45 @@
             android:layout_weight="1"
             android:orientation="vertical"
             android:paddingLeft="10dp"
-            android:paddingBottom="10dp"
-            android:paddingRight="10dp">
+            android:paddingRight="10dp"
+            android:paddingBottom="10dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Бағдарлама"
+                android:textColor="@color/black_grey"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/specFull"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="block name"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="Университет"
+                android:textColor="@color/black_grey"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/univerName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="univer name"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -55,22 +93,22 @@
                         android:background="@drawable/border"
                         android:gravity="center"
                         android:padding="5dp"
-                        android:text="2019 - 2020"
+                        android:text="@string/previousYear"
                         android:textColor="@android:color/black"
                         android:textSize="15sp"
                         android:textStyle="bold" />
 
                     <LinearLayout
-                        android:layout_height="match_parent"
-                        style="@style/layout_style">
+                        style="@style/layout_style"
+                        android:layout_height="match_parent">
 
                         <TextView
                             style="@style/group_style"
                             android:text="KAZ" />
 
-                        <TextView
+                        <EditText
                             android:id="@+id/y18_19_kaz"
-                            style="@style/number_style"
+                            style="@style/ed_number_style"
                             android:text="0" />
 
                     </LinearLayout>
@@ -91,25 +129,24 @@
                         android:layout_weight="1"
                         android:background="@drawable/border"
                         android:gravity="center"
-                        android:text="2020 - 2021"
                         android:padding="5dp"
+                        android:text="@string/currentYear"
                         android:textColor="@android:color/black"
                         android:textSize="15sp"
                         android:textStyle="bold" />
 
 
-
                     <LinearLayout
-                        android:layout_height="match_parent"
-                        style="@style/layout_style">
+                        style="@style/layout_style"
+                        android:layout_height="match_parent">
 
                         <TextView
                             style="@style/group_style"
                             android:text="KAZ" />
 
-                        <TextView
+                        <EditText
+                            style="@style/ed_number_style"
                             android:id="@+id/y19_20kaz"
-                            style="@style/number_style"
                             android:text="0" />
 
                     </LinearLayout>
@@ -128,20 +165,20 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/border"
                         android:gravity="center"
                         android:padding="5dp"
+                        android:singleLine="true"
                         android:text="АЙЫРМАСЫ"
-                        android:background="@drawable/border"
                         android:textColor="@android:color/black"
                         android:textSize="13sp"
-                        android:singleLine="true"
-                        android:layout_weight="1"
                         android:textStyle="bold" />
 
 
                     <LinearLayout
-                        android:layout_height="match_parent"
-                        style="@style/layout_style">
+                        style="@style/layout_style"
+                        android:layout_height="match_parent">
 
                         <TextView
                             style="@style/group_style"
@@ -191,9 +228,9 @@
                             style="@style/group_style"
                             android:text="MAX" />
 
-                        <TextView
+                        <EditText
+                            style="@style/ed_number_style"
                             android:id="@+id/kaz_max"
-                            style="@style/number_style"
                             android:text="0" />
 
                     </LinearLayout>
@@ -204,9 +241,9 @@
                             style="@style/group_style"
                             android:text="MIN" />
 
-                        <TextView
+                        <EditText
+                            style="@style/ed_number_style"
                             android:id="@+id/kaz_min"
-                            style="@style/number_style"
                             android:text="0" />
 
                     </LinearLayout>
@@ -217,9 +254,9 @@
                             style="@style/group_style"
                             android:text="Орта" />
 
-                        <TextView
+                        <EditText
+                            style="@style/ed_number_style"
                             android:id="@+id/kaz_ave"
-                            style="@style/number_style"
                             android:text="0" />
 
                     </LinearLayout>

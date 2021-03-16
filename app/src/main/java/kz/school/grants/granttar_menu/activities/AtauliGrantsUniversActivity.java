@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -21,6 +22,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -73,7 +75,6 @@ public class AtauliGrantsUniversActivity extends AppCompatActivity implements Vi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_atauli_univers);
-        setTitle("AtauliGrantsUniversActivity");
         initViews();
     }
 
@@ -116,6 +117,8 @@ public class AtauliGrantsUniversActivity extends AppCompatActivity implements Vi
                         Intent intent = new Intent(AtauliGrantsUniversActivity.this, AtauliGrantInfo.class);
                         Bundle bundle = new Bundle();
                         bundle.putString("specCode", specCode);
+                        bundle.putString("specFull", specFull);
+                        bundle.putString("univerName", lstUnivers.get(pos).getUniverName());
                         bundle.putString("univerCode", lstUnivers.get(pos).getUniverCode());
                         intent.putExtras(bundle);
                         startActivity(intent);
@@ -129,12 +132,15 @@ public class AtauliGrantsUniversActivity extends AppCompatActivity implements Vi
         );
     }
 
-    String specCode, specName;
+    String specFull, specCode, specName;
 
     public void initBundle(Bundle bundle) {
         if (bundle != null) {
             specCode = bundle.getString("specCode");
             specName = bundle.getString("specName");
+            specFull = specCode+" - "+specName;
+
+            setTitle(specFull);
 
             Cursor cursor = storeDb.getCursorWhereEqualTo(sqdb, TABLE_ATAULI_GRANTS, COLUMN_SPEC_CODE, specCode, COLUMN_SPEC_CODE);
 
@@ -171,6 +177,7 @@ public class AtauliGrantsUniversActivity extends AppCompatActivity implements Vi
                 Intent ballIntent = new Intent(AtauliGrantsUniversActivity.this, AtauliBallEsepteuActivity.class);
 
                 Bundle grantBundle = new Bundle();
+                grantBundle.putString("specFull", specFull);
                 grantBundle.putString("specCode", specCode);
 
                 ballIntent.putExtras(grantBundle);

@@ -9,7 +9,7 @@
     <include
         android:id="@+id/llProgressBar"
         layout="@layout/progress_loading"
-        android:visibility="visible" />
+        android:visibility="invisible" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_below="@id/llProgressBar"

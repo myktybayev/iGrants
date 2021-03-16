@@ -19,6 +19,7 @@
             app:popupTheme="@style/AppTheme.PopupOverlay"
             app:titleTextColor="@color/white">
 
+            <!--
             <ImageView
                 android:id="@+id/loginImage"
                 android:layout_width="30dp"
@@ -26,6 +27,7 @@
                 android:layout_gravity="right|center_vertical"
                 android:layout_marginRight="10dp"
                 android:src="@drawable/ic_exit_to_app" />
+            -->
 
         </androidx.appcompat.widget.Toolbar>
 

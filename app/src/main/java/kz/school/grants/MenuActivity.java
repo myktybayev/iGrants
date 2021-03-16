@@ -64,7 +64,7 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
     public void setupViews(Bundle savedInstanceState) {
 
         actionToolbar = findViewById(R.id.toolbar);
-        loginImage = findViewById(R.id.loginImage);
+//        loginImage = findViewById(R.id.loginImage);
 
         setSupportActionBar(actionToolbar);
         actionToolbar.setNavigationIcon(R.drawable.ic_home_white);
@@ -85,10 +85,9 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
         universFragment = new UniversFragment();
         granttarFragment = new GranttarFragment();
 
-
         if (savedInstanceState == null) {
+            getSupportActionBar().setTitle(getString(R.string.menu_mamandyktar));
             changeFragment(specFragment);
-            setTitle("Мамандықтар");
         }
 
         checkInternetConnection();
@@ -96,10 +95,12 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
 
 //        if(adminSigned) loginImage.setImageDrawable(getDrawable(R.drawable.ic_exit_to_app));
 
+        /*
         loginImage.setOnClickListener(view -> {
             FirebaseAuth.getInstance().signOut();
             startActivity(new Intent(MenuActivity.this, LoginByEmailPage.class));
         });
+        */
     }
 
     public static void setTitle(String title) {
@@ -110,7 +111,7 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
     public void onBackPressed() {
 
     }
-    
+
     public void addListenerToLogOut() {
         mDatabaseRef.child("logOutAll").addValueEventListener(new ValueEventListener() {
             @Override
@@ -165,7 +166,7 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
         resideMenu.addMenuItem(specMenu, ResideMenu.DIRECTION_LEFT);
         resideMenu.addMenuItem(grantTypeMenu, ResideMenu.DIRECTION_LEFT);
         resideMenu.addMenuItem(univerMenu, ResideMenu.DIRECTION_LEFT);
-        resideMenu.addMenuItem(hostelMenu, ResideMenu.DIRECTION_LEFT);
+//        resideMenu.addMenuItem(hostelMenu, ResideMenu.DIRECTION_LEFT);
 
         resideMenu.addMenuItem(sendReportMenu, ResideMenu.DIRECTION_RIGHT);
         resideMenu.addMenuItem(aboutUsMenu, ResideMenu.DIRECTION_RIGHT);
@@ -178,8 +179,7 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
 
         if (view == specMenu) {
             changeFragment(specFragment);
-            setTitle("Мамандықтар");
-//            actionToolbar.setNavigationIcon(R.drawable.ic_list_black_24dp);
+            getSupportActionBar().setTitle(getString(R.string.menu_mamandyktar));
         } else if (view == newsMenu) {
             changeFragment(newsFragment);
             getSupportActionBar().setTitle(getString(R.string.menu_news));

@@ -142,6 +142,7 @@ public class BallEsepteuActivity extends AppCompatActivity implements View.OnCli
                         Intent grantInfo = new Intent(BallEsepteuActivity.this, SpecBarUniverlerActivity.class);
 
                         Bundle grantBundle = new Bundle();
+                        grantBundle.putString("profFull", specList.get(pos).getTitle());
                         grantBundle.putString("profCode", profCode);
                         grantInfo.putExtras(grantBundle);
                         startActivity(grantInfo);

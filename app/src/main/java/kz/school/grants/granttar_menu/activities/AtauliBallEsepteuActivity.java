@@ -87,14 +87,14 @@ public class AtauliBallEsepteuActivity extends AppCompatActivity implements View
     TextView univerNotFound;
 
     Bundle bundle;
-    String specCode;
+    String specFull, specCode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_balmen_esepteu);
         ButterKnife.bind(this);
-        setTitle("BallEsepteuActivity");
+        setTitle("Атаулы грант балл есептеу");
         initViews();
     }
 
@@ -110,6 +110,7 @@ public class AtauliBallEsepteuActivity extends AppCompatActivity implements View
 
         bundle = getIntent().getExtras();
         if (bundle != null) {
+            specFull = bundle.getString("specFull");
             specCode = bundle.getString("specCode");
         }
 
@@ -144,6 +145,8 @@ public class AtauliBallEsepteuActivity extends AppCompatActivity implements View
                         Bundle bundle = new Bundle();
 
                         bundle.putString("specCode", specCode);
+                        bundle.putString("specFull", specFull);
+                        bundle.putString("univerName", specList.get(pos).getUniver().getUniverName());
                         bundle.putString("univerCode", specList.get(pos).getUniver().getUniverCode());
                         intent.putExtras(bundle);
 

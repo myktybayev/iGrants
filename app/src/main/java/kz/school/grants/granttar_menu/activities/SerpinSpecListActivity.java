@@ -90,7 +90,7 @@ public class SerpinSpecListActivity extends AppCompatActivity implements View.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_serpin_grants);
-        setTitle("SerpinSpecListActivity");
+        setTitle("Серпін бағдарламалары");
         initViews();
         checkInternetConnection();
         checkVersion("serpin_ver");

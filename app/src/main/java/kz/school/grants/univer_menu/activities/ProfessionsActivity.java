@@ -66,7 +66,7 @@ public class ProfessionsActivity extends AppCompatActivity implements View.OnCli
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_professions);
-        setTitle("ProfessionsActivity");
+        setTitle("Университет ақпараты");
         initViews();
     }
 
@@ -192,6 +192,7 @@ public class ProfessionsActivity extends AppCompatActivity implements View.OnCli
 
             Intent grantInfo = new Intent(ProfessionsActivity.this, GrantInfo.class);
             Bundle grantBundle = new Bundle();
+            grantBundle.putString("profName", profName);
             grantBundle.putString("blockCode", bCode);
             grantInfo.putExtras(grantBundle);
             startActivity(grantInfo);

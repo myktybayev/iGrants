@@ -115,7 +115,7 @@ public class AtauliSpecListActivity extends AppCompatActivity implements View.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about_grants);
-        setTitle("AtauliSpecListActivity");
+        setTitle("Атаулы Грант");
         initViews();
         checkInternetConnection();
         checkVersion("atauli_grant_list_ver");

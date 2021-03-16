@@ -73,7 +73,6 @@ public class SerpinGrantsUniversActivity extends AppCompatActivity implements Vi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_atauli_univers);
-        setTitle("GrantsUniversActivity");
         initViews();
     }
 
@@ -116,6 +115,8 @@ public class SerpinGrantsUniversActivity extends AppCompatActivity implements Vi
                         Bundle bundle = new Bundle();
 
                         bundle.putString("specCode", specCode);
+                        bundle.putString("specFull", specFull);
+                        bundle.putString("univerName", lstUnivers.get(pos).getUniverName());
                         bundle.putString("univerCode", lstUnivers.get(pos).getUniverCode());
                         intent.putExtras(bundle);
                         startActivity(intent);
@@ -129,12 +130,15 @@ public class SerpinGrantsUniversActivity extends AppCompatActivity implements Vi
         );
     }
 
-    String specCode, specName;
+    String specFull, specCode, specName;
 
     public void initBundle(Bundle bundle) {
         if (bundle != null) {
             specCode = bundle.getString("specCode");
             specName = bundle.getString("specName");
+            specFull =  specCode+" - "+specName;
+
+            setTitle(specFull);
 
             Cursor cursor = storeDb.getCursorWhereEqualTo(sqdb, TABLE_SERPIN_GRANTS, COLUMN_SPEC_CODE, specCode, COLUMN_SPEC_CODE);
 
@@ -172,6 +176,7 @@ public class SerpinGrantsUniversActivity extends AppCompatActivity implements Vi
                 Intent ballIntent = new Intent(SerpinGrantsUniversActivity.this, SerpinBallEsepteuActivity.class);
 
                 Bundle grantBundle = new Bundle();
+                grantBundle.putString("specFull", specFull);
                 grantBundle.putString("specCode", specCode);
 
                 ballIntent.putExtras(grantBundle);

@@ -19,75 +19,42 @@ import butterknife.ButterKnife;
 import kz.school.grants.R;
 import kz.school.grants.database.StoreDatabase;
 
-import static kz.school.grants.database.StoreDatabase.COLUMN_AUIL_KAZ_AVE_POINT;
-import static kz.school.grants.database.StoreDatabase.COLUMN_AUIL_KAZ_MAX_POINT;
-import static kz.school.grants.database.StoreDatabase.COLUMN_AUIL_KAZ_MIN_POINT;
-import static kz.school.grants.database.StoreDatabase.COLUMN_AUIL_RUS_AVE_POINT;
-import static kz.school.grants.database.StoreDatabase.COLUMN_AUIL_RUS_MAX_POINT;
-import static kz.school.grants.database.StoreDatabase.COLUMN_AUIL_RUS_MIN_POINT;
+import static kz.school.grants.database.StoreDatabase.COLUMN_AUIL_ENT_AVE_POINT;
+import static kz.school.grants.database.StoreDatabase.COLUMN_AUIL_ENT_MAX_POINT;
+import static kz.school.grants.database.StoreDatabase.COLUMN_AUIL_ENT_MIN_POINT;
 import static kz.school.grants.database.StoreDatabase.COLUMN_BLOCK_CODE;
 import static kz.school.grants.database.StoreDatabase.COLUMN_KAZ_AVE_POINT;
 import static kz.school.grants.database.StoreDatabase.COLUMN_KAZ_MAX_POINT;
 import static kz.school.grants.database.StoreDatabase.COLUMN_KAZ_MIN_POINT;
-import static kz.school.grants.database.StoreDatabase.COLUMN_RUS_AVE_POINT;
-import static kz.school.grants.database.StoreDatabase.COLUMN_RUS_MAX_POINT;
-import static kz.school.grants.database.StoreDatabase.COLUMN_RUS_MIN_POINT;
-import static kz.school.grants.database.StoreDatabase.COLUMN_YEAR_18_19_KAZ_COUNT;
-import static kz.school.grants.database.StoreDatabase.COLUMN_YEAR_18_19_RUS_COUNT;
-import static kz.school.grants.database.StoreDatabase.COLUMN_YEAR_19_20_KAZ_COUNT;
-import static kz.school.grants.database.StoreDatabase.COLUMN_YEAR_19_20_RUS_COUNT;
+import static kz.school.grants.database.StoreDatabase.COLUMN_YEAR_PREVIOUS_YEAR_COUNT;
+import static kz.school.grants.database.StoreDatabase.COLUMN_YEAR_CURRENT_YEAR_COUNT;
 import static kz.school.grants.database.StoreDatabase.TABLE_GRANTS;
 
 public class GrantInfo extends AppCompatActivity {
 
     @BindView(R.id.y18_19_total)
     TextView y18_19_total;
-    @BindView(R.id.y18_19_kaz)
-    TextView y18_19_kaz;
-    @BindView(R.id.y18_19_rus)
-    TextView y18_19_rus;
 
     @BindView(R.id.y19_20_total)
     TextView y19_20_total;
-    @BindView(R.id.y19_20kaz)
-    TextView y19_20_kaz;
-    @BindView(R.id.y19_20rus)
-    TextView y19_20_rus;
 
     @BindView(R.id.yTotal)
     TextView yTotal;
-    @BindView(R.id.yKaz)
-    TextView yKaz;
-    @BindView(R.id.yRus)
-    TextView yRus;
 
-    @BindView(R.id.kaz_max)
-    TextView kaz_max;
-    @BindView(R.id.kaz_min)
-    TextView kaz_min;
-    @BindView(R.id.kaz_ave)
-    TextView kaz_ave;
 
-    @BindView(R.id.rus_max)
-    TextView rus_max;
-    @BindView(R.id.rus_min)
-    TextView rus_min;
-    @BindView(R.id.rus_ave)
-    TextView rus_ave;
+    @BindView(R.id.ent_max)
+    TextView ent_max;
+    @BindView(R.id.ent_min)
+    TextView ent_min;
+    @BindView(R.id.ent_ave)
+    TextView ent_ave;
 
-    @BindView(R.id.auil_kaz_max)
-    TextView auil_kaz_max;
-    @BindView(R.id.auil_kaz_min)
-    TextView auil_kaz_min;
-    @BindView(R.id.auil_kaz_ave)
-    TextView auil_kaz_ave;
-
-    @BindView(R.id.auil_rus_max)
-    TextView auil_rus_max;
-    @BindView(R.id.auil_rus_min)
-    TextView auil_rus_min;
-    @BindView(R.id.auil_rus_ave)
-    TextView auil_rus_ave;
+    @BindView(R.id.auil_ent_max)
+    TextView auil_ent_max;
+    @BindView(R.id.auil_ent_min)
+    TextView auil_ent_min;
+    @BindView(R.id.auil_ent_ave)
+    TextView auil_ent_ave;
 
     @BindView(R.id.auilLayout)
     LinearLayout auilLayout;
@@ -99,7 +66,7 @@ public class GrantInfo extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_spec_info_old);
+        setContentView(R.layout.activity_spec_info);
         ButterKnife.bind(this);
 
         initViews();
@@ -124,49 +91,26 @@ public class GrantInfo extends AppCompatActivity {
             if (((cursor != null) && (cursor.getCount() > 0))) {
                 cursor.moveToFirst();
 
-                int y18_19_kazCount = Integer.parseInt(storeDb.getIntegerFromColumn(cursor, COLUMN_YEAR_18_19_KAZ_COUNT));
-                int y18_19_rusCount = Integer.parseInt(storeDb.getIntegerFromColumn(cursor, COLUMN_YEAR_18_19_RUS_COUNT));
-                int y18_19_TotalCount = y18_19_kazCount + y18_19_rusCount;
-
-                int y19_20_kazCount = Integer.parseInt(storeDb.getIntegerFromColumn(cursor, COLUMN_YEAR_19_20_KAZ_COUNT));
-                int y19_20_rusCount = Integer.parseInt(storeDb.getIntegerFromColumn(cursor, COLUMN_YEAR_19_20_RUS_COUNT));
-                int y19_20_TotalCount = y19_20_kazCount + y19_20_rusCount;
+                int y18_19_TotalCount = Integer.parseInt(storeDb.getIntegerFromColumn(cursor, COLUMN_YEAR_PREVIOUS_YEAR_COUNT));
+                int y19_20_TotalCount = Integer.parseInt(storeDb.getIntegerFromColumn(cursor, COLUMN_YEAR_CURRENT_YEAR_COUNT));
 
                 y18_19_total.setText("" + y18_19_TotalCount);
-                y18_19_kaz.setText("" + y18_19_kazCount);
-                y18_19_rus.setText("" + y18_19_rusCount);
-
                 y19_20_total.setText("" + y19_20_TotalCount);
-                y19_20_kaz.setText("" + y19_20_kazCount);
-                y19_20_rus.setText("" + y19_20_rusCount);
 
                 int yTotalInt = y19_20_TotalCount - y18_19_TotalCount;
-                int yKazInt = y19_20_kazCount - y18_19_kazCount;
-                int yRusInt = y19_20_rusCount - y18_19_rusCount;
 
                 yTotal.setText("" + yTotalInt);
-                yKaz.setText("" + yKazInt);
-                yRus.setText("" + yRusInt);
 
                 if (yTotalInt < 0) yTotal.setTextColor(getColor(R.color.red));
-                if (yKazInt < 0)  yKaz.setTextColor(getColor(R.color.red));
-                if (yRusInt < 0) yRus.setTextColor(getColor(R.color.red));
 
-                kaz_max.setText(storeDb.getIntegerFromColumn(cursor, COLUMN_KAZ_MAX_POINT));
-                kaz_min.setText(storeDb.getIntegerFromColumn(cursor, COLUMN_KAZ_MIN_POINT));
-                kaz_ave.setText(storeDb.getIntegerFromColumn(cursor, COLUMN_KAZ_AVE_POINT));
-
-                rus_max.setText(storeDb.getIntegerFromColumn(cursor, COLUMN_RUS_MAX_POINT));
-                rus_min.setText(storeDb.getIntegerFromColumn(cursor, COLUMN_RUS_MIN_POINT));
-                rus_ave.setText(storeDb.getIntegerFromColumn(cursor, COLUMN_RUS_AVE_POINT));
+                ent_max.setText(storeDb.getIntegerFromColumn(cursor, COLUMN_KAZ_MAX_POINT));
+                ent_min.setText(storeDb.getIntegerFromColumn(cursor, COLUMN_KAZ_MIN_POINT));
+                ent_ave.setText(storeDb.getIntegerFromColumn(cursor, COLUMN_KAZ_AVE_POINT));
 
                 String [] auilStore = {
-                        storeDb.getIntegerFromColumn(cursor, COLUMN_AUIL_KAZ_MAX_POINT),
-                        storeDb.getIntegerFromColumn(cursor, COLUMN_AUIL_KAZ_MIN_POINT),
-                        storeDb.getIntegerFromColumn(cursor, COLUMN_AUIL_KAZ_AVE_POINT),
-                        storeDb.getIntegerFromColumn(cursor, COLUMN_AUIL_RUS_MAX_POINT),
-                        storeDb.getIntegerFromColumn(cursor, COLUMN_AUIL_RUS_MIN_POINT),
-                        storeDb.getIntegerFromColumn(cursor, COLUMN_AUIL_RUS_AVE_POINT)};
+                        storeDb.getIntegerFromColumn(cursor, COLUMN_AUIL_ENT_MAX_POINT),
+                        storeDb.getIntegerFromColumn(cursor, COLUMN_AUIL_ENT_MIN_POINT),
+                        storeDb.getIntegerFromColumn(cursor, COLUMN_AUIL_ENT_AVE_POINT)};
 
                 boolean auilKvota = false;
                 for(String auilEnt: auilStore){
@@ -177,12 +121,10 @@ public class GrantInfo extends AppCompatActivity {
                 }
 
                 if(auilKvota) {
-                    auil_kaz_max.setText(storeDb.getIntegerFromColumn(cursor, COLUMN_AUIL_KAZ_MAX_POINT));
-                    auil_kaz_min.setText(storeDb.getIntegerFromColumn(cursor, COLUMN_AUIL_KAZ_MIN_POINT));
-                    auil_kaz_ave.setText(storeDb.getIntegerFromColumn(cursor, COLUMN_AUIL_KAZ_AVE_POINT));
-                    auil_rus_max.setText(storeDb.getIntegerFromColumn(cursor, COLUMN_AUIL_RUS_MAX_POINT));
-                    auil_rus_min.setText(storeDb.getIntegerFromColumn(cursor, COLUMN_AUIL_RUS_MIN_POINT));
-                    auil_rus_ave.setText(storeDb.getIntegerFromColumn(cursor, COLUMN_AUIL_RUS_AVE_POINT));
+                    auil_ent_max.setText(storeDb.getIntegerFromColumn(cursor, COLUMN_AUIL_ENT_MAX_POINT));
+                    auil_ent_min.setText(storeDb.getIntegerFromColumn(cursor, COLUMN_AUIL_ENT_MIN_POINT));
+                    auil_ent_ave.setText(storeDb.getIntegerFromColumn(cursor, COLUMN_AUIL_ENT_AVE_POINT));
+
                 }else{
                     auilLayout.setVisibility(View.GONE);
                 }

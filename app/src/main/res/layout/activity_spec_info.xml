@@ -66,7 +66,7 @@
                         style="@style/layout_style">
 
                         <TextView
-                            android:id="@+id/y18_19_kaz"
+                            android:id="@+id/y18_19_total"
                             style="@style/number_style"
                             android:text="0" />
 
@@ -100,7 +100,7 @@
                         style="@style/layout_style">
 
                         <TextView
-                            android:id="@+id/y19_20kaz"
+                            android:id="@+id/y19_20_total"
                             style="@style/number_style"
                             android:text="0" />
 
@@ -136,7 +136,7 @@
                         style="@style/layout_style">
 
                         <TextView
-                            android:id="@+id/yKaz"
+                            android:id="@+id/yTotal"
                             style="@style/number_style"
                             android:text="0"
                             android:textColor="@color/green" />
@@ -180,7 +180,7 @@
                             android:text="MAX" />
 
                         <TextView
-                            android:id="@+id/kaz_max"
+                            android:id="@+id/ent_max"
                             style="@style/number_style"
                             android:text="0" />
 
@@ -193,7 +193,7 @@
                             android:text="MIN" />
 
                         <TextView
-                            android:id="@+id/kaz_min"
+                            android:id="@+id/ent_min"
                             style="@style/number_style"
                             android:text="0" />
 
@@ -206,7 +206,7 @@
                             android:text="Орта" />
 
                         <TextView
-                            android:id="@+id/kaz_ave"
+                            android:id="@+id/ent_ave"
                             style="@style/number_style"
                             android:text="0" />
 
@@ -256,7 +256,7 @@
                                 android:text="MAX" />
 
                             <TextView
-                                android:id="@+id/auil_kaz_max"
+                                android:id="@+id/auil_ent_max"
                                 style="@style/number_style"
                                 android:text="135" />
 
@@ -269,7 +269,7 @@
                                 android:text="MIN" />
 
                             <TextView
-                                android:id="@+id/auil_kaz_min"
+                                android:id="@+id/auil_ent_min"
                                 style="@style/number_style"
                                 android:text="0" />
 
@@ -282,7 +282,7 @@
                                 android:text="Орта" />
 
                             <TextView
-                                android:id="@+id/auil_kaz_ave"
+                                android:id="@+id/auil_ent_ave"
                                 style="@style/number_style"
                                 android:text="0" />
 

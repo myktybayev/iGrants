@@ -6,15 +6,13 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import java.util.ArrayList;
-
 import kz.school.grants.advice_menu.Advice;
 import kz.school.grants.spec_menu.models.SubjectPair;
 
 public class StoreDatabase extends SQLiteOpenHelper {
 
     public static final String DATABASE_NAME = "igrants.db";
-    private static final int DATABASE_VERSION = 21;
+    private static final int DATABASE_VERSION = 22;
 
     public static final String TABLE_PROFILE_SUBJECTS = "profile_subjects";
     public static final String TABLE_BLOCKS = "blocks";
@@ -45,20 +43,20 @@ public class StoreDatabase extends SQLiteOpenHelper {
     public static final String COLUMN_PROF_CODE = "prof_code";
     public static final String COLUMN_PROF_TITLE = "prof_title";
 
-
     // TABLE_GRANTS columns
     // COLUMN_S_ID
     // COLUMN_BLOCK_CODE
-    public static final String COLUMN_YEAR_18_19_KAZ_COUNT = "y18_19_kaz";
-    public static final String COLUMN_YEAR_18_19_RUS_COUNT = "y18_19_rus";
-    public static final String COLUMN_YEAR_19_20_KAZ_COUNT = "y19_20_kaz";
-    public static final String COLUMN_YEAR_19_20_RUS_COUNT = "y19_20_rus";
-    public static final String COLUMN_AUIL_KAZ_MAX_POINT = "auil_kaz_max";
-    public static final String COLUMN_AUIL_KAZ_MIN_POINT = "auil_kaz_min";
-    public static final String COLUMN_AUIL_KAZ_AVE_POINT = "auil_kaz_ave";
+    public static final String COLUMN_YEAR_PREVIOUS_YEAR_COUNT = "y18_19_kaz";
+    public static final String COLUMN_YEAR_CURRENT_YEAR_COUNT = "y19_20_kaz";
+
+    public static final String COLUMN_AUIL_ENT_MAX_POINT = "auil_kaz_max";
+    public static final String COLUMN_AUIL_ENT_MIN_POINT = "auil_kaz_min";
+    public static final String COLUMN_AUIL_ENT_AVE_POINT = "auil_kaz_ave";
+
     public static final String COLUMN_AUIL_RUS_MAX_POINT = "auil_rus_max";
     public static final String COLUMN_AUIL_RUS_MIN_POINT = "auil_rus_min";
     public static final String COLUMN_AUIL_RUS_AVE_POINT = "auil_rus_ave";
+
     public static final String COLUMN_KAZ_MAX_POINT = "kaz_max";
     public static final String COLUMN_KAZ_MIN_POINT = "kaz_min";
     public static final String COLUMN_KAZ_AVE_POINT = "kaz_ave";
@@ -129,13 +127,11 @@ public class StoreDatabase extends SQLiteOpenHelper {
         db.execSQL("CREATE TABLE " + TABLE_ATAULI_GRANTS + "(" +
                 COLUMN_SPEC_CODE + " TEXT, " +
                 COLUMN_UNIVER_CODE + " TEXT , " +
-                COLUMN_YEAR_18_19_KAZ_COUNT + " INTEGER , " +
-                COLUMN_YEAR_18_19_RUS_COUNT + " INTEGER , " +
-                COLUMN_YEAR_19_20_KAZ_COUNT + " INTEGER , " +
-                COLUMN_YEAR_19_20_RUS_COUNT + " INTEGER , " +
-                COLUMN_AUIL_KAZ_MAX_POINT + " INTEGER , " +
-                COLUMN_AUIL_KAZ_MIN_POINT + " INTEGER , " +
-                COLUMN_AUIL_KAZ_AVE_POINT + " INTEGER , " +
+                COLUMN_YEAR_PREVIOUS_YEAR_COUNT + " INTEGER , " +
+                COLUMN_YEAR_CURRENT_YEAR_COUNT + " INTEGER , " +
+                COLUMN_AUIL_ENT_MAX_POINT + " INTEGER , " +
+                COLUMN_AUIL_ENT_MIN_POINT + " INTEGER , " +
+                COLUMN_AUIL_ENT_AVE_POINT + " INTEGER , " +
                 COLUMN_AUIL_RUS_MAX_POINT + " INTEGER , " +
                 COLUMN_AUIL_RUS_MIN_POINT + " INTEGER , " +
                 COLUMN_AUIL_RUS_AVE_POINT + " INTEGER , " +
@@ -155,8 +151,8 @@ public class StoreDatabase extends SQLiteOpenHelper {
         db.execSQL("CREATE TABLE " + TABLE_SERPIN_GRANTS + "(" +
                 COLUMN_SPEC_CODE + " TEXT, " +
                 COLUMN_UNIVER_CODE + " TEXT , " +
-                COLUMN_YEAR_18_19_KAZ_COUNT + " INTEGER , " +
-                COLUMN_YEAR_19_20_KAZ_COUNT + " INTEGER , " +
+                COLUMN_YEAR_PREVIOUS_YEAR_COUNT + " INTEGER , " +
+                COLUMN_YEAR_CURRENT_YEAR_COUNT + " INTEGER , " +
                 COLUMN_KAZ_MAX_POINT + " INTEGER , " +
                 COLUMN_KAZ_MIN_POINT + " INTEGER , " +
                 COLUMN_KAZ_AVE_POINT + " INTEGER)");
@@ -164,13 +160,11 @@ public class StoreDatabase extends SQLiteOpenHelper {
         db.execSQL("CREATE TABLE " + TABLE_GRANTS + "(" +
                 COLUMN_SUBJECTS_ID + " TEXT, " +
                 COLUMN_BLOCK_CODE + " TEXT , " +
-                COLUMN_YEAR_18_19_KAZ_COUNT + " INTEGER , " +
-                COLUMN_YEAR_18_19_RUS_COUNT + " INTEGER , " +
-                COLUMN_YEAR_19_20_KAZ_COUNT + " INTEGER , " +
-                COLUMN_YEAR_19_20_RUS_COUNT + " INTEGER , " +
-                COLUMN_AUIL_KAZ_MAX_POINT + " INTEGER , " +
-                COLUMN_AUIL_KAZ_MIN_POINT + " INTEGER , " +
-                COLUMN_AUIL_KAZ_AVE_POINT + " INTEGER , " +
+                COLUMN_YEAR_PREVIOUS_YEAR_COUNT + " INTEGER , " +
+                COLUMN_YEAR_CURRENT_YEAR_COUNT + " INTEGER , " +
+                COLUMN_AUIL_ENT_MAX_POINT + " INTEGER , " +
+                COLUMN_AUIL_ENT_MIN_POINT + " INTEGER , " +
+                COLUMN_AUIL_ENT_AVE_POINT + " INTEGER , " +
                 COLUMN_AUIL_RUS_MAX_POINT + " INTEGER , " +
                 COLUMN_AUIL_RUS_MIN_POINT + " INTEGER , " +
                 COLUMN_AUIL_RUS_AVE_POINT + " INTEGER , " +

@@ -102,40 +102,8 @@
                         android:layout_height="match_parent"
                         style="@style/layout_style">
 
-                        <ImageView style="@style/start_style" />
-
                         <TextView
                             android:id="@+id/y18_19_total"
-                            style="@style/number_style"
-                            android:text="0" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_height="match_parent"
-                        style="@style/layout_style">
-
-                        <TextView
-                            style="@style/group_style"
-                            android:text="KAZ" />
-
-                        <TextView
-                            android:id="@+id/y18_19_kaz"
-                            style="@style/number_style"
-                            android:text="0" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_height="match_parent"
-                        style="@style/layout_style">
-
-                        <TextView
-                            style="@style/group_style"
-                            android:text="RUS" />
-
-                        <TextView
-                            android:id="@+id/y18_19_rus"
                             style="@style/number_style"
                             android:text="0" />
 
@@ -163,11 +131,10 @@
                         android:textSize="15sp"
                         android:textStyle="bold" />
 
+
                     <LinearLayout
                         android:layout_height="match_parent"
                         style="@style/layout_style">
-
-                        <ImageView style="@style/start_style" />
 
                         <TextView
                             android:id="@+id/y19_20_total"
@@ -176,35 +143,6 @@
 
                     </LinearLayout>
 
-                    <LinearLayout
-                        android:layout_height="match_parent"
-                        style="@style/layout_style">
-
-                        <TextView
-                            style="@style/group_style"
-                            android:text="KAZ" />
-
-                        <TextView
-                            android:id="@+id/y19_20kaz"
-                            style="@style/number_style"
-                            android:text="0" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_height="match_parent"
-                        style="@style/layout_style">
-
-                        <TextView
-                            style="@style/group_style"
-                            android:text="RUS" />
-
-                        <TextView
-                            android:id="@+id/y19_20rus"
-                            style="@style/number_style"
-                            android:text="0" />
-
-                    </LinearLayout>
 
                 </LinearLayout>
 
@@ -229,11 +167,10 @@
                         android:layout_weight="1"
                         android:textStyle="bold" />
 
+
                     <LinearLayout
                         android:layout_height="match_parent"
                         style="@style/layout_style">
-
-                        <ImageView style="@style/start_style" />
 
                         <TextView
                             android:id="@+id/yTotal"
@@ -243,37 +180,6 @@
 
                     </LinearLayout>
 
-                    <LinearLayout
-                        android:layout_height="match_parent"
-                        style="@style/layout_style">
-
-                        <TextView
-                            style="@style/group_style"
-                            android:text="KAZ" />
-
-                        <TextView
-                            android:id="@+id/yKaz"
-                            style="@style/number_style"
-                            android:text="0"
-                            android:textColor="@color/green" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_height="match_parent"
-                        style="@style/layout_style">
-
-                        <TextView
-                            style="@style/group_style"
-                            android:text="RUS" />
-
-                        <TextView
-                            android:id="@+id/yRus"
-                            style="@style/number_style"
-                            android:text="0"
-                            android:textColor="@color/green" />
-
-                    </LinearLayout>
 
                 </LinearLayout>
 
@@ -304,18 +210,6 @@
                     android:background="@drawable/border_green"
                     android:orientation="vertical">
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:background="@drawable/border_green"
-                        android:gravity="center"
-                        android:padding="10dp"
-                        android:text="Қазақ группа"
-                        android:textColor="@android:color/black"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
-
                     <LinearLayout style="@style/layout_style">
 
                         <TextView
@@ -323,7 +217,7 @@
                             android:text="MAX" />
 
                         <TextView
-                            android:id="@+id/kaz_max"
+                            android:id="@+id/ent_max"
                             style="@style/number_style"
                             android:text="0" />
 
@@ -336,7 +230,7 @@
                             android:text="MIN" />
 
                         <TextView
-                            android:id="@+id/kaz_min"
+                            android:id="@+id/ent_min"
                             style="@style/number_style"
                             android:text="0" />
 
@@ -349,64 +243,7 @@
                             android:text="Орта" />
 
                         <TextView
-                            android:id="@+id/kaz_ave"
-                            style="@style/number_style"
-                            android:text="0" />
-
-                    </LinearLayout>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    style="@style/layout_style"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:background="@drawable/border_green"
-                        android:gravity="center"
-                        android:padding="10dp"
-                        android:text="Орыс группа"
-                        android:textColor="@android:color/black"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
-
-                    <LinearLayout style="@style/layout_style">
-
-                        <TextView
-                            style="@style/group_style"
-                            android:text="MAX" />
-
-                        <TextView
-                            android:id="@+id/rus_max"
-                            style="@style/number_style"
-                            android:text="0" />
-
-                    </LinearLayout>
-
-                    <LinearLayout style="@style/layout_style">
-
-                        <TextView
-                            style="@style/group_style"
-                            android:text="MIN" />
-
-                        <TextView
-                            android:id="@+id/rus_min"
-                            style="@style/number_style"
-                            android:text="0" />
-
-                    </LinearLayout>
-
-                    <LinearLayout style="@style/layout_style">
-
-                        <TextView
-                            style="@style/group_style"
-                            android:text="Орта" />
-
-                        <TextView
-                            android:id="@+id/rus_ave"
+                            android:id="@+id/ent_ave"
                             style="@style/number_style"
                             android:text="0" />
 
@@ -449,18 +286,6 @@
                         android:background="@drawable/border_orange"
                         android:orientation="vertical">
 
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:background="@drawable/border_orange"
-                            android:gravity="center"
-                            android:padding="10dp"
-                            android:text="Қазақ группа"
-                            android:textColor="@android:color/black"
-                            android:textSize="18sp"
-                            android:textStyle="bold" />
-
                         <LinearLayout style="@style/layout_style">
 
                             <TextView
@@ -468,7 +293,7 @@
                                 android:text="MAX" />
 
                             <TextView
-                                android:id="@+id/auil_kaz_max"
+                                android:id="@+id/auil_ent_max"
                                 style="@style/number_style"
                                 android:text="135" />
 
@@ -481,7 +306,7 @@
                                 android:text="MIN" />
 
                             <TextView
-                                android:id="@+id/auil_kaz_min"
+                                android:id="@+id/auil_ent_min"
                                 style="@style/number_style"
                                 android:text="0" />
 
@@ -494,7 +319,7 @@
                                 android:text="Орта" />
 
                             <TextView
-                                android:id="@+id/auil_kaz_ave"
+                                android:id="@+id/auil_ent_ave"
                                 style="@style/number_style"
                                 android:text="0" />
 
@@ -502,62 +327,6 @@
 
                     </LinearLayout>
 
-                    <LinearLayout
-                        style="@style/layout_style"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:background="@drawable/border_orange"
-                            android:gravity="center"
-                            android:padding="10dp"
-                            android:text="Орыс группа"
-                            android:textColor="@android:color/black"
-                            android:textSize="18sp"
-                            android:textStyle="bold" />
-
-                        <LinearLayout style="@style/layout_style">
-
-                            <TextView
-                                style="@style/group_style"
-                                android:text="MAX" />
-
-                            <TextView
-                                android:id="@+id/auil_rus_max"
-                                style="@style/number_style"
-                                android:text="0" />
-
-                        </LinearLayout>
-
-                        <LinearLayout style="@style/layout_style">
-
-                            <TextView
-                                style="@style/group_style"
-                                android:text="MIN" />
-
-                            <TextView
-                                android:id="@+id/auil_rus_min"
-                                style="@style/number_style"
-                                android:text="0" />
-
-                        </LinearLayout>
-
-                        <LinearLayout style="@style/layout_style">
-
-                            <TextView
-                                style="@style/group_style"
-                                android:text="Орта" />
-
-                            <TextView
-                                android:id="@+id/auil_rus_ave"
-                                style="@style/number_style"
-                                android:text="0" />
-
-                        </LinearLayout>
-
-                    </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
 

@@ -4,29 +4,19 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RadioButton;
-import android.widget.RelativeLayout;
 import android.widget.SeekBar;
-import android.widget.TextView;
-import android.widget.Toast;
-import android.widget.Toolbar;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityOptionsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
-import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -34,12 +24,10 @@ import kz.school.grants.R;
 import kz.school.grants.database.StoreDatabase;
 import kz.school.grants.spec_menu.adapters.BallEsepteuAdapter;
 import kz.school.grants.spec_menu.adapters.RecyclerItemClickListener;
-import kz.school.grants.spec_menu.adapters.SubjectPairAdapter;
 import kz.school.grants.spec_menu.models.OneSpec;
-import kz.school.grants.univer_menu.activities.ProfessionsActivity;
 
-import static kz.school.grants.database.StoreDatabase.COLUMN_AUIL_KAZ_MAX_POINT;
-import static kz.school.grants.database.StoreDatabase.COLUMN_AUIL_KAZ_MIN_POINT;
+import static kz.school.grants.database.StoreDatabase.COLUMN_AUIL_ENT_MAX_POINT;
+import static kz.school.grants.database.StoreDatabase.COLUMN_AUIL_ENT_MIN_POINT;
 import static kz.school.grants.database.StoreDatabase.COLUMN_AUIL_RUS_MAX_POINT;
 import static kz.school.grants.database.StoreDatabase.COLUMN_AUIL_RUS_MIN_POINT;
 import static kz.school.grants.database.StoreDatabase.COLUMN_BLOCK_CODE;
@@ -50,7 +38,6 @@ import static kz.school.grants.database.StoreDatabase.COLUMN_PROF_TITLE;
 import static kz.school.grants.database.StoreDatabase.COLUMN_RUS_MAX_POINT;
 import static kz.school.grants.database.StoreDatabase.COLUMN_RUS_MIN_POINT;
 import static kz.school.grants.database.StoreDatabase.COLUMN_SUBJECTS_ID;
-import static kz.school.grants.database.StoreDatabase.TABLE_BLOCKS;
 import static kz.school.grants.database.StoreDatabase.TABLE_GRANTS;
 import static kz.school.grants.database.StoreDatabase.TABLE_PROFESSIONS;
 
@@ -169,8 +156,8 @@ public class BallEsepteuActivity extends AppCompatActivity implements View.OnCli
 
         if (kazGroup.isChecked()) {
             if (auilGroup.isChecked()) {
-                columnSearchMax = COLUMN_AUIL_KAZ_MAX_POINT;
-                columnSearchMin = COLUMN_AUIL_KAZ_MIN_POINT;
+                columnSearchMax = COLUMN_AUIL_ENT_MAX_POINT;
+                columnSearchMin = COLUMN_AUIL_ENT_MIN_POINT;
             } else {
                 columnSearchMax = COLUMN_KAZ_MAX_POINT;
                 columnSearchMin = COLUMN_KAZ_MIN_POINT;

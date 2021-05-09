@@ -1,22 +1,15 @@
 package kz.school.grants.granttar_menu.activities;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
-import android.content.Intent;
-import android.content.res.ColorStateList;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,7 +22,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
@@ -37,27 +29,14 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import kz.school.grants.R;
 import kz.school.grants.database.StoreDatabase;
-import kz.school.grants.granttar_menu.activities.add_grants.AddSerpinGrant;
 
-import static kz.school.grants.database.StoreDatabase.COLUMN_AUIL_KAZ_AVE_POINT;
-import static kz.school.grants.database.StoreDatabase.COLUMN_AUIL_KAZ_MAX_POINT;
-import static kz.school.grants.database.StoreDatabase.COLUMN_AUIL_KAZ_MIN_POINT;
-import static kz.school.grants.database.StoreDatabase.COLUMN_AUIL_RUS_AVE_POINT;
-import static kz.school.grants.database.StoreDatabase.COLUMN_AUIL_RUS_MAX_POINT;
-import static kz.school.grants.database.StoreDatabase.COLUMN_AUIL_RUS_MIN_POINT;
 import static kz.school.grants.database.StoreDatabase.COLUMN_KAZ_AVE_POINT;
 import static kz.school.grants.database.StoreDatabase.COLUMN_KAZ_MAX_POINT;
 import static kz.school.grants.database.StoreDatabase.COLUMN_KAZ_MIN_POINT;
-import static kz.school.grants.database.StoreDatabase.COLUMN_RUS_AVE_POINT;
-import static kz.school.grants.database.StoreDatabase.COLUMN_RUS_MAX_POINT;
-import static kz.school.grants.database.StoreDatabase.COLUMN_RUS_MIN_POINT;
 import static kz.school.grants.database.StoreDatabase.COLUMN_SPEC_CODE;
 import static kz.school.grants.database.StoreDatabase.COLUMN_UNIVER_CODE;
-import static kz.school.grants.database.StoreDatabase.COLUMN_YEAR_18_19_KAZ_COUNT;
-import static kz.school.grants.database.StoreDatabase.COLUMN_YEAR_18_19_RUS_COUNT;
-import static kz.school.grants.database.StoreDatabase.COLUMN_YEAR_19_20_KAZ_COUNT;
-import static kz.school.grants.database.StoreDatabase.COLUMN_YEAR_19_20_RUS_COUNT;
-import static kz.school.grants.database.StoreDatabase.TABLE_ATAULI_GRANTS;
+import static kz.school.grants.database.StoreDatabase.COLUMN_YEAR_PREVIOUS_YEAR_COUNT;
+import static kz.school.grants.database.StoreDatabase.COLUMN_YEAR_CURRENT_YEAR_COUNT;
 import static kz.school.grants.database.StoreDatabase.TABLE_SERPIN_GRANTS;
 
 public class SerpinGrantInfo extends AppCompatActivity {
@@ -120,8 +99,8 @@ public class SerpinGrantInfo extends AppCompatActivity {
             if (((cursor != null) && (cursor.getCount() > 0))) {
                 cursor.moveToFirst();
 
-                int y18_19_kazCount = Integer.parseInt(storeDb.getIntegerFromColumn(cursor, COLUMN_YEAR_18_19_KAZ_COUNT));
-                int y19_20_kazCount = Integer.parseInt(storeDb.getIntegerFromColumn(cursor, COLUMN_YEAR_19_20_KAZ_COUNT));
+                int y18_19_kazCount = Integer.parseInt(storeDb.getIntegerFromColumn(cursor, COLUMN_YEAR_PREVIOUS_YEAR_COUNT));
+                int y19_20_kazCount = Integer.parseInt(storeDb.getIntegerFromColumn(cursor, COLUMN_YEAR_CURRENT_YEAR_COUNT));
 
                 y18_19_kaz.setText("" + y18_19_kazCount);
                 y19_20_kaz.setText("" + y19_20_kazCount);

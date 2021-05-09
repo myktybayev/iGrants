@@ -54,8 +54,8 @@ import static kz.school.grants.database.StoreDatabase.COLUMN_SPEC_NAME;
 import static kz.school.grants.database.StoreDatabase.COLUMN_SPEC_SUBJECTS_PAIR;
 import static kz.school.grants.database.StoreDatabase.COLUMN_SUBJECTS_PAIR;
 import static kz.school.grants.database.StoreDatabase.COLUMN_UNIVER_CODE;
-import static kz.school.grants.database.StoreDatabase.COLUMN_YEAR_18_19_KAZ_COUNT;
-import static kz.school.grants.database.StoreDatabase.COLUMN_YEAR_19_20_KAZ_COUNT;
+import static kz.school.grants.database.StoreDatabase.COLUMN_YEAR_PREVIOUS_YEAR_COUNT;
+import static kz.school.grants.database.StoreDatabase.COLUMN_YEAR_CURRENT_YEAR_COUNT;
 import static kz.school.grants.database.StoreDatabase.TABLE_PROFILE_SUBJECTS;
 import static kz.school.grants.database.StoreDatabase.TABLE_SERPIN_GRANTS;
 import static kz.school.grants.database.StoreDatabase.TABLE_SERPIN_SPECS;
@@ -225,8 +225,8 @@ public class SerpinSpecListActivity extends AppCompatActivity implements View.On
                                 ContentValues grantsValues = new ContentValues();
                                 grantsValues.put(COLUMN_SPEC_CODE, specItem.getSpecCode());
                                 grantsValues.put(COLUMN_UNIVER_CODE, universHashMap.get(univerCode).getUniverCode());
-                                grantsValues.put(COLUMN_YEAR_18_19_KAZ_COUNT, Integer.parseInt("" + universHashMap.get(univerCode).getGrant18_19().get("kaz")));
-                                grantsValues.put(COLUMN_YEAR_19_20_KAZ_COUNT, Integer.parseInt("" + universHashMap.get(univerCode).getGrant19_20().get("kaz")));
+                                grantsValues.put(COLUMN_YEAR_PREVIOUS_YEAR_COUNT, Integer.parseInt("" + universHashMap.get(univerCode).getGrant18_19().get("kaz")));
+                                grantsValues.put(COLUMN_YEAR_CURRENT_YEAR_COUNT, Integer.parseInt("" + universHashMap.get(univerCode).getGrant19_20().get("kaz")));
 
                                 HashMap<String, GrantCounts> entBalldari = universHashMap.get(univerCode).getJalpiEnt();
                                 grantsValues.put(COLUMN_KAZ_MAX_POINT, entBalldari.get("kaz").getMax());

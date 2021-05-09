@@ -10,7 +10,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,9 +47,9 @@ import kz.school.grants.spec_menu.models.GrantCounts;
 import kz.school.grants.spec_menu.models.OneBlockSpec;
 import kz.school.grants.spec_menu.models.SubjectPair;
 
-import static kz.school.grants.database.StoreDatabase.COLUMN_AUIL_KAZ_AVE_POINT;
-import static kz.school.grants.database.StoreDatabase.COLUMN_AUIL_KAZ_MAX_POINT;
-import static kz.school.grants.database.StoreDatabase.COLUMN_AUIL_KAZ_MIN_POINT;
+import static kz.school.grants.database.StoreDatabase.COLUMN_AUIL_ENT_AVE_POINT;
+import static kz.school.grants.database.StoreDatabase.COLUMN_AUIL_ENT_MAX_POINT;
+import static kz.school.grants.database.StoreDatabase.COLUMN_AUIL_ENT_MIN_POINT;
 import static kz.school.grants.database.StoreDatabase.COLUMN_AUIL_RUS_AVE_POINT;
 import static kz.school.grants.database.StoreDatabase.COLUMN_AUIL_RUS_MAX_POINT;
 import static kz.school.grants.database.StoreDatabase.COLUMN_AUIL_RUS_MIN_POINT;
@@ -68,10 +67,8 @@ import static kz.school.grants.database.StoreDatabase.COLUMN_RUS_MIN_POINT;
 import static kz.school.grants.database.StoreDatabase.COLUMN_SUBJECTS_ID;
 import static kz.school.grants.database.StoreDatabase.COLUMN_SUBJECTS_PAIR;
 import static kz.school.grants.database.StoreDatabase.COLUMN_SUBJECT_VER;
-import static kz.school.grants.database.StoreDatabase.COLUMN_YEAR_18_19_KAZ_COUNT;
-import static kz.school.grants.database.StoreDatabase.COLUMN_YEAR_18_19_RUS_COUNT;
-import static kz.school.grants.database.StoreDatabase.COLUMN_YEAR_19_20_KAZ_COUNT;
-import static kz.school.grants.database.StoreDatabase.COLUMN_YEAR_19_20_RUS_COUNT;
+import static kz.school.grants.database.StoreDatabase.COLUMN_YEAR_PREVIOUS_YEAR_COUNT;
+import static kz.school.grants.database.StoreDatabase.COLUMN_YEAR_CURRENT_YEAR_COUNT;
 import static kz.school.grants.database.StoreDatabase.TABLE_BLOCKS;
 import static kz.school.grants.database.StoreDatabase.TABLE_GRANTS;
 import static kz.school.grants.database.StoreDatabase.TABLE_PROFESSIONS;
@@ -437,18 +434,15 @@ public class SpecFragment extends Fragment implements View.OnClickListener {
                                 ContentValues grantsValues = new ContentValues();
                                 grantsValues.put(COLUMN_SUBJECTS_ID, subjectId);
                                 grantsValues.put(COLUMN_BLOCK_CODE, blockCode);
-                                grantsValues.put(COLUMN_YEAR_18_19_KAZ_COUNT, Integer.parseInt("" + blocksHashMap.get(blockCode).getGrant18_19().get("kaz")));
-                                grantsValues.put(COLUMN_YEAR_18_19_RUS_COUNT, Integer.parseInt("" + blocksHashMap.get(blockCode).getGrant18_19().get("rus")));
-
-                                grantsValues.put(COLUMN_YEAR_19_20_KAZ_COUNT, Integer.parseInt("" + blocksHashMap.get(blockCode).getGrant19_20().get("kaz")));
-                                grantsValues.put(COLUMN_YEAR_19_20_RUS_COUNT, Integer.parseInt("" + blocksHashMap.get(blockCode).getGrant19_20().get("rus")));
+                                grantsValues.put(COLUMN_YEAR_PREVIOUS_YEAR_COUNT, Integer.parseInt("" + blocksHashMap.get(blockCode).getGrant18_19().get("kaz")));
+                                grantsValues.put(COLUMN_YEAR_CURRENT_YEAR_COUNT, Integer.parseInt("" + blocksHashMap.get(blockCode).getGrant19_20().get("kaz")));
 
                                 HashMap<String, GrantCounts> entBalldari = blocksHashMap.get(blockCode).getJalpiEnt();
                                 for (String entType : entBalldari.keySet()) {
                                     if (entType.equals("auilKaz")) {
-                                        grantsValues.put(COLUMN_AUIL_KAZ_MAX_POINT, entBalldari.get(entType).getMax());
-                                        grantsValues.put(COLUMN_AUIL_KAZ_MIN_POINT, entBalldari.get(entType).getMin());
-                                        grantsValues.put(COLUMN_AUIL_KAZ_AVE_POINT, entBalldari.get(entType).getAve());
+                                        grantsValues.put(COLUMN_AUIL_ENT_MAX_POINT, entBalldari.get(entType).getMax());
+                                        grantsValues.put(COLUMN_AUIL_ENT_MIN_POINT, entBalldari.get(entType).getMin());
+                                        grantsValues.put(COLUMN_AUIL_ENT_AVE_POINT, entBalldari.get(entType).getAve());
 
                                     } else if (entType.equals("auilRus")) {
                                         grantsValues.put(COLUMN_AUIL_RUS_MAX_POINT, entBalldari.get(entType).getMax());

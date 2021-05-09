@@ -6,9 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.RadioButton;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -27,14 +25,8 @@ import kz.school.grants.granttar_menu.models.OneBallEseptuUniver;
 import kz.school.grants.spec_menu.adapters.RecyclerItemClickListener;
 import kz.school.grants.univer_menu.models.Univer;
 
-import static kz.school.grants.database.StoreDatabase.COLUMN_AUIL_KAZ_MAX_POINT;
-import static kz.school.grants.database.StoreDatabase.COLUMN_AUIL_KAZ_MIN_POINT;
-import static kz.school.grants.database.StoreDatabase.COLUMN_AUIL_RUS_MAX_POINT;
-import static kz.school.grants.database.StoreDatabase.COLUMN_AUIL_RUS_MIN_POINT;
 import static kz.school.grants.database.StoreDatabase.COLUMN_KAZ_MAX_POINT;
 import static kz.school.grants.database.StoreDatabase.COLUMN_KAZ_MIN_POINT;
-import static kz.school.grants.database.StoreDatabase.COLUMN_RUS_MAX_POINT;
-import static kz.school.grants.database.StoreDatabase.COLUMN_RUS_MIN_POINT;
 import static kz.school.grants.database.StoreDatabase.COLUMN_SPEC_CODE;
 import static kz.school.grants.database.StoreDatabase.COLUMN_UNIVER_CODE;
 import static kz.school.grants.database.StoreDatabase.COLUMN_UNIVER_ID;
@@ -42,7 +34,6 @@ import static kz.school.grants.database.StoreDatabase.COLUMN_UNIVER_IMAGE;
 import static kz.school.grants.database.StoreDatabase.COLUMN_UNIVER_LOCATION;
 import static kz.school.grants.database.StoreDatabase.COLUMN_UNIVER_NAME;
 import static kz.school.grants.database.StoreDatabase.COLUMN_UNIVER_PHON;
-import static kz.school.grants.database.StoreDatabase.TABLE_ATAULI_GRANTS;
 import static kz.school.grants.database.StoreDatabase.TABLE_SERPIN_GRANTS;
 import static kz.school.grants.database.StoreDatabase.TABLE_UNIVER_LIST;
 

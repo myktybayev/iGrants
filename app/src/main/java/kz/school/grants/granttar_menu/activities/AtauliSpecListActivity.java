@@ -49,9 +49,9 @@ import kz.school.grants.spec_menu.models.GrantCounts;
 import kz.school.grants.univer_menu.models.Univer;
 import kz.school.grants.univer_menu.UniversAdapter;
 
-import static kz.school.grants.database.StoreDatabase.COLUMN_AUIL_KAZ_AVE_POINT;
-import static kz.school.grants.database.StoreDatabase.COLUMN_AUIL_KAZ_MAX_POINT;
-import static kz.school.grants.database.StoreDatabase.COLUMN_AUIL_KAZ_MIN_POINT;
+import static kz.school.grants.database.StoreDatabase.COLUMN_AUIL_ENT_AVE_POINT;
+import static kz.school.grants.database.StoreDatabase.COLUMN_AUIL_ENT_MAX_POINT;
+import static kz.school.grants.database.StoreDatabase.COLUMN_AUIL_ENT_MIN_POINT;
 import static kz.school.grants.database.StoreDatabase.COLUMN_AUIL_RUS_AVE_POINT;
 import static kz.school.grants.database.StoreDatabase.COLUMN_AUIL_RUS_MAX_POINT;
 import static kz.school.grants.database.StoreDatabase.COLUMN_AUIL_RUS_MIN_POINT;
@@ -73,10 +73,8 @@ import static kz.school.grants.database.StoreDatabase.COLUMN_UNIVER_IMAGE;
 import static kz.school.grants.database.StoreDatabase.COLUMN_UNIVER_LOCATION;
 import static kz.school.grants.database.StoreDatabase.COLUMN_UNIVER_NAME;
 import static kz.school.grants.database.StoreDatabase.COLUMN_UNIVER_PHON;
-import static kz.school.grants.database.StoreDatabase.COLUMN_YEAR_18_19_KAZ_COUNT;
-import static kz.school.grants.database.StoreDatabase.COLUMN_YEAR_18_19_RUS_COUNT;
-import static kz.school.grants.database.StoreDatabase.COLUMN_YEAR_19_20_KAZ_COUNT;
-import static kz.school.grants.database.StoreDatabase.COLUMN_YEAR_19_20_RUS_COUNT;
+import static kz.school.grants.database.StoreDatabase.COLUMN_YEAR_PREVIOUS_YEAR_COUNT;
+import static kz.school.grants.database.StoreDatabase.COLUMN_YEAR_CURRENT_YEAR_COUNT;
 import static kz.school.grants.database.StoreDatabase.TABLE_ATAULI_GRANTS;
 import static kz.school.grants.database.StoreDatabase.TABLE_ATAULI_SPECS;
 import static kz.school.grants.database.StoreDatabase.TABLE_PROFILE_SUBJECTS;
@@ -346,18 +344,15 @@ public class AtauliSpecListActivity extends AppCompatActivity implements View.On
                                 ContentValues grantsValues = new ContentValues();
                                 grantsValues.put(COLUMN_SPEC_CODE, specItem.getSpecCode());
                                 grantsValues.put(COLUMN_UNIVER_CODE, universHashMap.get(univerCode).getUniverCode());
-                                grantsValues.put(COLUMN_YEAR_18_19_KAZ_COUNT, Integer.parseInt("" + universHashMap.get(univerCode).getGrant18_19().get("kaz")));
-                                grantsValues.put(COLUMN_YEAR_18_19_RUS_COUNT, Integer.parseInt("" + universHashMap.get(univerCode).getGrant18_19().get("rus")));
-
-                                grantsValues.put(COLUMN_YEAR_19_20_KAZ_COUNT, Integer.parseInt("" + universHashMap.get(univerCode).getGrant19_20().get("kaz")));
-                                grantsValues.put(COLUMN_YEAR_19_20_RUS_COUNT, Integer.parseInt("" + universHashMap.get(univerCode).getGrant19_20().get("rus")));
+                                grantsValues.put(COLUMN_YEAR_PREVIOUS_YEAR_COUNT, Integer.parseInt("" + universHashMap.get(univerCode).getGrant18_19().get("kaz")));
+                                grantsValues.put(COLUMN_YEAR_CURRENT_YEAR_COUNT, Integer.parseInt("" + universHashMap.get(univerCode).getGrant19_20().get("kaz")));
 
                                 HashMap<String, GrantCounts> entBalldari = universHashMap.get(univerCode).getJalpiEnt();
                                 for (String entType : entBalldari.keySet()) {
                                     if (entType.equals("auilKaz")) {
-                                        grantsValues.put(COLUMN_AUIL_KAZ_MAX_POINT, entBalldari.get(entType).getMax());
-                                        grantsValues.put(COLUMN_AUIL_KAZ_MIN_POINT, entBalldari.get(entType).getMin());
-                                        grantsValues.put(COLUMN_AUIL_KAZ_AVE_POINT, entBalldari.get(entType).getAve());
+                                        grantsValues.put(COLUMN_AUIL_ENT_MAX_POINT, entBalldari.get(entType).getMax());
+                                        grantsValues.put(COLUMN_AUIL_ENT_MIN_POINT, entBalldari.get(entType).getMin());
+                                        grantsValues.put(COLUMN_AUIL_ENT_AVE_POINT, entBalldari.get(entType).getAve());
 
                                     } else if (entType.equals("auilRus")) {
                                         grantsValues.put(COLUMN_AUIL_RUS_MAX_POINT, entBalldari.get(entType).getMax());

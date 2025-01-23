@@ -1,6 +1,8 @@
 Қазақстан мемлекетіндегі университеттер, гранттарға шектік балл, әртүрлі грант түрлері жайлы ақпаратпен бөлісетін программа
 Әр оқушыға ыңғайлы болу үшін өз таңдаған пәндермен келетін мамандықтар тізімін шығарады
 
+Келесі этап жаңа версиясы: https://www.figma.com/design/CMSy8QatBbY6wtP4n2Tyei/educon?node-id=20-25
+
 <img width="336" alt="Screenshot 2025-01-23 at 10 00 36" src="https://github.com/user-attachments/assets/af71ac71-ed12-45e4-8827-f13503a40b13" />
 <img width="336" alt="Screenshot 2025-01-23 at 10 01 28" src="https://github.com/user-attachments/assets/88732111-0824-4fcd-935b-9d6883d04356" />
 
